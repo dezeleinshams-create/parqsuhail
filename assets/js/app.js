@@ -97,6 +97,7 @@ function updateCategoryPillCounts() {
   const products = getProducts();
   const counts = {
     all: products.length,
+    devices: 0,
     thuraya: 0,
     garmin: 0,
     radios: 0,
@@ -117,7 +118,7 @@ function updateCategoryPillCounts() {
   }
 
   const badgeTotal = document.getElementById("catalog-badge-total");
-  if (badgeTotal) badgeTotal.textContent = `${products.length} منتج معتمد`;
+  if (badgeTotal) badgeTotal.textContent = `${products.length} منتج في المخزون`;
 }
 
 // Filter and Sort Products
@@ -152,8 +153,9 @@ function getFilteredAndSortedProducts() {
       break;
     case "featured":
     default:
-      // Keep natural order or prioritizes badges
-      filtered.sort((a, b) => (b.badge ? 1 : 0) - (a.badge ? 1 : 0));
+      // Keep natural inventory order: devices first, then accessories
+      // (order is already set by displayIndex in data.js)
+      filtered.sort((a, b) => (a.displayIndex || 0) - (b.displayIndex || 0));
       break;
   }
 
