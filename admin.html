@@ -17,7 +17,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <script>
+    // Theme anti-flicker initializer
+    (function() {
+      const saved = localStorage.getItem('barq_theme');
+      if (saved === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      }
+    })();
+
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -25,6 +38,7 @@
               teal: '#008DA5',
               cyan: '#00D2FF',
               dark: '#0A0F1D',
+              light: '#F8FAFC',
               card: '#111827'
             }
           },
@@ -37,11 +51,65 @@
     }
   </script>
   <style>
-    body { font-family: 'Tajawal', sans-serif; }
+    body { 
+      font-family: 'Tajawal', sans-serif; 
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
     h1, h2, h3, h4, .font-heading { font-family: 'Cairo', sans-serif; }
+
+    /* Admin Light Mode */
+    html.light body {
+      background-color: #F8FAFC !important;
+      color: #0F172A !important;
+    }
+    html.light .bg-brand-dark {
+      background-color: #F8FAFC !important;
+    }
+    html.light .bg-slate-950,
+    html.light .bg-slate-950\/80 {
+      background-color: #F1F5F9 !important;
+      color: #0F172A !important;
+    }
+    html.light .bg-slate-900,
+    html.light .bg-slate-900\/90,
+    html.light .bg-slate-900\/80 {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+      box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05) !important;
+    }
+    html.light .border-slate-800,
+    html.light .border-slate-700 {
+      border-color: #E2E8F0 !important;
+    }
+    html.light .text-white {
+      color: #0F172A !important;
+    }
+    html.light .text-slate-200 {
+      color: #1E293B !important;
+    }
+    html.light .text-slate-300 {
+      color: #334155 !important;
+    }
+    html.light .text-slate-400,
+    html.light .text-slate-500 {
+      color: #64748B !important;
+    }
+    html.light input, html.light select, html.light textarea {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+      border-color: #CBD5E1 !important;
+    }
+    html.light select option {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+    }
+    html.light header.bg-slate-950 {
+      background-color: #FFFFFF !important;
+      border-bottom-color: #E2E8F0 !important;
+    }
   </style>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen">
+<body class="bg-brand-dark text-slate-100 min-h-screen transition-colors duration-300">
 
   <!-- Top Admin Bar -->
   <header class="bg-slate-950 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
@@ -56,6 +124,11 @@
     </div>
 
     <div class="flex items-center gap-3">
+      <!-- Theme Switcher -->
+      <button onclick="toggleTheme()" class="theme-toggle-btn bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-xl border border-slate-700 transition flex items-center justify-center" title="تبديل الوضع (فاتح / داكن)">
+        <i class="fas fa-sun text-sm"></i>
+      </button>
+
       <a href="index.html" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 transition">
         <i class="fas fa-external-link-alt text-cyan-400"></i>
         <span>عرض الموقع المباشر</span>
@@ -234,8 +307,48 @@
     let adminCatFilter = "all";
 
     document.addEventListener("DOMContentLoaded", () => {
+      initTheme();
       loadAdminDashboard();
     });
+
+    function initTheme() {
+      const saved = localStorage.getItem("barq_theme");
+      const activeTheme = saved ? saved : "dark";
+      setTheme(activeTheme, false);
+    }
+
+    function toggleTheme() {
+      const isCurrentlyDark = document.documentElement.classList.contains("dark") || 
+                              !document.documentElement.classList.contains("light");
+      const newTheme = isCurrentlyDark ? "light" : "dark";
+      setTheme(newTheme, true);
+    }
+
+    function setTheme(theme, save = true) {
+      const html = document.documentElement;
+      if (theme === "dark") {
+        html.classList.add("dark");
+        html.classList.remove("light");
+      } else {
+        html.classList.add("light");
+        html.classList.remove("dark");
+      }
+
+      if (save) {
+        localStorage.setItem("barq_theme", theme);
+      }
+
+      const buttons = document.querySelectorAll(".theme-toggle-btn");
+      buttons.forEach(btn => {
+        if (theme === "dark") {
+          btn.innerHTML = `<i class="fas fa-sun text-amber-400 text-sm"></i>`;
+          btn.setAttribute("title", "التبديل إلى الوضع الفاتح (Light Mode)");
+        } else {
+          btn.innerHTML = `<i class="fas fa-moon text-cyan-600 text-sm"></i>`;
+          btn.setAttribute("title", "التبديل إلى الوضع الداكن (Dark Mode)");
+        }
+      });
+    }
 
     function loadAdminDashboard() {
       renderAdminProducts();

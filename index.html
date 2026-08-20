@@ -18,7 +18,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <script>
+    // Theme anti-flicker initializer
+    (function() {
+      const saved = localStorage.getItem('barq_theme');
+      if (saved === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      }
+    })();
+
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -26,6 +39,7 @@
               teal: '#008DA5',
               cyan: '#00D2FF',
               dark: '#0A0F1D',
+              light: '#F8FAFC',
               card: '#111827',
               gold: '#D4AF37'
             }
@@ -40,8 +54,13 @@
   </script>
 
   <style>
-    body { font-family: 'Tajawal', sans-serif; }
+    body { 
+      font-family: 'Tajawal', sans-serif; 
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
     h1, h2, h3, h4, .font-heading { font-family: 'Cairo', sans-serif; }
+    
+    /* Dark / Glass Navigation */
     .glass-nav {
       background: rgba(10, 15, 29, 0.90);
       backdrop-filter: blur(16px);
@@ -50,12 +69,106 @@
     .electric-gradient {
       background: linear-gradient(135deg, #008DA5 0%, #00D2FF 100%);
     }
+
+    /* Light Theme Styling System */
+    html.light body {
+      background-color: #F8FAFC !important;
+      color: #0F172A !important;
+    }
+    html.light .bg-brand-dark {
+      background-color: #F8FAFC !important;
+    }
+    html.light .bg-slate-950 {
+      background-color: #F1F5F9 !important;
+      color: #0F172A !important;
+    }
+    html.light .bg-slate-900,
+    html.light .bg-slate-900\/90,
+    html.light .bg-slate-900\/80,
+    html.light .bg-slate-900\/60,
+    html.light .bg-slate-900\/50,
+    html.light .bg-slate-900\/40 {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+    }
+    html.light .border-slate-800,
+    html.light .border-slate-800\/80,
+    html.light .border-slate-800\/90,
+    html.light .border-slate-800\/60,
+    html.light .border-slate-700,
+    html.light .border-slate-700\/80 {
+      border-color: #E2E8F0 !important;
+    }
+    html.light .text-white {
+      color: #0F172A !important;
+    }
+    html.light .text-slate-100 {
+      color: #0F172A !important;
+    }
+    html.light .text-slate-200 {
+      color: #1E293B !important;
+    }
+    html.light .text-slate-300 {
+      color: #334155 !important;
+    }
+    html.light .text-slate-400 {
+      color: #64748B !important;
+    }
+    html.light .text-slate-500 {
+      color: #64748B !important;
+    }
+    html.light .glass-nav {
+      background: rgba(255, 255, 255, 0.94) !important;
+      border-bottom-color: #E2E8F0 !important;
+      box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+    }
+    html.light .product-card {
+      background: #FFFFFF !important;
+      border-color: #E2E8F0 !important;
+      box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.03) !important;
+    }
+    html.light .product-card:hover {
+      border-color: #008DA5 !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 141, 165, 0.15) !important;
+    }
+    html.light #home {
+      background: linear-gradient(to bottom, #FFFFFF 0%, #F1F5F9 50%, #F8FAFC 100%) !important;
+    }
+    html.light #home .text-slate-300 {
+      color: #475569 !important;
+    }
+    html.light input, html.light select, html.light textarea {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+      border-color: #CBD5E1 !important;
+    }
+    html.light input::placeholder {
+      color: #94A3B8 !important;
+    }
+    html.light .cat-pill.bg-slate-800\/80 {
+      background-color: #E2E8F0 !important;
+      color: #334155 !important;
+    }
+    html.light .cat-pill.bg-slate-800\/80:hover {
+      background-color: #CBD5E1 !important;
+    }
+    html.light #cart-modal-container > div:last-child,
+    html.light #product-modal > div {
+      background-color: #FFFFFF !important;
+      border-color: #E2E8F0 !important;
+      color: #0F172A !important;
+    }
+    html.light .theme-toggle-btn {
+      background-color: #F1F5F9 !important;
+      border-color: #CBD5E1 !important;
+      color: #008DA5 !important;
+    }
   </style>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950 transition-colors duration-300">
 
   <!-- Top Announcement Bar -->
-  <div class="bg-slate-950 border-b border-slate-800 text-xs py-2 px-4">
+  <div class="bg-slate-950 border-b border-slate-800 text-xs py-2 px-4 transition-colors">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-4 text-slate-300">
         <span class="flex items-center gap-1.5 text-cyan-400 font-bold">
@@ -76,6 +189,12 @@
         <a href="admin.html" class="text-slate-500 hover:text-slate-300 transition text-[11px]">
           <i class="fas fa-lock text-[10px]"></i> لوحة الإدارة
         </a>
+        
+        <!-- Top theme toggle button -->
+        <button onclick="toggleTheme()" class="theme-toggle-btn text-xs text-amber-400 hover:text-amber-300 transition flex items-center gap-1 px-2 py-0.5 rounded-lg border border-slate-800 bg-slate-900" title="تبديل الوضع (فاتح / داكن)">
+          <i class="fas fa-sun text-[11px]"></i>
+          <span class="theme-label text-[10px]">داكن</span>
+        </button>
       </div>
     </div>
   </div>
@@ -101,22 +220,21 @@
         <a href="#showroom" class="hover:text-cyan-400 transition">المعرض والتواصل</a>
       </nav>
 
-      <!-- Actions (Search, Quote CTA, Cart) -->
+      <!-- Actions (Theme Switcher, Quote CTA, Cart) -->
       <div class="flex items-center gap-3">
-        <!-- Live Search -->
-        <div class="relative hidden sm:block w-48 xl:w-64">
-          <input type="text" id="search-input" placeholder="ابحث عن جهاز، شريحة..." class="w-full bg-slate-900 border border-slate-700/80 rounded-xl py-2 pr-9 pl-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
-          <i class="fas fa-search absolute right-3 top-2.5 text-slate-500 text-xs"></i>
-        </div>
-
         <!-- B2B Quote Button -->
         <a href="#b2b" class="hidden sm:inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 text-xs font-bold px-3.5 py-2.5 rounded-xl transition">
           <i class="fas fa-file-invoice"></i>
           <span>طلب تسعيرة</span>
         </a>
 
+        <!-- Main Theme Toggle Button (Light / Dark) -->
+        <button onclick="toggleTheme()" class="theme-toggle-btn w-10 h-10 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-amber-400 border border-slate-700/80 transition flex items-center justify-center shadow-md active:scale-95" title="تبديل الوضع (فاتح / داكن)">
+          <i class="fas fa-sun text-base"></i>
+        </button>
+
         <!-- Cart Button -->
-        <button onclick="toggleCart(true)" class="relative bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 p-2.5 rounded-xl shadow-lg shadow-cyan-500/20 hover:scale-105 active:scale-95 transition flex items-center justify-center">
+        <button onclick="toggleCart(true)" class="relative bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 p-2.5 rounded-xl shadow-lg shadow-cyan-500/20 hover:scale-105 active:scale-95 transition flex items-center justify-center" title="سلة المشتريات">
           <i class="fas fa-shopping-bag text-base"></i>
           <span class="cart-count absolute -top-1.5 -left-1.5 bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-dark hidden">0</span>
         </button>

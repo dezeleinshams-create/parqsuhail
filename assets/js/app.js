@@ -13,12 +13,70 @@ let currentPage = 1;
 let itemsPerPage = 20; // 20 products per page default
 
 document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
   updateCategoryPillCounts();
   applyViewModeUI();
   renderProducts();
   updateCartUI();
   setupEventListeners();
 });
+
+// ----------------- THEME MANAGEMENT (Light / Dark) -----------------
+function initTheme() {
+  const saved = localStorage.getItem("barq_theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const activeTheme = saved ? saved : (prefersDark ? "dark" : "dark"); // default to sleek dark
+  setTheme(activeTheme, false);
+}
+
+function toggleTheme() {
+  const isCurrentlyDark = document.documentElement.classList.contains("dark") || 
+                          !document.documentElement.classList.contains("light");
+  const newTheme = isCurrentlyDark ? "light" : "dark";
+  setTheme(newTheme, true);
+  showToast(newTheme === "light" ? "تم تفعيل الوضع الفاتح ☀️" : "تم تفعيل الوضع الداكن 🌙");
+}
+
+function setTheme(theme, save = true) {
+  const html = document.documentElement;
+  if (theme === "dark") {
+    html.classList.add("dark");
+    html.classList.remove("light");
+  } else {
+    html.classList.add("light");
+    html.classList.remove("dark");
+  }
+
+  if (save) {
+    localStorage.setItem("barq_theme", theme);
+  }
+
+  updateThemeToggleUI(theme);
+}
+
+function updateThemeToggleUI(theme) {
+  const buttons = document.querySelectorAll(".theme-toggle-btn");
+  buttons.forEach(btn => {
+    const isTopMini = btn.querySelector(".theme-label");
+    if (isTopMini) {
+      if (theme === "dark") {
+        btn.innerHTML = `<i class="fas fa-sun text-[11px] text-amber-400"></i><span class="theme-label text-[10px] text-slate-300">داكن</span>`;
+        btn.setAttribute("title", "التبديل إلى الوضع الفاتح");
+      } else {
+        btn.innerHTML = `<i class="fas fa-moon text-[11px] text-cyan-600"></i><span class="theme-label text-[10px] text-slate-700">فاتح</span>`;
+        btn.setAttribute("title", "التبديل إلى الوضع الداكن");
+      }
+    } else {
+      if (theme === "dark") {
+        btn.innerHTML = `<i class="fas fa-sun text-amber-400 text-base"></i>`;
+        btn.setAttribute("title", "التبديل إلى الوضع الفاتح (Light Mode)");
+      } else {
+        btn.innerHTML = `<i class="fas fa-moon text-cyan-600 text-base"></i>`;
+        btn.setAttribute("title", "التبديل إلى الوضع الداكن (Dark Mode)");
+      }
+    }
+  });
+}
 
 // Get Products from localStorage or INITIAL_PRODUCTS
 function getProducts() {
