@@ -172,8 +172,31 @@
             </div>
           </form>
 
+          <!-- Products Table Search & Stats Bar -->
+          <div class="flex items-center gap-3 mb-4">
+            <div class="relative flex-1">
+              <i class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+              <input 
+                type="text" 
+                id="admin-product-search" 
+                oninput="handleAdminSearch(this.value)" 
+                placeholder="بحث في المنتجات (99 منتج)..." 
+                class="w-full bg-slate-950 border border-slate-800 rounded-xl pr-8 pl-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500"
+              >
+            </div>
+            <select id="admin-cat-filter" onchange="handleAdminCatFilter(this.value)" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none cursor-pointer">
+              <option value="all">كل الأقسام</option>
+              <option value="thuraya">الثريا</option>
+              <option value="garmin">قارمن</option>
+              <option value="radios">لاسلكي</option>
+              <option value="accessories">ملحقات</option>
+              <option value="cards">شرائح ورصيد</option>
+              <option value="services">خدمات</option>
+            </select>
+          </div>
+
           <!-- Products Table -->
-          <div id="admin-products-list" class="space-y-3">
+          <div id="admin-products-list" class="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
             <!-- Injected by JS -->
           </div>
 
@@ -207,6 +230,9 @@
 
   <script src="assets/js/data.js"></script>
   <script>
+    let adminSearchQuery = "";
+    let adminCatFilter = "all";
+
     document.addEventListener("DOMContentLoaded", () => {
       loadAdminDashboard();
     });
@@ -216,21 +242,49 @@
       renderAdminQuotes();
     }
 
+    function handleAdminSearch(val) {
+      adminSearchQuery = val.trim().toLowerCase();
+      renderAdminProducts();
+    }
+
+    function handleAdminCatFilter(val) {
+      adminCatFilter = val;
+      renderAdminProducts();
+    }
+
     function renderAdminProducts() {
       const stored = localStorage.getItem("barq_products");
       const products = stored ? JSON.parse(stored) : INITIAL_PRODUCTS;
       
       document.getElementById("stat-products").textContent = products.length;
 
+      const filtered = products.filter(p => {
+        const matchCat = adminCatFilter === "all" || p.category === adminCatFilter;
+        const matchSearch = !adminSearchQuery || 
+          p.name.toLowerCase().includes(adminSearchQuery) || 
+          p.id.toLowerCase().includes(adminSearchQuery);
+        return matchCat && matchSearch;
+      });
+
       const container = document.getElementById("admin-products-list");
-      container.innerHTML = products.map((p, index) => `
-        <div class="flex items-center justify-between p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl gap-3">
-          <img src="${p.image}" alt="${p.name}" class="w-12 h-12 object-cover rounded-lg bg-slate-900 shrink-0" onerror="this.src='assets/images/main_logo.jpg'">
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="py-8 text-center text-slate-500 text-xs">
+            لا توجد منتجات مطابقة للبحث أو الفلتر المختار.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map((p, index) => `
+        <div class="flex items-center justify-between p-3 bg-slate-950/80 border border-slate-800 rounded-xl gap-3 hover:border-slate-700 transition">
+          <img src="${p.image}" alt="${p.name}" class="w-11 h-11 object-contain rounded-lg bg-slate-900 border border-slate-800 shrink-0 p-1" onerror="this.src='assets/images/main_logo.jpg'">
           
           <div class="flex-1 min-w-0">
             <h4 class="text-xs font-bold text-white truncate">${p.name}</h4>
             <div class="flex items-center gap-2 mt-1">
-              <span class="text-[10px] text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded">${p.categoryName || p.category}</span>
+              <span class="text-[10px] text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded font-mono">${p.id}</span>
+              <span class="text-[10px] text-slate-400">${p.categoryName || p.category}</span>
               <span class="text-xs font-mono font-bold text-white">${p.price.toLocaleString()} ر.س</span>
             </div>
           </div>

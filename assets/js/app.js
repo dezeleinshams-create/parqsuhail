@@ -1,118 +1,497 @@
 // Main JavaScript Application for Barq Suhail (www.barqsuhail.com)
+// Optimized for High-Density 99+ Products Catalog
 
 const STORE_PHONE = "966507181115";
 let cart = JSON.parse(localStorage.getItem("barq_cart")) || [];
+
+// Catalog State
 let activeCategory = "all";
 let searchQuery = "";
+let sortBy = "featured";
+let viewMode = localStorage.getItem("barq_view_mode") || "grid";
+let currentPage = 1;
+let itemsPerPage = 20; // 20 products per page default
 
 document.addEventListener("DOMContentLoaded", () => {
+  updateCategoryPillCounts();
+  applyViewModeUI();
   renderProducts();
   updateCartUI();
   setupEventListeners();
 });
 
-// Get Products from localStorage
+// Get Products from localStorage or INITIAL_PRODUCTS
 function getProducts() {
   const stored = localStorage.getItem("barq_products");
-  return stored ? JSON.parse(stored) : INITIAL_PRODUCTS;
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {
+      console.error("Error reading stored products:", e);
+    }
+  }
+  return typeof INITIAL_PRODUCTS !== "undefined" ? INITIAL_PRODUCTS : [];
 }
 
-// Render Products Grid
-function renderProducts() {
-  const container = document.getElementById("products-container");
-  if (!container) return;
-
+// Update count badges on category pills
+function updateCategoryPillCounts() {
   const products = getProducts();
-  const filtered = products.filter(p => {
+  const counts = {
+    all: products.length,
+    thuraya: 0,
+    garmin: 0,
+    radios: 0,
+    accessories: 0,
+    cards: 0,
+    services: 0
+  };
+
+  products.forEach(p => {
+    if (counts[p.category] !== undefined) {
+      counts[p.category]++;
+    }
+  });
+
+  for (const [key, count] of Object.entries(counts)) {
+    const el = document.getElementById(`count-${key}`);
+    if (el) el.textContent = count;
+  }
+
+  const badgeTotal = document.getElementById("catalog-badge-total");
+  if (badgeTotal) badgeTotal.textContent = `${products.length} منتج معتمد`;
+}
+
+// Filter and Sort Products
+function getFilteredAndSortedProducts() {
+  const products = getProducts();
+
+  // 1. Filter by category & search query
+  let filtered = products.filter(p => {
     const matchCat = activeCategory === "all" || p.category === activeCategory;
-    const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                        p.shortDesc.toLowerCase().includes(searchQuery.toLowerCase());
+    const query = searchQuery.trim().toLowerCase();
+    const matchSearch = !query || 
+      p.name.toLowerCase().includes(query) || 
+      (p.nameEn && p.nameEn.toLowerCase().includes(query)) ||
+      (p.shortDesc && p.shortDesc.toLowerCase().includes(query)) ||
+      (p.id && p.id.toLowerCase().includes(query));
     return matchCat && matchSearch;
   });
 
-  if (filtered.length === 0) {
+  // 2. Sort
+  switch (sortBy) {
+    case "price-asc":
+      filtered.sort((a, b) => a.price - b.price);
+      break;
+    case "price-desc":
+      filtered.sort((a, b) => b.price - a.price);
+      break;
+    case "rating-desc":
+      filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      break;
+    case "name-asc":
+      filtered.sort((a, b) => a.name.localeCompare(b.name, "ar"));
+      break;
+    case "featured":
+    default:
+      // Keep natural order or prioritizes badges
+      filtered.sort((a, b) => (b.badge ? 1 : 0) - (a.badge ? 1 : 0));
+      break;
+  }
+
+  return filtered;
+}
+
+// Render Products Grid / List with Pagination
+function renderProducts() {
+  const container = document.getElementById("products-container");
+  const countText = document.getElementById("results-count-text");
+  const paginationContainer = document.getElementById("pagination-container");
+  if (!container) return;
+
+  const allFiltered = getFilteredAndSortedProducts();
+  const totalItems = allFiltered.length;
+
+  // Pagination calculation
+  const effectivePerPage = itemsPerPage === "all" ? totalItems : parseInt(itemsPerPage, 10);
+  const totalPages = Math.max(1, Math.ceil(totalItems / effectivePerPage));
+
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  const startIndex = (currentPage - 1) * effectivePerPage;
+  const endIndex = itemsPerPage === "all" ? totalItems : Math.min(startIndex + effectivePerPage, totalItems);
+  const displayedProducts = allFiltered.slice(startIndex, endIndex);
+
+  // Update Status bar text
+  if (countText) {
+    if (totalItems === 0) {
+      countText.innerHTML = `<span class="text-rose-400 font-bold">لا توجد نتائج مطابقة</span>`;
+    } else {
+      countText.innerHTML = `عرض <span class="text-cyan-400 font-bold font-mono">${startIndex + 1} - ${endIndex}</span> من أصل <span class="text-white font-bold font-mono">${totalItems}</span> منتج`;
+    }
+  }
+
+  // Active filter tags
+  updateActiveFilterTags(totalItems);
+
+  // Empty state
+  if (displayedProducts.length === 0) {
+    container.className = "w-full py-16 text-center text-slate-400 bg-slate-900/40 border border-slate-800 rounded-3xl";
     container.innerHTML = `
-      <div class="col-span-full py-12 text-center text-slate-400">
-        <i class="fas fa-search text-4xl mb-3 text-cyan-500/50"></i>
-        <p class="text-lg">لا توجد منتجات مطابقة لبحثك في هذا القسم حالياً.</p>
+      <div class="max-w-md mx-auto space-y-3">
+        <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl mx-auto border border-cyan-500/20">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">لم نجد أجهزة مطابقة لبحثك</h3>
+        <p class="text-xs text-slate-400">جرب البحث بكلمات أخرى أو اختر قسماً مختلفاً من الكبسولات أعلاه.</p>
+        <button onclick="resetFilters()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-lg shadow-cyan-500/20">
+          إعادة ضبط وتصفح كل المنتجات
+        </button>
       </div>
     `;
+    if (paginationContainer) paginationContainer.innerHTML = "";
     return;
   }
 
-  container.innerHTML = filtered.map(p => `
-    <div class="product-card group relative bg-slate-900/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 shadow-lg shadow-black/40 flex flex-col justify-between">
+  // Apply layout class
+  if (viewMode === "list") {
+    container.className = "flex flex-col gap-3 transition-all";
+    container.innerHTML = displayedProducts.map(p => renderListCard(p)).join("");
+  } else {
+    container.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 transition-all";
+    container.innerHTML = displayedProducts.map(p => renderGridCard(p)).join("");
+  }
+
+  // Render Pagination
+  renderPaginationUI(totalPages, totalItems);
+}
+
+// Render Compact Grid Card (High-density design)
+function renderGridCard(p) {
+  return `
+    <div class="product-card group relative bg-slate-900/90 border border-slate-800/90 hover:border-cyan-500/50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-md hover:shadow-xl hover:shadow-cyan-500/10 flex flex-col justify-between">
       
-      <!-- Badge Top -->
-      <div class="absolute top-3 right-3 z-10 flex flex-col gap-1.5">
-        ${p.badge ? `<span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs font-bold px-2.5 py-1 rounded-full backdrop-blur-md">${p.badge}</span>` : ''}
+      <!-- Top Action & Badges Overlay -->
+      <div class="absolute top-2.5 inset-x-2.5 z-10 flex items-start justify-between pointer-events-none">
+        ${p.badge ? `<span class="bg-slate-950/80 text-cyan-300 border border-cyan-500/40 text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-lg backdrop-blur-md shadow-sm">${p.badge}</span>` : '<span></span>'}
+        <button onclick="openProductModal('${p.id}')" class="pointer-events-auto w-7 h-7 rounded-lg bg-slate-950/80 hover:bg-cyan-500 text-slate-300 hover:text-slate-950 flex items-center justify-center text-xs transition border border-slate-800 backdrop-blur-md" title="نظرة سريعة">
+          <i class="fas fa-eye"></i>
+        </button>
       </div>
 
-      <!-- Product Image -->
-      <div class="relative h-56 w-full bg-slate-950 overflow-hidden cursor-pointer" onclick="openProductModal('${p.id}')">
-        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='assets/images/main_logo.jpg'; this.classList.add('p-8')">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+      <!-- Image Container (Compact h-36 to h-40) -->
+      <div class="relative h-36 sm:h-40 w-full bg-slate-950 overflow-hidden cursor-pointer flex items-center justify-center p-2" onclick="openProductModal('${p.id}')">
+        <img 
+          src="${p.image}" 
+          alt="${p.name}" 
+          class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500" 
+          onerror="this.src='assets/images/main_logo.jpg'; this.classList.add('p-4')"
+          loading="lazy"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-60"></div>
       </div>
 
-      <!-- Product Details -->
-      <div class="p-5 flex-1 flex flex-col justify-between">
+      <!-- Card Details (Compact padding p-3 sm:p-3.5) -->
+      <div class="p-3 sm:p-3.5 flex-1 flex flex-col justify-between bg-slate-900/60">
         <div>
-          <div class="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-            <span class="text-cyan-400 font-medium">${p.categoryName}</span>
-            <div class="flex items-center text-amber-400">
-              <i class="fas fa-star text-xs ml-1"></i>
-              <span>${p.rating}</span>
+          <!-- Category & Rating Row -->
+          <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+            <span class="text-cyan-400 font-medium truncate max-w-[70%]">${p.categoryName || 'أجهزة معتمدة'}</span>
+            <div class="flex items-center text-amber-400 font-mono text-[10px] shrink-0">
+              <i class="fas fa-star text-[9px] ml-0.5"></i>
+              <span>${p.rating || '5.0'}</span>
             </div>
           </div>
 
-          <h3 class="font-bold text-white text-base leading-snug group-hover:text-cyan-300 transition-colors mb-2 cursor-pointer" onclick="openProductModal('${p.id}')">
+          <!-- Product Title (Clamped to 2 lines for uniform height) -->
+          <h3 class="font-bold text-white text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-cyan-300 transition-colors mb-2 min-h-[2.5rem] cursor-pointer" onclick="openProductModal('${p.id}')" title="${p.name}">
             ${p.name}
           </h3>
-
-          <p class="text-slate-400 text-xs line-clamp-2 mb-4 leading-relaxed">
-            ${p.shortDesc}
-          </p>
         </div>
 
-        <!-- Price and Add to Cart -->
-        <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between mt-auto">
-          <div>
-            <div class="text-xl font-extrabold text-white font-mono flex items-baseline gap-1">
-              ${p.price.toLocaleString()} <span class="text-xs font-normal text-cyan-400 font-sans">ر.س</span>
+        <!-- Price & Add to Cart Row -->
+        <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between mt-auto gap-2">
+          <div class="min-w-0">
+            <div class="text-sm sm:text-base font-extrabold text-white font-mono flex items-baseline gap-0.5">
+              ${p.price.toLocaleString()} <span class="text-[10px] font-normal text-cyan-400 font-sans">ر.س</span>
             </div>
-            ${p.oldPrice ? `<span class="text-xs text-slate-500 line-through">${p.oldPrice.toLocaleString()} ر.س</span>` : ''}
+            ${p.oldPrice ? `<span class="text-[10px] text-slate-500 line-through font-mono block truncate">${p.oldPrice.toLocaleString()} ر.س</span>` : ''}
           </div>
 
-          <div class="flex items-center gap-2">
-            <button onclick="openProductModal('${p.id}')" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-sm transition" title="عرض التفاصيل">
-              <i class="fas fa-eye"></i>
-            </button>
-            <button onclick="addToCart('${p.id}')" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold px-3.5 py-2.5 rounded-xl text-xs flex items-center gap-1.5 shadow-lg shadow-cyan-500/20 transition active:scale-95">
-              <i class="fas fa-cart-plus"></i>
-              <span>إضافة للسلة</span>
-            </button>
-          </div>
+          <button onclick="addToCart('${p.id}')" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold px-2.5 sm:px-3 py-1.5 rounded-xl text-xs flex items-center gap-1 shadow-md shadow-cyan-500/20 transition active:scale-95 shrink-0" title="إضافة للسلة">
+            <i class="fas fa-cart-plus text-[11px]"></i>
+            <span class="hidden sm:inline text-[11px]">سلة</span>
+          </button>
         </div>
 
       </div>
 
     </div>
-  `).join("");
+  `;
 }
 
-// Filter Category
+// Render Compact List Card (Horizontal fast comparison layout)
+function renderListCard(p) {
+  return `
+    <div class="product-card group bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-3 sm:p-4 transition-all duration-200 hover:-translate-y-0.5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+      
+      <div class="flex items-center gap-3.5 w-full sm:w-auto flex-1 min-w-0">
+        <!-- Thumbnail -->
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden shrink-0 flex items-center justify-center p-1 cursor-pointer" onclick="openProductModal('${p.id}')">
+          <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition" onerror="this.src='assets/images/main_logo.jpg'">
+        </div>
+
+        <!-- Info -->
+        <div class="flex-1 min-w-0 space-y-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-md border border-cyan-500/20">${p.categoryName}</span>
+            ${p.badge ? `<span class="text-[10px] font-bold text-slate-300 bg-slate-800 px-2 py-0.5 rounded-md">${p.badge}</span>` : ''}
+            <div class="flex items-center text-amber-400 font-mono text-xs">
+              <i class="fas fa-star text-[10px] ml-1"></i>
+              <span>${p.rating}</span>
+            </div>
+          </div>
+
+          <h3 class="font-bold text-white text-sm sm:text-base truncate group-hover:text-cyan-300 transition-colors cursor-pointer" onclick="openProductModal('${p.id}')">
+            ${p.name}
+          </h3>
+
+          <p class="text-xs text-slate-400 line-clamp-1 hidden md:block">${p.shortDesc}</p>
+        </div>
+      </div>
+
+      <!-- Price & Actions Side -->
+      <div class="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800 shrink-0">
+        <div class="text-left sm:text-right">
+          <div class="text-base sm:text-lg font-extrabold text-white font-mono">
+            ${p.price.toLocaleString()} <span class="text-xs font-normal text-cyan-400 font-sans">ر.س</span>
+          </div>
+          ${p.oldPrice ? `<span class="text-xs text-slate-500 line-through font-mono">${p.oldPrice.toLocaleString()} ر.س</span>` : ''}
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openProductModal('${p.id}')" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs transition" title="عرض التفاصيل">
+            <i class="fas fa-eye"></i>
+          </button>
+          <button onclick="addToCart('${p.id}')" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-cyan-500/20 transition active:scale-95">
+            <i class="fas fa-cart-plus"></i>
+            <span>إضافة للسلة</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+// Render Pagination Controls
+function renderPaginationUI(totalPages, totalItems) {
+  const container = document.getElementById("pagination-container");
+  if (!container) return;
+
+  if (totalPages <= 1 || itemsPerPage === "all") {
+    container.innerHTML = `
+      <div class="text-xs text-slate-500">تم عرض جميع المنتجات (${totalItems})</div>
+      <div class="flex items-center gap-2">
+        <button onclick="scrollToProductsTop()" class="text-xs text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1">
+          <i class="fas fa-arrow-up"></i> العودة للأعلى
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  let buttonsHtml = "";
+
+  // Prev Button
+  buttonsHtml += `
+    <button 
+      onclick="goToPage(${currentPage - 1})" 
+      ${currentPage === 1 ? 'disabled class="opacity-40 cursor-not-allowed px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-500 text-xs flex items-center gap-1"' : 'class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-bold transition flex items-center gap-1"'}
+    >
+      <i class="fas fa-chevron-right"></i>
+      <span>السابق</span>
+    </button>
+  `;
+
+  // Page Numbers
+  const maxButtons = 5;
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+  if (endPage - startPage < maxButtons - 1) {
+    startPage = Math.max(1, endPage - maxButtons + 1);
+  }
+
+  if (startPage > 1) {
+    buttonsHtml += `<button onclick="goToPage(1)" class="w-8 h-8 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-mono font-bold transition">1</button>`;
+    if (startPage > 2) buttonsHtml += `<span class="text-slate-600 px-1 font-mono">...</span>`;
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    const isActive = i === currentPage;
+    buttonsHtml += `
+      <button 
+        onclick="goToPage(${i})" 
+        class="w-8 h-8 rounded-xl text-xs font-mono font-bold transition ${isActive ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/30' : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800'}"
+      >
+        ${i}
+      </button>
+    `;
+  }
+
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) buttonsHtml += `<span class="text-slate-600 px-1 font-mono">...</span>`;
+    buttonsHtml += `<button onclick="goToPage(${totalPages})" class="w-8 h-8 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-mono font-bold transition">${totalPages}</button>`;
+  }
+
+  // Next Button
+  buttonsHtml += `
+    <button 
+      onclick="goToPage(${currentPage + 1})" 
+      ${currentPage === totalPages ? 'disabled class="opacity-40 cursor-not-allowed px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-500 text-xs flex items-center gap-1"' : 'class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 text-xs font-bold transition flex items-center gap-1"'}
+    >
+      <span>التالي</span>
+      <i class="fas fa-chevron-left"></i>
+    </button>
+  `;
+
+  container.innerHTML = `
+    <div class="text-xs text-slate-400 font-mono">
+      صفحة <span class="text-white font-bold">${currentPage}</span> من <span class="text-white font-bold">${totalPages}</span>
+    </div>
+    <div class="flex items-center gap-1.5 flex-wrap justify-center">
+      ${buttonsHtml}
+    </div>
+  `;
+}
+
+// Navigation and Filter handlers
+function goToPage(page) {
+  currentPage = page;
+  renderProducts();
+  scrollToProductsTop();
+}
+
+function scrollToProductsTop() {
+  const section = document.getElementById("products");
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 function setCategory(cat, btn) {
   activeCategory = cat;
+  currentPage = 1;
+
   document.querySelectorAll(".cat-pill").forEach(el => {
     el.classList.remove("bg-cyan-500", "text-slate-950", "shadow-cyan-500/30");
     el.classList.add("bg-slate-800/80", "text-slate-300");
   });
-  btn.classList.add("bg-cyan-500", "text-slate-950", "shadow-cyan-500/30");
-  btn.classList.remove("bg-slate-800/80", "text-slate-300");
+
+  if (btn) {
+    btn.classList.add("bg-cyan-500", "text-slate-950", "shadow-cyan-500/30");
+    btn.classList.remove("bg-slate-800/80", "text-slate-300");
+  }
+
   renderProducts();
 }
 
-// Add to Cart
+function changeSort(val) {
+  sortBy = val;
+  currentPage = 1;
+  renderProducts();
+}
+
+function changeItemsPerPage(val) {
+  itemsPerPage = val;
+  currentPage = 1;
+  renderProducts();
+}
+
+function setViewMode(mode) {
+  viewMode = mode;
+  localStorage.setItem("barq_view_mode", mode);
+  applyViewModeUI();
+  renderProducts();
+}
+
+function applyViewModeUI() {
+  const btnGrid = document.getElementById("btn-view-grid");
+  const btnList = document.getElementById("btn-view-list");
+  if (!btnGrid || !btnList) return;
+
+  if (viewMode === "list") {
+    btnList.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20";
+    btnGrid.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-400 hover:text-white";
+  } else {
+    btnGrid.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20";
+    btnList.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-400 hover:text-white";
+  }
+}
+
+function clearSearch() {
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) {
+    searchInput.value = "";
+    searchQuery = "";
+  }
+  const clearBtn = document.getElementById("search-clear-btn");
+  if (clearBtn) clearBtn.classList.add("hidden");
+  currentPage = 1;
+  renderProducts();
+}
+
+function resetFilters() {
+  searchQuery = "";
+  activeCategory = "all";
+  sortBy = "featured";
+
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) searchInput.value = "";
+
+  const sortSelect = document.getElementById("sort-select");
+  if (sortSelect) sortSelect.value = "featured";
+
+  const firstCatBtn = document.querySelector(".cat-pill");
+  setCategory("all", firstCatBtn);
+}
+
+function updateActiveFilterTags(totalCount) {
+  const container = document.getElementById("active-filter-tags");
+  if (!container) return;
+
+  let tags = [];
+  if (activeCategory !== "all") {
+    const catMap = {
+      thuraya: "أجهزة الثريا",
+      garmin: "قارمن والملاحة",
+      radios: "أجهزة اللاسلكي",
+      accessories: "الملحقات والهوائيات",
+      cards: "الشرائح والرصيد",
+      services: "خدمات التحديث"
+    };
+    tags.push(`
+      <span class="inline-flex items-center gap-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded-lg text-[11px]">
+        قسم: ${catMap[activeCategory] || activeCategory}
+        <button onclick="setCategory('all', document.querySelector('.cat-pill'))" class="hover:text-white mr-1">&times;</button>
+      </span>
+    `);
+  }
+
+  if (searchQuery.trim()) {
+    tags.push(`
+      <span class="inline-flex items-center gap-1 bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-lg text-[11px]">
+        بحث: "${searchQuery}"
+        <button onclick="clearSearch()" class="hover:text-white mr-1">&times;</button>
+      </span>
+    `);
+  }
+
+  container.innerHTML = tags.join("");
+}
+
+// ----------------- CART SYSTEM -----------------
 function addToCart(productId) {
   const products = getProducts();
   const product = products.find(p => p.id === productId);
@@ -127,11 +506,10 @@ function addToCart(productId) {
 
   saveCart();
   updateCartUI();
-  toggleCart(true); // Open smoothly on add
+  toggleCart(true); // Open drawer smoothly on add
   showToast(`تمت إضافة "${product.name}" إلى السلة 🛒`);
 }
 
-// Update Cart Quantity
 function updateQty(productId, delta) {
   const item = cart.find(i => i.id === productId);
   if (!item) return;
@@ -145,7 +523,6 @@ function updateQty(productId, delta) {
   updateCartUI();
 }
 
-// Remove from Cart
 function removeFromCart(productId) {
   cart = cart.filter(i => i.id !== productId);
   saveCart();
@@ -157,7 +534,6 @@ function saveCart() {
   localStorage.setItem("barq_cart", JSON.stringify(cart));
 }
 
-// Update Cart UI
 function updateCartUI() {
   const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
   const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
@@ -184,7 +560,7 @@ function updateCartUI() {
     } else {
       itemsContainer.innerHTML = cart.map(item => `
         <div class="flex items-center gap-3 p-3.5 bg-slate-950 border border-slate-800 rounded-2xl">
-          <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl bg-slate-900 border border-slate-800 shrink-0" onerror="this.src='assets/images/main_logo.jpg'">
+          <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-contain rounded-xl bg-slate-900 border border-slate-800 shrink-0 p-1" onerror="this.src='assets/images/main_logo.jpg'">
           
           <div class="flex-1 min-w-0">
             <h4 class="text-xs font-bold text-white leading-tight mb-1 truncate">${item.name}</h4>
@@ -210,21 +586,19 @@ function updateCartUI() {
   if (totalEl) totalEl.textContent = `${totalPrice.toLocaleString()} ر.س`;
 }
 
-// Toggle Cart Drawer (Guaranteed Rock-Solid Open & Close)
 function toggleCart(show) {
   const container = document.getElementById("cart-modal-container");
   if (!container) return;
 
   if (show) {
     container.classList.remove("hidden");
-    document.body.style.overflow = "hidden"; // prevent background scroll
+    document.body.style.overflow = "hidden";
   } else {
     container.classList.add("hidden");
     document.body.style.overflow = "auto";
   }
 }
 
-// Checkout to WhatsApp
 function checkoutViaWhatsApp() {
   if (cart.length === 0) {
     showToast("سلتك فارغة! يرجى إضافة منتجات أولاً.");
@@ -244,7 +618,7 @@ function checkoutViaWhatsApp() {
   window.open(url, "_blank");
 }
 
-// Submit B2B Request a Quote Form
+// ----------------- B2B QUOTE FORM -----------------
 function submitQuoteForm(e) {
   e.preventDefault();
   const form = e.target;
@@ -285,7 +659,7 @@ function submitQuoteForm(e) {
   showToast("تم استلام طلب عرض السعر وجاري تحويلك للواتساب!");
 }
 
-// Product Quick View Modal
+// ----------------- QUICK VIEW MODAL -----------------
 function openProductModal(productId) {
   const products = getProducts();
   const p = products.find(i => i.id === productId);
@@ -297,24 +671,28 @@ function openProductModal(productId) {
 
   content.innerHTML = `
     <div class="grid md:grid-cols-2 gap-6 p-6">
-      <div class="h-72 md:h-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800">
-        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
+      <div class="h-64 sm:h-80 md:h-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center p-4">
+        <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain" onerror="this.src='assets/images/main_logo.jpg'">
       </div>
       <div class="flex flex-col justify-between">
         <div>
-          <span class="text-xs text-cyan-400 font-bold bg-cyan-500/10 px-2.5 py-1 rounded-full border border-cyan-500/20">${p.categoryName}</span>
-          <h2 class="text-xl font-bold text-white mt-2">${p.name}</h2>
-          <p class="text-slate-400 text-xs mt-1 font-mono">${p.nameEn}</p>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs text-cyan-400 font-bold bg-cyan-500/10 px-2.5 py-1 rounded-full border border-cyan-500/20">${p.categoryName}</span>
+            ${p.badge ? `<span class="text-xs text-slate-300 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700">${p.badge}</span>` : ''}
+          </div>
+          <h2 class="text-lg sm:text-xl font-bold text-white">${p.name}</h2>
+          <p class="text-slate-400 text-xs mt-1 font-mono">${p.nameEn || ''}</p>
 
           <div class="my-4 text-2xl font-black text-white font-mono flex items-baseline gap-1">
             ${p.price.toLocaleString()} <span class="text-sm font-normal text-cyan-400">ريال سعودي</span>
+            ${p.oldPrice ? `<span class="text-xs text-slate-500 line-through mr-2 font-mono">${p.oldPrice.toLocaleString()} ر.س</span>` : ''}
           </div>
 
           <p class="text-slate-300 text-xs leading-relaxed mb-4">${p.shortDesc}</p>
 
           <div class="space-y-1.5 mb-6">
             <h4 class="text-xs font-bold text-white">المواصفات والضمان:</h4>
-            ${p.specs.map(s => `
+            ${(p.specs || []).map(s => `
               <div class="flex items-center gap-2 text-xs text-slate-300">
                 <i class="fas fa-check-circle text-cyan-400 text-[10px]"></i>
                 <span>${s}</span>
@@ -344,7 +722,7 @@ function closeModal() {
   if (modal) modal.classList.add("hidden");
 }
 
-// Toast Notification
+// ----------------- TOAST NOTIFICATIONS -----------------
 function showToast(message) {
   let toast = document.getElementById("barq-toast");
   if (!toast) {
@@ -362,12 +740,18 @@ function showToast(message) {
   }, 3500);
 }
 
-// Event Listeners
+// ----------------- EVENT LISTENERS -----------------
 function setupEventListeners() {
   const searchInput = document.getElementById("search-input");
+  const clearBtn = document.getElementById("search-clear-btn");
+
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       searchQuery = e.target.value;
+      if (clearBtn) {
+        clearBtn.classList.toggle("hidden", searchQuery.length === 0);
+      }
+      currentPage = 1;
       renderProducts();
     });
   }

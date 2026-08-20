@@ -242,29 +242,132 @@
     </div>
   </section>
 
-  <!-- Interactive Products Catalog -->
-  <section id="products" class="py-16 bg-brand-dark">
+  <!-- Interactive Products Catalog (Optimized for 99 Products) -->
+  <section id="products" class="py-12 sm:py-16 bg-brand-dark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+      <!-- Catalog Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
         <div>
-          <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider font-mono">PRODUCT CATALOG</span>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider font-mono">PRODUCT CATALOG</span>
+            <span id="catalog-badge-total" class="bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-[11px] font-mono font-bold px-2 py-0.5 rounded-full">99 منتج معتمد</span>
+          </div>
           <h2 class="text-2xl sm:text-3xl font-black font-heading text-white mt-1">كتالوج الأجهزة والمنتجات المعتمدة</h2>
-          <p class="text-slate-400 text-xs sm:text-sm mt-1">اختر من نخبة أجهزة الاتصالات الفضائية والملاحة البرية والبحرية</p>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1">تصفح أجهزة الثريا، أجهزة اللاسلكي المرخصة CST، وأجهزة وخرائط قارمن بأفضل الأسعار</p>
         </div>
 
-        <div class="flex flex-wrap gap-2">
-          <button onclick="setCategory('all', this)" class="cat-pill bg-cyan-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-md shadow-cyan-500/30">الكل</button>
-          <button onclick="setCategory('thuraya', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">أجهزة الثريا</button>
-          <button onclick="setCategory('garmin', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">قارمن والملاحة</button>
-          <button onclick="setCategory('radios', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">أجهزة اللاسلكي</button>
-          <button onclick="setCategory('cards', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">الشرائح والرصيد</button>
-          <button onclick="setCategory('services', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">خدمات التحديث</button>
+        <!-- View Switcher & Per Page Controls -->
+        <div class="flex items-center gap-3">
+          <!-- View Switcher -->
+          <div class="bg-slate-900 border border-slate-800 p-1 rounded-xl flex items-center gap-1">
+            <button id="btn-view-grid" onclick="setViewMode('grid')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20" title="عرض الشبكة المدمجة">
+              <i class="fas fa-grip-vertical"></i>
+              <span class="hidden sm:inline">شبكة</span>
+            </button>
+            <button id="btn-view-list" onclick="setViewMode('list')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-slate-400 hover:text-white" title="عرض القائمة السريعة">
+              <i class="fas fa-list"></i>
+              <span class="hidden sm:inline">قائمة</span>
+            </button>
+          </div>
+
+          <!-- Items Per Page -->
+          <div class="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl">
+            <span>عرض:</span>
+            <select id="items-per-page-select" onchange="changeItemsPerPage(this.value)" class="bg-transparent text-cyan-400 font-mono font-bold text-xs focus:outline-none cursor-pointer">
+              <option value="20" class="bg-slate-900 text-white">20 منتج</option>
+              <option value="40" class="bg-slate-900 text-white">40 منتج</option>
+              <option value="60" class="bg-slate-900 text-white">60 منتج</option>
+              <option value="all" class="bg-slate-900 text-white">عرض الكل (99)</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Rendered dynamically -->
+      <!-- Advanced Filter & Search Toolbar -->
+      <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-3 sm:p-4 mb-6 shadow-xl space-y-3">
+        
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+          <!-- Search Bar (Takes 7 cols on desktop) -->
+          <div class="md:col-span-7 relative">
+            <i class="fas fa-search absolute right-3.5 top-1/2 -translate-y-1/2 text-cyan-400/70 text-xs"></i>
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="ابحث بالاسم، الموديل، الماركة (مثل: XT-PRO, Garmin 67, آيكوم, شريحة)..." 
+              class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl pr-9 pl-9 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 transition focus:outline-none"
+            >
+            <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs">
+              <i class="fas fa-times-circle"></i>
+            </button>
+          </div>
+
+          <!-- Sort Dropdown (Takes 5 cols on desktop) -->
+          <div class="md:col-span-5 flex items-center gap-2">
+            <label class="text-xs text-slate-400 whitespace-nowrap shrink-0 flex items-center gap-1">
+              <i class="fas fa-arrow-down-short-wide text-cyan-400"></i>
+              <span>ترتيب:</span>
+            </label>
+            <select id="sort-select" onchange="changeSort(this.value)" class="w-full bg-slate-950 border border-slate-800 focus:border-cyan-500 text-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none cursor-pointer">
+              <option value="featured">المميز والأكثر طلباً ⭐</option>
+              <option value="price-asc">السعر: من الأقل للأعلى ⬆</option>
+              <option value="price-desc">السعر: من الأعلى للأقل ⬇</option>
+              <option value="rating-desc">التقييم: الأعلى تقييماً 🔥</option>
+              <option value="name-asc">الاسم: أ إلى ي</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Category Filter Pills (With counters) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar text-xs">
+          <button onclick="setCategory('all', this)" class="cat-pill shrink-0 bg-cyan-500 text-slate-950 font-bold px-3.5 py-1.5 rounded-xl transition shadow-md shadow-cyan-500/30 flex items-center gap-1.5">
+            <span>الكل</span>
+            <span class="cat-count bg-slate-950/20 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-all">99</span>
+          </button>
+          <button onclick="setCategory('thuraya', this)" class="cat-pill shrink-0 bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5">
+            <span>أجهزة الثريا</span>
+            <span class="cat-count bg-slate-950/40 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-thuraya">0</span>
+          </button>
+          <button onclick="setCategory('garmin', this)" class="cat-pill shrink-0 bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5">
+            <span>قارمن والملاحة</span>
+            <span class="cat-count bg-slate-950/40 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-garmin">0</span>
+          </button>
+          <button onclick="setCategory('radios', this)" class="cat-pill shrink-0 bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5">
+            <span>أجهزة اللاسلكي</span>
+            <span class="cat-count bg-slate-950/40 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-radios">0</span>
+          </button>
+          <button onclick="setCategory('accessories', this)" class="cat-pill shrink-0 bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5">
+            <span>الملحقات والهوائيات</span>
+            <span class="cat-count bg-slate-950/40 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-accessories">0</span>
+          </button>
+          <button onclick="setCategory('cards', this)" class="cat-pill shrink-0 bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5">
+            <span>الشرائح والرصيد</span>
+            <span class="cat-count bg-slate-950/40 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-cards">0</span>
+          </button>
+          <button onclick="setCategory('services', this)" class="cat-pill shrink-0 bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5">
+            <span>خدمات التحديث</span>
+            <span class="cat-count bg-slate-950/40 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-services">0</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Catalog Active Status Bar -->
+      <div class="flex items-center justify-between text-xs text-slate-400 mb-4 px-1">
+        <div id="results-count-text" class="font-mono">
+          جاري تجهيز المنتجات...
+        </div>
+        <div id="active-filter-tags" class="flex items-center gap-2"></div>
+      </div>
+
+      <!-- Dynamic Products Container (High-Density Multi-Column Grid or List) -->
+      <div id="products-container" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 transition-all">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+
+      <!-- Dynamic Pagination Controls Bar -->
+      <div id="pagination-container" class="mt-10 pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4">
+        <!-- Rendered dynamically via app.js -->
       </div>
 
     </div>
