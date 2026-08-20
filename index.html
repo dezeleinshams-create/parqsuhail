@@ -163,7 +163,26 @@
       border-color: #CBD5E1 !important;
       color: #008DA5 !important;
     }
+
+    /* ===== HIDE SCROLLBAR ON CATEGORY PILLS BAR ===== */
+    /* Hide scrollbar for Chrome, Safari, Edge */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+    /* Hide scrollbar for Firefox */
+    .no-scrollbar {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    /* Global horizontal scrollbar hide for pills containers */
+    .cat-pills-bar::-webkit-scrollbar { display: none; height: 0; }
+    .cat-pills-bar { scrollbar-width: none; -ms-overflow-style: none; }
+    #cat-pills-bar::-webkit-scrollbar { display: none !important; height: 0 !important; }
+    #cat-pills-bar { scrollbar-width: none !important; -ms-overflow-style: none !important; }
   </style>
+
 </head>
 <body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950 transition-colors duration-300">
 
@@ -435,9 +454,8 @@
             </select>
           </div>
         </div>
-
         <!-- Category Filter Pills (With counters) -->
-        <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar text-xs">
+        <div class="flex items-center gap-2 overflow-x-auto text-xs" style="padding-top:4px;padding-bottom:4px;scrollbar-width:none;-ms-overflow-style:none" id="cat-pills-bar">
           <button onclick="setCategory('all', this)" class="cat-pill shrink-0 bg-cyan-500 text-slate-950 font-bold px-3.5 py-1.5 rounded-xl transition shadow-md shadow-cyan-500/30 flex items-center gap-1.5">
             <span>🔘 الكل</span>
             <span class="cat-count bg-slate-950/20 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-all">0</span>
@@ -467,6 +485,7 @@
             <span class="cat-count bg-slate-950/40 px-1.5 py-0.2 rounded-md font-mono text-[10px]" id="count-services">0</span>
           </button>
         </div>
+
 
       </div>
 
