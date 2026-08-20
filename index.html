@@ -43,7 +43,7 @@
     body { font-family: 'Tajawal', sans-serif; }
     h1, h2, h3, h4, .font-heading { font-family: 'Cairo', sans-serif; }
     .glass-nav {
-      background: rgba(10, 15, 29, 0.85);
+      background: rgba(10, 15, 29, 0.90);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
@@ -84,17 +84,10 @@
   <header class="sticky top-0 z-40 glass-nav border-b border-slate-800/80 transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
       
-      <!-- Brand Logo -->
+      <!-- Exact Official Brand Logo from Client Card -->
       <a href="index.html" class="flex items-center gap-3 group">
-        <div class="w-12 h-12 rounded-xl bg-white p-1 border border-cyan-500/30 flex items-center justify-center overflow-hidden shadow-lg shadow-cyan-500/10 group-hover:border-cyan-400 transition">
-          <img src="assets/images/main_logo.jpg" alt="برق سهيل" class="w-full h-full object-contain">
-        </div>
-        <div>
-          <div class="flex items-center gap-1.5">
-            <span class="font-heading font-black text-xl text-white tracking-tight">برق سهيل</span>
-            <i class="fas fa-bolt text-cyan-400 text-sm animate-pulse"></i>
-          </div>
-          <span class="text-[10px] text-slate-400 tracking-wider block font-mono">BARQ SUHAIL TRADING</span>
+        <div class="h-14 py-1 px-3 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-cyan-500/10 border border-slate-200 group-hover:border-cyan-400 transition">
+          <img src="assets/images/official_logo_white.png" alt="مؤسسة برق سهيل التجارية" class="h-full w-auto object-contain">
         </div>
       </a>
 
@@ -141,12 +134,19 @@
         
         <div class="lg:col-span-7 space-y-6 text-center lg:text-right">
           
-          <div class="inline-flex items-center gap-2 bg-slate-800/90 border border-cyan-500/40 px-3.5 py-1.5 rounded-full text-xs font-bold text-cyan-300 shadow-md">
-            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-            الوكيل والموزع المعتمد بالمنطقة الشرقية والمملكة
+          <!-- Official Logo Showcase on Hero -->
+          <div class="inline-block bg-white p-3 sm:p-4 rounded-2xl border-2 border-cyan-500/50 shadow-2xl shadow-cyan-500/20">
+            <img src="assets/images/official_logo_white.png" alt="شعار برق سهيل الأصلي" class="h-16 sm:h-20 w-auto object-contain mx-auto lg:mx-0">
           </div>
 
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black font-heading text-white leading-tight">
+          <div class="block">
+            <span class="inline-flex items-center gap-2 bg-slate-800/90 border border-cyan-500/40 px-3.5 py-1.5 rounded-full text-xs font-bold text-cyan-300 shadow-md">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+              الوكيل والموزع المعتمد بالمنطقة الشرقية والمملكة
+            </span>
+          </div>
+
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black font-heading text-white leading-tight">
             حلول <span class="text-transparent bg-clip-text electric-gradient">الاتصالات الفضائية واللاسلكية</span> والملاحة في المملكة
           </h1>
 
@@ -486,9 +486,8 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
         
         <div class="space-y-3">
-          <div class="flex items-center gap-2">
-            <img src="assets/images/main_logo.jpg" alt="شعار برق سهيل" class="w-8 h-8 rounded-lg bg-white p-0.5 object-contain">
-            <span class="font-heading font-black text-base text-white">مؤسسة برق سهيل التجارية</span>
+          <div class="bg-white p-2 rounded-xl inline-block">
+            <img src="assets/images/official_logo_white.png" alt="شعار برق سهيل الأصلي" class="h-10 w-auto object-contain">
           </div>
           <p class="text-slate-400 leading-relaxed text-xs">
             المتخصصون الأوائل في أجهزة الاتصالات اللاسلكية المرخصة CST وهواتف الثريا الفضائية وأجهزة الملاحة وتحديث خرائط قارمن بالمملكة.
@@ -545,15 +544,12 @@
     </div>
   </footer>
 
-  <!-- Shopping Cart Modal (100% Solid Overlay & Pop-up Dialog) -->
+  <!-- Shopping Cart Modal -->
   <div id="cart-modal-container" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    <!-- Dark Backdrop -->
     <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" onclick="toggleCart(false)"></div>
     
-    <!-- Modal Card Box -->
     <div class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl flex flex-col max-h-[90vh] z-10 overflow-hidden">
       
-      <!-- Header -->
       <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950">
         <div class="flex items-center gap-2.5">
           <div class="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-base">
@@ -569,12 +565,8 @@
         </button>
       </div>
 
-      <!-- Items Scrollable Area -->
-      <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3">
-        <!-- Injected dynamically by app.js -->
-      </div>
+      <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
 
-      <!-- Footer Summary & Checkout Actions -->
       <div class="p-5 border-t border-slate-800 bg-slate-950 space-y-4">
         <div class="flex justify-between items-center bg-slate-900 p-3.5 rounded-xl border border-slate-800">
           <span class="text-xs font-bold text-slate-300">المجموع الإجمالي:</span>
