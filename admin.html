@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم والإدارة | مؤسسة برق سهيل التجارية</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              teal: '#008DA5',
+              cyan: '#00D2FF',
+              dark: '#0A0F1D',
+              card: '#111827'
+            }
+          },
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            tajawal: ['Tajawal', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Tajawal', sans-serif; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Cairo', sans-serif; }
+  </style>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen">
+
+  <!-- Top Admin Bar -->
+  <header class="bg-slate-950 border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-white p-1 border border-cyan-500/30 flex items-center justify-center">
+        <img src="assets/images/main_logo.jpg" alt="برق سهيل" class="w-full h-full object-contain">
+      </div>
+      <div>
+        <h1 class="font-heading font-black text-lg text-white">لوحة تحكم الموقع الرسمي (Admin)</h1>
+        <p class="text-xs text-cyan-400 font-mono">www.barqsuhail.com</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="index.html" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 transition">
+        <i class="fas fa-external-link-alt text-cyan-400"></i>
+        <span>عرض الموقع المباشر</span>
+      </a>
+      <a href="https://salla.sa/barqsuhail" target="_blank" class="bg-teal-900/60 hover:bg-teal-800 text-teal-300 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 border border-teal-500/30 transition">
+        <i class="fas fa-store"></i>
+        <span>متجر سلة</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- Stats Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      
+      <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl flex items-center justify-between">
+        <div>
+          <div class="text-xs text-slate-400 font-bold mb-1">إجمالي المنتجات المعروضة</div>
+          <div id="stat-products" class="text-3xl font-black text-white font-mono">0</div>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl">
+          <i class="fas fa-boxes-stacked"></i>
+        </div>
+      </div>
+
+      <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl flex items-center justify-between">
+        <div>
+          <div class="text-xs text-slate-400 font-bold mb-1">طلبات عروض الأسعار (B2B)</div>
+          <div id="stat-quotes" class="text-3xl font-black text-amber-400 font-mono">0</div>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl">
+          <i class="fas fa-file-invoice-dollar"></i>
+        </div>
+      </div>
+
+      <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl flex items-center justify-between">
+        <div>
+          <div class="text-xs text-slate-400 font-bold mb-1">حالة الموقع والترخيص</div>
+          <div class="text-sm font-bold text-emerald-400 flex items-center gap-1.5 mt-1">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            نشط - معتمد CST
+          </div>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+          <i class="fas fa-shield-check"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Main Content Tabs / Sections -->
+    <div class="grid lg:grid-cols-12 gap-8">
+      
+      <!-- Products Management (Left/Main) -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          
+          <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+            <div>
+              <h2 class="text-lg font-bold text-white font-heading">إدارة منتجات الموقع</h2>
+              <p class="text-xs text-slate-400">إضافة أو تعديل أو حذف المنتجات من الكتالوج</p>
+            </div>
+            <button onclick="toggleAddProductForm()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
+              <i class="fas fa-plus"></i>
+              <span>إضافة منتج جديد</span>
+            </button>
+          </div>
+
+          <!-- Add Product Form (Hidden by default) -->
+          <form id="add-product-form" onsubmit="handleAddNewProduct(event)" class="hidden bg-slate-950 p-5 rounded-xl border border-slate-700 mb-6 space-y-4">
+            <h3 class="text-xs font-bold text-cyan-400">إضافة منتج جديد للكتالوج:</h3>
+            
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">اسم المنتج بالعربي *</label>
+                <input type="text" name="p_name" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">القسم *</label>
+                <select name="p_category" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                  <option value="thuraya">أجهزة وهواتف الثريا</option>
+                  <option value="garmin">أجهزة الملاحة وقارمن</option>
+                  <option value="radios">الأجهزة اللاسلكية المرخصة</option>
+                  <option value="cards">الشرائح وبطاقات الرصيد</option>
+                  <option value="services">خدمات التحديث والبرمجة</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">السعر (ر.س) *</label>
+                <input type="number" name="p_price" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">السعر قبل الخصم (اختياري)</label>
+                <input type="number" name="p_old_price" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">شارة مميزة (Badge)</label>
+                <input type="text" name="p_badge" placeholder="مثال: خصم 15%" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-300 mb-1">وصف تسويقي موجز *</label>
+              <textarea name="p_desc" rows="2" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white"></textarea>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button" onclick="toggleAddProductForm()" class="bg-slate-800 text-slate-400 px-3 py-1.5 rounded-lg text-xs">إلغاء</button>
+              <button type="submit" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-4 py-1.5 rounded-lg text-xs">حفظ المنتج</button>
+            </div>
+          </form>
+
+          <!-- Products Table -->
+          <div id="admin-products-list" class="space-y-3">
+            <!-- Injected by JS -->
+          </div>
+
+        </div>
+      </div>
+
+      <!-- B2B Quotes Inbox (Right) -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          
+          <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+            <div>
+              <h2 class="text-lg font-bold text-white font-heading">طلبات عروض الأسعار الواردة</h2>
+              <p class="text-xs text-slate-400">استفسارات الشركات وفرق الرحلات</p>
+            </div>
+            <button onclick="clearQuotes()" class="text-slate-500 hover:text-red-400 text-xs">
+              <i class="fas fa-trash"></i> مسح
+            </button>
+          </div>
+
+          <div id="admin-quotes-list" class="space-y-3 max-h-[600px] overflow-y-auto">
+            <!-- Injected by JS -->
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadAdminDashboard();
+    });
+
+    function loadAdminDashboard() {
+      renderAdminProducts();
+      renderAdminQuotes();
+    }
+
+    function renderAdminProducts() {
+      const stored = localStorage.getItem("barq_products");
+      const products = stored ? JSON.parse(stored) : INITIAL_PRODUCTS;
+      
+      document.getElementById("stat-products").textContent = products.length;
+
+      const container = document.getElementById("admin-products-list");
+      container.innerHTML = products.map((p, index) => `
+        <div class="flex items-center justify-between p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl gap-3">
+          <img src="${p.image}" alt="${p.name}" class="w-12 h-12 object-cover rounded-lg bg-slate-900 shrink-0" onerror="this.src='assets/images/main_logo.jpg'">
+          
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-white truncate">${p.name}</h4>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-[10px] text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded">${p.categoryName || p.category}</span>
+              <span class="text-xs font-mono font-bold text-white">${p.price.toLocaleString()} ر.س</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="deleteProduct('${p.id}')" class="text-slate-500 hover:text-red-400 p-2 text-xs rounded-lg hover:bg-slate-800 transition" title="حذف المنتج">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderAdminQuotes() {
+      const quotes = JSON.parse(localStorage.getItem("barq_quotes") || "[]");
+      document.getElementById("stat-quotes").textContent = quotes.length;
+
+      const container = document.getElementById("admin-quotes-list");
+      if (quotes.length === 0) {
+        container.innerHTML = `
+          <div class="py-12 text-center text-slate-500 text-xs">
+            <i class="fas fa-inbox text-3xl mb-2 text-slate-700"></i>
+            <p>لا توجد طلبات عروض أسعار مسجلة حتى الآن.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = quotes.map(q => `
+        <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-xl space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-white">${q.name}</span>
+            <span class="text-[10px] text-slate-500 font-mono">${q.date || ''}</span>
+          </div>
+          <div class="text-xs text-slate-300">👤 المسؤول: <strong>${q.contact}</strong></div>
+          <div class="text-xs text-slate-300">📦 الأجهزة: <span class="text-cyan-400 font-bold">${q.productType}</span> (الكمية: ${q.qty})</div>
+          ${q.notes ? `<div class="text-[11px] text-slate-400 bg-slate-900 p-2 rounded">${q.notes}</div>` : ''}
+          <div class="pt-2 flex justify-end">
+            <a href="https://wa.me/966${q.phone.replace(/^0/, '')}?text=مرحباً%20${encodeURIComponent(q.contact)}،%20بخصوص%20طلب%20عرض%20السعر%20من%20مؤسسة%20برق%20سهيل" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+              <i class="fab fa-whatsapp"></i>
+              <span>مراسلة واتساب (${q.phone})</span>
+            </a>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function toggleAddProductForm() {
+      const f = document.getElementById("add-product-form");
+      f.classList.toggle("hidden");
+    }
+
+    function handleAddNewProduct(e) {
+      e.preventDefault();
+      const form = e.target;
+      const catNames = {
+        thuraya: "أجهزة وهواتف الثريا",
+        garmin: "أجهزة الملاحة وقارمن",
+        radios: "الأجهزة اللاسلكية المرخصة",
+        cards: "الشرائح وبطاقات الرصيد",
+        services: "خدمات التحديث والبرمجة"
+      };
+
+      const newP = {
+        id: "BS-" + Date.now().toString().slice(-4),
+        name: form.p_name.value,
+        nameEn: "Barq Suhail Custom Item",
+        category: form.p_category.value,
+        categoryName: catNames[form.p_category.value] || form.p_category.value,
+        price: parseFloat(form.p_price.value),
+        oldPrice: form.p_old_price.value ? parseFloat(form.p_old_price.value) : null,
+        badge: form.p_badge.value || null,
+        image: "assets/images/hero_banner_1_refined.jpg",
+        rating: 5.0,
+        reviewsCount: 1,
+        stock: 10,
+        shortDesc: form.p_desc.value,
+        specs: ["ضمان معتمد لدى مؤسسة برق سهيل", "شحن فوري لكافة مناطق المملكة"]
+      };
+
+      const stored = localStorage.getItem("barq_products");
+      const products = stored ? JSON.parse(stored) : INITIAL_PRODUCTS;
+      products.unshift(newP);
+      localStorage.setItem("barq_products", JSON.stringify(products));
+
+      form.reset();
+      toggleAddProductForm();
+      loadAdminDashboard();
+      alert("تمت إضافة المنتج بنجاح إلى كتالوج الموقع!");
+    }
+
+    function deleteProduct(id) {
+      if (!confirm("هل أنت متأكد من رغبتك في حذف هذا المنتج؟")) return;
+      const stored = localStorage.getItem("barq_products");
+      let products = stored ? JSON.parse(stored) : INITIAL_PRODUCTS;
+      products = products.filter(p => p.id !== id);
+      localStorage.setItem("barq_products", JSON.stringify(products));
+      loadAdminDashboard();
+    }
+
+    function clearQuotes() {
+      if (!confirm("هل تريد مسح جميع طلبات عروض الأسعار؟")) return;
+      localStorage.removeItem("barq_quotes");
+      renderAdminQuotes();
+    }
+  </script>
+</body>
+</html>

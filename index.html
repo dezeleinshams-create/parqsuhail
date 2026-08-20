@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مؤسسة برق سهيل التجارية | أجهزة الاتصالات الفضائية واللاسلكية والملاحة</title>
+  <meta name="description" content="الموقع الرسمي لمؤسسة برق سهيل التجارية بالدمام. أجهزة الثريا الفضائية، أجهزة اللاسلكي المرخصة CST، وأجهزة وخرائط قارمن للرحلات والمقناص.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts (Tajawal & Cairo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              teal: '#008DA5',
+              cyan: '#00D2FF',
+              dark: '#0A0F1D',
+              card: '#111827',
+              gold: '#D4AF37'
+            }
+          },
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            tajawal: ['Tajawal', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Tajawal', sans-serif; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Cairo', sans-serif; }
+    .glass-nav {
+      background: rgba(10, 15, 29, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 25px rgba(0, 210, 255, 0.3);
+    }
+    .electric-gradient {
+      background: linear-gradient(135deg, #008DA5 0%, #00D2FF 100%);
+    }
+  </style>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-slate-950 border-b border-slate-800 text-xs py-2 px-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-4 text-slate-300">
+        <span class="flex items-center gap-1.5 text-cyan-400 font-bold">
+          <i class="fas fa-shield-halved"></i>
+          مرخص من هيئة الاتصالات والفضاء وتقنية المعلومات (CST)
+        </span>
+        <span class="hidden md:inline text-slate-600">|</span>
+        <span class="hidden md:flex items-center gap-1.5 text-slate-400">
+          <i class="fas fa-location-dot text-cyan-500"></i>
+          معرضنا بالدمام: حي بدر 91 - طريق الملك فهد
+        </span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="tel:0507181115" class="hover:text-cyan-400 transition flex items-center gap-1 font-mono">
+          <i class="fas fa-phone text-cyan-400 text-[11px]"></i>
+          0507181115
+        </a>
+        <a href="admin.html" class="text-slate-500 hover:text-slate-300 transition text-[11px]">
+          <i class="fas fa-lock text-[10px]"></i> لوحة الإدارة
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="sticky top-0 z-40 glass-nav border-b border-slate-800/80 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 rounded-xl bg-white p-1 border border-cyan-500/30 flex items-center justify-center overflow-hidden shadow-lg shadow-cyan-500/10 group-hover:border-cyan-400 transition">
+          <img src="assets/images/main_logo.jpg" alt="برق سهيل" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-heading font-black text-xl text-white tracking-tight">برق سهيل</span>
+            <i class="fas fa-bolt text-cyan-400 text-sm animate-pulse"></i>
+          </div>
+          <span class="text-[10px] text-slate-400 tracking-wider block font-mono">BARQ SUHAIL TRADING</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <a href="#home" class="text-cyan-400 font-bold hover:text-cyan-300 transition">الرئيسية</a>
+        <a href="#products" class="hover:text-cyan-400 transition">كتالوج المنتجات</a>
+        <a href="#thuraya" class="hover:text-cyan-400 transition">أجهزة الثريا</a>
+        <a href="#garmin" class="hover:text-cyan-400 transition">قارمن والخرائط</a>
+        <a href="#b2b" class="hover:text-cyan-400 transition">عروض أسعار B2B</a>
+        <a href="#showroom" class="hover:text-cyan-400 transition">المعرض والتواصل</a>
+      </nav>
+
+      <!-- Actions (Search, Quote CTA, Cart) -->
+      <div class="flex items-center gap-3">
+        <!-- Live Search -->
+        <div class="relative hidden sm:block w-48 xl:w-64">
+          <input type="text" id="search-input" placeholder="ابحث عن جهاز، شريحة..." class="w-full bg-slate-900 border border-slate-700/80 rounded-xl py-2 pr-9 pl-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
+          <i class="fas fa-search absolute right-3 top-2.5 text-slate-500 text-xs"></i>
+        </div>
+
+        <!-- B2B Quote Button -->
+        <a href="#b2b" class="hidden sm:inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 text-xs font-bold px-3.5 py-2.5 rounded-xl transition">
+          <i class="fas fa-file-invoice"></i>
+          <span>طلب تسعيرة</span>
+        </a>
+
+        <!-- Cart Button -->
+        <button onclick="toggleCart(true)" class="relative bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 p-2.5 rounded-xl shadow-lg shadow-cyan-500/20 hover:scale-105 active:scale-95 transition flex items-center justify-center">
+          <i class="fas fa-shopping-bag text-base"></i>
+          <span class="cart-count absolute -top-1.5 -left-1.5 bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-dark hidden">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative overflow-hidden pt-10 pb-16 lg:py-20 border-b border-slate-800/80 bg-gradient-to-b from-slate-950 via-slate-900 to-brand-dark">
+    
+    <!-- Background Glow & Grid -->
+    <div class="absolute inset-0 bg-[radial-gradient(#008DA5_1px,transparent_1px)] [background-size:24px_24px] opacity-15"></div>
+    <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        
+        <!-- Hero Texts -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-right">
+          
+          <div class="inline-flex items-center gap-2 bg-slate-800/90 border border-cyan-500/40 px-3.5 py-1.5 rounded-full text-xs font-bold text-cyan-300 shadow-md">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            الوكيل والموزع المعتمد بالمنطقة الشرقية والمملكة
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black font-heading text-white leading-tight">
+            حلول <span class="text-transparent bg-clip-text electric-gradient">الاتصالات الفضائية واللاسلكية</span> والملاحة في المملكة
+          </h1>
+
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            مؤسسة برق سهيل التجارية وجهتكم الرائدة لتجهيز الرحلات البرية والبحرية بأحدث هواتف الثريا، أجهزة اللاسلكي المرخصة من هيئة الاتصالات (CST)، وملاحة وخرائط قارمن مع الضمان والدعم الفني المباشر بالدمام.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#products" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-sm px-7 py-3.5 rounded-xl shadow-xl shadow-cyan-500/25 transition active:scale-95 flex items-center gap-2">
+              <i class="fas fa-compass"></i>
+              <span>تصفح كتالوج الأجهزة</span>
+            </a>
+            <a href="#b2b" class="bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 hover:border-cyan-500/50 font-bold text-sm px-6 py-3.5 rounded-xl transition flex items-center gap-2">
+              <i class="fas fa-building"></i>
+              <span>عروض أسعار الشركات والمقناص</span>
+            </a>
+          </div>
+
+          <!-- Trust Counters -->
+          <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0">
+            <div>
+              <div class="text-2xl font-black text-white font-mono text-cyan-400">100%</div>
+              <div class="text-xs text-slate-400">أجهزة أصلية معتمدة</div>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-white font-mono text-cyan-400">سنتين</div>
+              <div class="text-xs text-slate-400">ضمان معتمد</div>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-white font-mono text-cyan-400">24/48h</div>
+              <div class="text-xs text-slate-400">شحن سريع لكافة المدن</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Hero Banner Showcase Image -->
+        <div class="lg:col-span-5">
+          <div class="relative group rounded-3xl overflow-hidden border-2 border-slate-800 shadow-2xl shadow-cyan-500/10 hover:border-cyan-500/50 transition duration-500">
+            <img src="assets/images/hero_banner_1_refined.jpg" alt="برق سهيل للاتصالات" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 right-4 left-4 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 backdrop-blur-md flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg">
+                  <i class="fas fa-satellite"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-white">متوفر الآن: ثريا XT-PRO & قارمن 67</h4>
+                  <p class="text-[10px] text-slate-400">تحديث خرائط الصحراء 2026</p>
+                </div>
+              </div>
+              <a href="#products" class="text-xs text-cyan-400 font-bold hover:underline">تسوق الآن &larr;</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Strip -->
+  <section class="py-8 bg-slate-950 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        
+        <div class="flex items-center gap-3.5 p-3 rounded-xl bg-slate-900/50 border border-slate-800/60">
+          <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-white">ترخيص رسمي CST</h4>
+            <p class="text-[11px] text-slate-400">مطابقة للمواصفات السعودية</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3.5 p-3 rounded-xl bg-slate-900/50 border border-slate-800/60">
+          <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-truck-fast"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-white">توصيل سريع وآمن</h4>
+            <p class="text-[11px] text-slate-400">شحن لكافة مناطق المملكة</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3.5 p-3 rounded-xl bg-slate-900/50 border border-slate-800/60">
+          <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-map-location-dot"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-white">تحديث خرائط القارمن</h4>
+            <p class="text-[11px] text-slate-400">خرائط البراري والبحر بالمعرض</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3.5 p-3 rounded-xl bg-slate-900/50 border border-slate-800/60">
+          <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-headset"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-white">دعم فني واستشارات</h4>
+            <p class="text-[11px] text-slate-400">خبراء اتصالات وملاحة متخصصون</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Products Catalog -->
+  <section id="products" class="py-16 bg-brand-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+        <div>
+          <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider font-mono">PRODUCT CATALOG</span>
+          <h2 class="text-2xl sm:text-3xl font-black font-heading text-white mt-1">كتالوج الأجهزة والمنتجات المعتمدة</h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1">اختر من نخبة أجهزة الاتصالات الفضائية والملاحة البرية والبحرية</p>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="setCategory('all', this)" class="cat-pill bg-cyan-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-md shadow-cyan-500/30">الكل</button>
+          <button onclick="setCategory('thuraya', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">أجهزة الثريا</button>
+          <button onclick="setCategory('garmin', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">قارمن والملاحة</button>
+          <button onclick="setCategory('radios', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">أجهزة اللاسلكي</button>
+          <button onclick="setCategory('cards', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">الشرائح والرصيد</button>
+          <button onclick="setCategory('services', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">خدمات التحديث</button>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Thuraya Spotlight Section -->
+  <section id="thuraya" class="py-16 bg-slate-950 border-y border-slate-800 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        
+        <div class="space-y-5">
+          <span class="text-xs text-cyan-400 font-bold uppercase tracking-wider font-mono">THURAYA SATELLITE PHONES</span>
+          <h2 class="text-2xl sm:text-3xl font-black font-heading text-white">اتصال فضائي لا ينقطع أينما ذهبت</h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            نوفر في مؤسسة برق سهيل أحدث هواتف وأجهزة الأقمار الصناعية وشبكة الثريا، الحل الأمثل للرحالة، أصحاب المقناص، عمال المناجم، والسفن البحرية في أي نقطة خارج تغطية شبكات الجوال.
+          </p>
+          <div class="space-y-2.5">
+            <div class="flex items-center gap-3 text-xs text-slate-200">
+              <i class="fas fa-check-circle text-cyan-400"></i>
+              <span>هواتف الثريا XT-PRO و XT-LITE الأصلية بضمان سنتين.</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-slate-200">
+              <i class="fas fa-check-circle text-cyan-400"></i>
+              <span>شحن فوري لرصيد الثريا وتفعيل الشرائح مباشرة.</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-slate-200">
+              <i class="fas fa-check-circle text-cyan-400"></i>
+              <span>أجهزة إعادة البث (Repeaters) ونقاط الاتصال بالأقمار الصناعية.</span>
+            </div>
+          </div>
+          <div class="pt-2">
+            <a href="https://wa.me/966507181115?text=استفسار%20عن%20أجهزة%20وشرائح%20الثريا" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition">
+              <i class="fab fa-whatsapp text-sm"></i>
+              <span>استفسر عن عروض الثريا واتساب</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+          <img src="assets/images/thuraya_banner_3.jpg" alt="الثريا للاتصالات الفضائية" class="w-full h-auto object-cover">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Garmin & Desert Expedition Section -->
+  <section id="garmin" class="py-16 bg-brand-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        
+        <div class="order-2 lg:order-1 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+          <img src="assets/images/garmin_banner_2.jpg" alt="قارمن ملاحة الصحراء" class="w-full h-auto object-cover">
+        </div>
+
+        <div class="order-1 lg:order-2 space-y-5">
+          <span class="text-xs text-cyan-400 font-bold uppercase tracking-wider font-mono">GARMIN GPS & MAPS</span>
+          <h2 class="text-2xl sm:text-3xl font-black font-heading text-white">استكشف دروب الصحراء والبحر بدقة متناهية</h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            أجهزة الملاحة اليدوية والمثبتة من شركة قارمن (Garmin) العالمية، محملة مسبقاً بأحدث خرائط تضاريس المملكة، الفياض، الشعبان، والمعالم الجغرافية البرية والبحرية.
+          </p>
+          <div class="space-y-2.5">
+            <div class="flex items-center gap-3 text-xs text-slate-200">
+              <i class="fas fa-location-crosshairs text-cyan-400"></i>
+              <span>أجهزة Garmin GPSMAP 67 و Montana و Tread للسيارات.</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-slate-200">
+              <i class="fas fa-location-crosshairs text-cyan-400"></i>
+              <span>خدمة تحديث وبرمجة الخرائط الحديثة داخل معرضنا بالدمام.</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-slate-200">
+              <i class="fas fa-location-crosshairs text-cyan-400"></i>
+              <span>قواعد تثبيت وهوائيات عالية الكسب للسيارات والقوارب.</span>
+            </div>
+          </div>
+          <div class="pt-2">
+            <a href="#products" class="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl transition">
+              <i class="fas fa-map"></i>
+              <span>عرض أجهزة قارمن والخرائط</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- B2B & Corporate Quote Request Form -->
+  <section id="b2b" class="py-16 bg-slate-950 border-t border-slate-800 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+        <div class="absolute -top-24 -left-24 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl"></div>
+
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <span class="text-xs text-cyan-400 font-bold uppercase font-mono">B2B & EXPEDITIONS QUOTE</span>
+          <h2 class="text-2xl sm:text-3xl font-black font-heading text-white mt-1">طلب عرض أسعار رسمي للشركات والمقناص</h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-2">
+            للشركات، المقاولات، الجهات الحكومية، ومجموعات الرحلات البرية والبحرية. نجهز لكم عروض أسعار تفصيلية شاملة التراخيص والتوريد.
+          </p>
+        </div>
+
+        <form onsubmit="submitQuoteForm(event)" class="space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">اسم الجهة / المؤسسة *</label>
+              <input type="text" name="company_name" required placeholder="مثال: شركة المقاولات أو فريق الرحلات" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">اسم المسؤول للتواصل *</label>
+              <input type="text" name="contact_person" required placeholder="الاسم الكامل" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">رقم الهاتف / واتساب *</label>
+              <input type="tel" name="phone" required placeholder="05xxxxxxxx" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">نوع الأجهزة المطلوبة *</label>
+              <select name="product_type" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyan-500">
+                <option value="هواتف وشرائح الثريا الفضائية">هواتف وشرائح الثريا الفضائية</option>
+                <option value="أجهزة لاسلكي يدوية وثابتة (ICOM/Motorola)">أجهزة لاسلكي يدوية وثابتة (ICOM/Motorola)</option>
+                <option value="أجهزة وملاحة قارمن GPS">أجهزة وملاحة قارمن GPS</option>
+                <option value="أجهزة لاسلكي بحري Marine VHF">أجهزة لاسلكي بحري Marine VHF</option>
+                <option value="باقات شحن رصيد بالجملة">باقات شحن رصيد بالجملة</option>
+                <option value="أخرى / متعددة">أخرى / متعددة</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">الكمية التقديرية *</label>
+              <input type="text" name="quantity" required placeholder="مثال: 5 أجهزة" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">ملاحظات أو مواصفات خاصة</label>
+            <textarea name="notes" rows="3" placeholder="اكتب أي متطلبات خاصة بالبرمجة أو الشحن والتراخيص..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-sm py-3.5 rounded-xl shadow-lg shadow-cyan-500/25 transition active:scale-98 flex items-center justify-center gap-2">
+            <i class="fab fa-whatsapp text-lg"></i>
+            <span>إرسال طلب التسعيرة عبر واتساب الإدارة</span>
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Showroom & Location Card -->
+  <section id="showroom" class="py-16 bg-brand-dark border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-6 space-y-5">
+          <span class="text-xs text-cyan-400 font-bold uppercase font-mono">DAMMAM SHOWROOM & VISITS</span>
+          <h2 class="text-2xl sm:text-3xl font-black font-heading text-white">تفضل بزيارة معرضنا بالدمام</h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            يسعدنا استقبالكم في معرضنا للاطلاع المباشر على الأجهزة، تجربة الهواتف، وبرمجة وتحديث خرائط القارمن الفورية.
+          </p>
+
+          <div class="space-y-3">
+            <div class="flex items-start gap-3 p-3.5 bg-slate-900/60 border border-slate-800 rounded-xl">
+              <i class="fas fa-map-pin text-cyan-400 text-lg mt-0.5"></i>
+              <div>
+                <h4 class="text-xs font-bold text-white">العنوان التفصيلي:</h4>
+                <p class="text-xs text-slate-300 mt-0.5">الدمام - حي بدر (المخطط 91) - داخل محل القناص الدولي، بجوار رفيق الدرب ومقابل مطعم البيك، طريق الملك فهد (خط المطار).</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-3.5 bg-slate-900/60 border border-slate-800 rounded-xl">
+              <i class="fas fa-clock text-cyan-400 text-lg mt-0.5"></i>
+              <div>
+                <h4 class="text-xs font-bold text-white">أوقات العمل والمعرض:</h4>
+                <p class="text-xs text-slate-300 mt-0.5">السبت إلى الخميس: 9:00 صباحاً - 10:00 مساءً</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-3.5 bg-slate-900/60 border border-slate-800 rounded-xl">
+              <i class="fas fa-phone-volume text-cyan-400 text-lg mt-0.5"></i>
+              <div>
+                <h4 class="text-xs font-bold text-white">الهاتف والمبيعات المباشرة:</h4>
+                <p class="text-xs text-cyan-400 font-mono font-bold mt-0.5">0507181115 / +966507181115</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-3 pt-2">
+            <a href="https://maps.google.com/?q=الدمام+حي+بدر+طريق+الملك+فهد" target="_blank" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition">
+              <i class="fas fa-location-arrow"></i>
+              <span>الاتجاهات عبر Google Maps</span>
+            </a>
+            <a href="tel:0507181115" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-5 py-3 rounded-xl flex items-center gap-2 transition font-mono">
+              <i class="fas fa-phone"></i>
+              <span>اتصال هاتفي</span>
+            </a>
+          </div>
+
+        </div>
+
+        <div class="lg:col-span-6">
+          <div class="rounded-3xl overflow-hidden border-2 border-slate-800 shadow-2xl">
+            <img src="assets/images/store_identity_card.jpg" alt="بطاقة فرع برق سهيل بالدمام" class="w-full h-auto object-cover">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800/80 pt-12 pb-8 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
+        
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/main_logo.jpg" alt="شعار برق سهيل" class="w-8 h-8 rounded-lg bg-white p-0.5 object-contain">
+            <span class="font-heading font-black text-base text-white">مؤسسة برق سهيل التجارية</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed text-xs">
+            المتخصصون الأوائل في أجهزة الاتصالات اللاسلكية المرخصة CST وهواتف الثريا الفضائية وأجهزة الملاحة وتحديث خرائط قارمن بالمملكة.
+          </p>
+          <div class="text-[11px] text-cyan-400 font-bold">
+            سجل تجاري وترخيص رسمي معتمد
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white mb-3 text-sm">أقسام المتجر</h4>
+          <ul class="space-y-2">
+            <li><a href="#products" class="hover:text-cyan-400 transition">أجهزة وهواتف الثريا</a></li>
+            <li><a href="#products" class="hover:text-cyan-400 transition">أجهزة قارمن الملاحية</a></li>
+            <li><a href="#products" class="hover:text-cyan-400 transition">أجهزة اللاسلكي للسيارات</a></li>
+            <li><a href="#products" class="hover:text-cyan-400 transition">كروت وبطاقات شحن الرصيد</a></li>
+            <li><a href="#products" class="hover:text-cyan-400 transition">تحديث وبرمجة الخرائط</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white mb-3 text-sm">خدمات وعروض</h4>
+          <ul class="space-y-2">
+            <li><a href="#b2b" class="hover:text-cyan-400 transition">عروض أسعار الشركات (B2B)</a></li>
+            <li><a href="https://salla.sa/barqsuhail" target="_blank" class="hover:text-cyan-400 transition">متجرنا على سلة (Salla)</a></li>
+            <li><a href="#showroom" class="hover:text-cyan-400 transition">موقع الفرع في الدمام</a></li>
+            <li><a href="https://wa.me/966507181115" target="_blank" class="hover:text-cyan-400 transition">خدمة العملاء واتساب</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white mb-3 text-sm">معلومات التواصل</h4>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-phone text-cyan-400"></i>
+              <span class="font-mono text-white font-bold">0507181115</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-envelope text-cyan-400"></i>
+              <span class="font-mono">info@barqsuhail.com</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-map-marker-alt text-cyan-400"></i>
+              <span>الدمام - طريق الملك فهد - حي بدر</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+        <div>
+          جميع الحقوق محفوظة &copy; 2026 <strong>مؤسسة برق سهيل التجارية</strong> | Barq Suhail Trading Est.
+        </div>
+        <div class="flex items-center gap-3">
+          <span>دفع آمن: مدى | Apple Pay | فيزا | تحويل بنكي</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Shopping Cart Slide-over Drawer -->
+  <div id="cart-overlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden transition-opacity" onclick="toggleCart(false)"></div>
+  <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full max-w-md bg-slate-900 border-r border-slate-800 z-50 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
+    
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-shopping-bag text-cyan-400 text-lg"></i>
+        <h3 class="font-bold text-white text-base">سلة المشتريات</h3>
+      </div>
+      <button onclick="toggleCart(false)" class="text-slate-400 hover:text-white p-2 rounded-lg">
+        <i class="fas fa-times text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Drawer Items List -->
+    <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3">
+      <!-- Injected by app.js -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-5 border-t border-slate-800 bg-slate-950/80 space-y-4">
+      <div class="flex justify-between items-center text-sm">
+        <span class="text-slate-400">المجموع الإجمالي:</span>
+        <span id="cart-total" class="font-black text-cyan-400 text-lg font-mono">0 ر.س</span>
+      </div>
+
+      <div class="space-y-2">
+        <button onclick="checkoutViaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition active:scale-98">
+          <i class="fab fa-whatsapp text-base"></i>
+          <span>إتمام الطلب وتأكيده عبر واتساب</span>
+        </button>
+
+        <a href="https://salla.sa/barqsuhail" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition">
+          <i class="fas fa-store"></i>
+          <span>أو الدفع الإلكتروني عبر متجر سلة</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Product Details Quick View Modal -->
+  <div id="product-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-2xl w-full shadow-2xl relative overflow-hidden">
+      <button onclick="closeModal()" class="absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-slate-800/80 text-slate-300 hover:text-white flex items-center justify-center">
+        <i class="fas fa-times"></i>
+      </button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/966507181115" target="_blank" class="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-400 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-2xl shadow-emerald-500/40 hover:scale-110 active:scale-95 transition" title="تواصل عبر واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
