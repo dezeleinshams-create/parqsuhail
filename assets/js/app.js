@@ -43,7 +43,7 @@ function renderProducts() {
   container.innerHTML = filtered.map(p => `
     <div class="product-card group relative bg-slate-900/80 border border-slate-800 hover:border-cyan-500/50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 shadow-lg shadow-black/40 flex flex-col justify-between">
       
-      <!-- Badge & Action Top -->
+      <!-- Badge Top -->
       <div class="absolute top-3 right-3 z-10 flex flex-col gap-1.5">
         ${p.badge ? `<span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-xs font-bold px-2.5 py-1 rounded-full backdrop-blur-md">${p.badge}</span>` : ''}
       </div>
@@ -127,7 +127,8 @@ function addToCart(productId) {
 
   saveCart();
   updateCartUI();
-  showToast(`تمت إضافة "${product.name}" إلى سلتك بنجاح! 🛒`);
+  toggleCart(true); // Open smoothly on add
+  showToast(`تمت إضافة "${product.name}" إلى السلة 🛒`);
 }
 
 // Update Cart Quantity
@@ -169,7 +170,6 @@ function updateCartUI() {
 
   // Cart Drawer Content
   const itemsContainer = document.getElementById("cart-items");
-  const subtotalEl = document.getElementById("cart-subtotal");
   const totalEl = document.getElementById("cart-total");
 
   if (itemsContainer) {
@@ -177,51 +177,50 @@ function updateCartUI() {
       itemsContainer.innerHTML = `
         <div class="py-16 text-center text-slate-400">
           <i class="fas fa-shopping-basket text-5xl mb-3 text-slate-600"></i>
-          <p class="text-base font-medium">سلة مشترياتك فارغة حالياً</p>
-          <p class="text-xs text-slate-500 mt-1">تصفح منتجاتنا وأضف ما يناسبك</p>
+          <p class="text-base font-bold text-white">سلة مشترياتك فارغة حالياً</p>
+          <p class="text-xs text-slate-400 mt-1">تصفح أجهزتنا وأضف ما يناسبك</p>
         </div>
       `;
     } else {
       itemsContainer.innerHTML = cart.map(item => `
-        <div class="flex items-center justify-between gap-3 p-3 bg-slate-950/60 border border-slate-800/80 rounded-xl">
-          <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded-lg bg-slate-900">
+        <div class="flex items-center gap-3 p-3.5 bg-slate-950 border border-slate-800 rounded-2xl">
+          <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl bg-slate-900 border border-slate-800 shrink-0" onerror="this.src='assets/images/main_logo.jpg'">
+          
           <div class="flex-1 min-w-0">
-            <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
-            <div class="text-cyan-400 text-xs font-mono font-bold mt-1">${(item.price * item.qty).toLocaleString()} ر.س</div>
-            <div class="flex items-center gap-2 mt-1.5">
-              <button onclick="updateQty('${item.id}', -1)" class="w-5 h-5 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded flex items-center justify-center text-xs">-</button>
-              <span class="text-xs text-white font-mono px-1.5">${item.qty}</span>
-              <button onclick="updateQty('${item.id}', 1)" class="w-5 h-5 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded flex items-center justify-center text-xs">+</button>
+            <h4 class="text-xs font-bold text-white leading-tight mb-1 truncate">${item.name}</h4>
+            <div class="text-cyan-400 text-xs font-mono font-bold">${(item.price * item.qty).toLocaleString()} ر.س</div>
+            
+            <div class="flex items-center gap-2 mt-2">
+              <div class="flex items-center bg-slate-900 border border-slate-700 rounded-lg overflow-hidden">
+                <button onclick="updateQty('${item.id}', -1)" class="w-6 h-6 text-slate-300 hover:text-white hover:bg-slate-800 flex items-center justify-center text-xs font-bold transition">-</button>
+                <span class="text-xs text-white font-mono px-2 font-bold">${item.qty}</span>
+                <button onclick="updateQty('${item.id}', 1)" class="w-6 h-6 text-slate-300 hover:text-white hover:bg-slate-800 flex items-center justify-center text-xs font-bold transition">+</button>
+              </div>
             </div>
           </div>
-          <button onclick="removeFromCart('${item.id}')" class="text-slate-500 hover:text-red-400 p-1 text-xs">
-            <i class="fas fa-trash"></i>
+
+          <button onclick="removeFromCart('${item.id}')" class="text-slate-500 hover:text-red-400 p-2 rounded-lg hover:bg-slate-900 transition" title="حذف">
+            <i class="fas fa-trash-can text-sm"></i>
           </button>
         </div>
       `).join("");
     }
   }
 
-  if (subtotalEl) subtotalEl.textContent = `${totalPrice.toLocaleString()} ر.س`;
   if (totalEl) totalEl.textContent = `${totalPrice.toLocaleString()} ر.س`;
 }
 
-// Toggle Cart Drawer
+// Toggle Cart Drawer (Guaranteed Rock-Solid Open & Close)
 function toggleCart(show) {
-  const drawer = document.getElementById("cart-drawer");
-  const overlay = document.getElementById("cart-overlay");
-  if (!drawer || !overlay) return;
+  const container = document.getElementById("cart-modal-container");
+  if (!container) return;
 
   if (show) {
-    overlay.classList.remove("hidden");
-    setTimeout(() => {
-      drawer.classList.remove("translate-x-full");
-    }, 10);
+    container.classList.remove("hidden");
+    document.body.style.overflow = "hidden"; // prevent background scroll
   } else {
-    drawer.classList.add("translate-x-full");
-    setTimeout(() => {
-      overlay.classList.add("hidden");
-    }, 300);
+    container.classList.add("hidden");
+    document.body.style.overflow = "auto";
   }
 }
 
@@ -267,12 +266,10 @@ function submitQuoteForm(e) {
     date: new Date().toLocaleDateString("ar-SA")
   };
 
-  // Save in localStorage for admin
   const quotes = JSON.parse(localStorage.getItem("barq_quotes") || "[]");
   quotes.unshift(quote);
   localStorage.setItem("barq_quotes", JSON.stringify(quotes));
 
-  // Redirect to WhatsApp with Quote Details
   let msg = `*طلب عرض سعر رسمي (B2B / مؤسسات)*\n`;
   msg += `🏢 المؤسسة/الجهة: ${name}\n`;
   msg += `👤 المسؤول: ${contact}\n`;

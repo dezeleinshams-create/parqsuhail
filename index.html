@@ -47,9 +47,6 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
-    .glow-cyan {
-      box-shadow: 0 0 25px rgba(0, 210, 255, 0.3);
-    }
     .electric-gradient {
       background: linear-gradient(135deg, #008DA5 0%, #00D2FF 100%);
     }
@@ -137,15 +134,11 @@
 
   <!-- Hero Section -->
   <section id="home" class="relative overflow-hidden pt-10 pb-16 lg:py-20 border-b border-slate-800/80 bg-gradient-to-b from-slate-950 via-slate-900 to-brand-dark">
-    
-    <!-- Background Glow & Grid -->
     <div class="absolute inset-0 bg-[radial-gradient(#008DA5_1px,transparent_1px)] [background-size:24px_24px] opacity-15"></div>
-    <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
+    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="grid lg:grid-cols-12 gap-10 items-center">
         
-        <!-- Hero Texts -->
         <div class="lg:col-span-7 space-y-6 text-center lg:text-right">
           
           <div class="inline-flex items-center gap-2 bg-slate-800/90 border border-cyan-500/40 px-3.5 py-1.5 rounded-full text-xs font-bold text-cyan-300 shadow-md">
@@ -161,7 +154,6 @@
             مؤسسة برق سهيل التجارية وجهتكم الرائدة لتجهيز الرحلات البرية والبحرية بأحدث هواتف الثريا، أجهزة اللاسلكي المرخصة من هيئة الاتصالات (CST)، وملاحة وخرائط قارمن مع الضمان والدعم الفني المباشر بالدمام.
           </p>
 
-          <!-- CTAs -->
           <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
             <a href="#products" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-sm px-7 py-3.5 rounded-xl shadow-xl shadow-cyan-500/25 transition active:scale-95 flex items-center gap-2">
               <i class="fas fa-compass"></i>
@@ -173,7 +165,6 @@
             </a>
           </div>
 
-          <!-- Trust Counters -->
           <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0">
             <div>
               <div class="text-2xl font-black text-white font-mono text-cyan-400">100%</div>
@@ -191,23 +182,10 @@
 
         </div>
 
-        <!-- Hero Banner Showcase Image -->
         <div class="lg:col-span-5">
           <div class="relative group rounded-3xl overflow-hidden border-2 border-slate-800 shadow-2xl shadow-cyan-500/10 hover:border-cyan-500/50 transition duration-500">
             <img src="assets/images/hero_banner_1_refined.jpg" alt="برق سهيل للاتصالات" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-            <div class="absolute bottom-4 right-4 left-4 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 backdrop-blur-md flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg">
-                  <i class="fas fa-satellite"></i>
-                </div>
-                <div>
-                  <h4 class="text-xs font-bold text-white">متوفر الآن: ثريا XT-PRO & قارمن 67</h4>
-                  <p class="text-[10px] text-slate-400">تحديث خرائط الصحراء 2026</p>
-                </div>
-              </div>
-              <a href="#products" class="text-xs text-cyan-400 font-bold hover:underline">تسوق الآن &larr;</a>
-            </div>
           </div>
         </div>
 
@@ -268,7 +246,6 @@
   <section id="products" class="py-16 bg-brand-dark">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Section Header -->
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
         <div>
           <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider font-mono">PRODUCT CATALOG</span>
@@ -276,7 +253,6 @@
           <p class="text-slate-400 text-xs sm:text-sm mt-1">اختر من نخبة أجهزة الاتصالات الفضائية والملاحة البرية والبحرية</p>
         </div>
 
-        <!-- Category Filter Pills -->
         <div class="flex flex-wrap gap-2">
           <button onclick="setCategory('all', this)" class="cat-pill bg-cyan-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-md shadow-cyan-500/30">الكل</button>
           <button onclick="setCategory('thuraya', this)" class="cat-pill bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition">أجهزة الثريا</button>
@@ -287,16 +263,15 @@
         </div>
       </div>
 
-      <!-- Products Grid -->
       <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Rendered dynamically by app.js -->
+        <!-- Rendered dynamically -->
       </div>
 
     </div>
   </section>
 
   <!-- Thuraya Spotlight Section -->
-  <section id="thuraya" class="py-16 bg-slate-950 border-y border-slate-800 relative overflow-hidden">
+  <section id="thuraya" class="py-16 bg-slate-950 border-y border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         
@@ -377,13 +352,12 @@
     </div>
   </section>
 
-  <!-- B2B & Corporate Quote Request Form -->
-  <section id="b2b" class="py-16 bg-slate-950 border-t border-slate-800 relative">
+  <!-- B2B Quote Request Form -->
+  <section id="b2b" class="py-16 bg-slate-950 border-t border-slate-800">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
-        <div class="absolute -top-24 -left-24 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl"></div>
-
+        
         <div class="text-center max-w-xl mx-auto mb-8">
           <span class="text-xs text-cyan-400 font-bold uppercase font-mono">B2B & EXPEDITIONS QUOTE</span>
           <h2 class="text-2xl sm:text-3xl font-black font-heading text-white mt-1">طلب عرض أسعار رسمي للشركات والمقناص</h2>
@@ -519,9 +493,6 @@
           <p class="text-slate-400 leading-relaxed text-xs">
             المتخصصون الأوائل في أجهزة الاتصالات اللاسلكية المرخصة CST وهواتف الثريا الفضائية وأجهزة الملاحة وتحديث خرائط قارمن بالمملكة.
           </p>
-          <div class="text-[11px] text-cyan-400 font-bold">
-            سجل تجاري وترخيص رسمي معتمد
-          </div>
         </div>
 
         <div>
@@ -569,54 +540,61 @@
         <div>
           جميع الحقوق محفوظة &copy; 2026 <strong>مؤسسة برق سهيل التجارية</strong> | Barq Suhail Trading Est.
         </div>
-        <div class="flex items-center gap-3">
-          <span>دفع آمن: مدى | Apple Pay | فيزا | تحويل بنكي</span>
-        </div>
       </div>
 
     </div>
   </footer>
 
-  <!-- Shopping Cart Slide-over Drawer -->
-  <div id="cart-overlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden transition-opacity" onclick="toggleCart(false)"></div>
-  <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full max-w-md bg-slate-900 border-r border-slate-800 z-50 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
+  <!-- Shopping Cart Modal (100% Solid Overlay & Pop-up Dialog) -->
+  <div id="cart-modal-container" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <!-- Dark Backdrop -->
+    <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" onclick="toggleCart(false)"></div>
     
-    <!-- Drawer Header -->
-    <div class="p-5 border-b border-slate-800 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i class="fas fa-shopping-bag text-cyan-400 text-lg"></i>
-        <h3 class="font-bold text-white text-base">سلة المشتريات</h3>
-      </div>
-      <button onclick="toggleCart(false)" class="text-slate-400 hover:text-white p-2 rounded-lg">
-        <i class="fas fa-times text-lg"></i>
-      </button>
-    </div>
-
-    <!-- Drawer Items List -->
-    <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3">
-      <!-- Injected by app.js -->
-    </div>
-
-    <!-- Drawer Footer -->
-    <div class="p-5 border-t border-slate-800 bg-slate-950/80 space-y-4">
-      <div class="flex justify-between items-center text-sm">
-        <span class="text-slate-400">المجموع الإجمالي:</span>
-        <span id="cart-total" class="font-black text-cyan-400 text-lg font-mono">0 ر.س</span>
-      </div>
-
-      <div class="space-y-2">
-        <button onclick="checkoutViaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition active:scale-98">
-          <i class="fab fa-whatsapp text-base"></i>
-          <span>إتمام الطلب وتأكيده عبر واتساب</span>
+    <!-- Modal Card Box -->
+    <div class="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl flex flex-col max-h-[90vh] z-10 overflow-hidden">
+      
+      <!-- Header -->
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-base">
+            <i class="fas fa-shopping-bag"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-base font-heading">سلة المشتريات</h3>
+            <p class="text-[11px] text-slate-400">راجع منتجاتك وأكمل الطلب مباشرة</p>
+          </div>
+        </div>
+        <button onclick="toggleCart(false)" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition" title="إغلاق السلة">
+          <i class="fas fa-times text-sm"></i>
         </button>
-
-        <a href="https://salla.sa/barqsuhail" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition">
-          <i class="fas fa-store"></i>
-          <span>أو الدفع الإلكتروني عبر متجر سلة</span>
-        </a>
       </div>
-    </div>
 
+      <!-- Items Scrollable Area -->
+      <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3">
+        <!-- Injected dynamically by app.js -->
+      </div>
+
+      <!-- Footer Summary & Checkout Actions -->
+      <div class="p-5 border-t border-slate-800 bg-slate-950 space-y-4">
+        <div class="flex justify-between items-center bg-slate-900 p-3.5 rounded-xl border border-slate-800">
+          <span class="text-xs font-bold text-slate-300">المجموع الإجمالي:</span>
+          <span id="cart-total" class="font-black text-cyan-400 text-xl font-mono">0 ر.س</span>
+        </div>
+
+        <div class="space-y-2">
+          <button onclick="checkoutViaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition active:scale-98">
+            <i class="fab fa-whatsapp text-lg"></i>
+            <span>إتمام الطلب وتأكيده عبر واتساب (مبيعات الدمام)</span>
+          </button>
+
+          <a href="https://salla.sa/barqsuhail" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition">
+            <i class="fas fa-store"></i>
+            <span>أو الدفع الإلكتروني عبر متجر سلة</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- Product Details Quick View Modal -->
