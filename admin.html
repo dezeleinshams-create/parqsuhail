@@ -32,8 +32,8 @@
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #00D2FF44; }
     
-    .sidebar { width: 240px; min-height: 100vh; background: #050811; border-left: 1px solid #1e293b; position: fixed; top: 0; right: 0; z-index: 40; display: flex; flex-direction: column; }
-    .main-content { margin-right: 240px; min-height: 100vh; }
+    .sidebar { width: 250px; min-height: 100vh; background: #050811; border-left: 1px solid #1e293b; position: fixed; top: 0; right: 0; z-index: 40; display: flex; flex-direction: column; }
+    .main-content { margin-right: 250px; min-height: 100vh; }
     @media (max-width: 768px) {
       .sidebar { position: static; width: 100%; min-height: auto; }
       .main-content { margin-right: 0; }
@@ -44,7 +44,7 @@
     .admin-input:focus { border-color: #00D2FF; }
     .admin-input::placeholder { color: #475569; }
     
-    .nav-btn { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-radius: 12px; font-size: 14px; font-weight: 700; color: #94a3b8; transition: all 0.2s; width: 100%; text-align: right; background: none; border: none; cursor: pointer; text-decoration: none; }
+    .nav-btn { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 700; color: #94a3b8; transition: all 0.2s; width: 100%; text-align: right; background: none; border: none; cursor: pointer; text-decoration: none; }
     .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
     .nav-btn.active { color: #00D2FF; background: rgba(0, 210, 255, 0.1); border-right: 3px solid #00D2FF; }
     
@@ -74,17 +74,17 @@
 <div id="login-overlay">
   <div class="login-box">
     <div style="width: 60px; height: 60px; border-radius: 18px; background: rgba(0,210,255,0.12); border: 1px solid rgba(0,210,255,0.25); display: flex; align-items: center; justify-content: center; color: #00D2FF; font-size: 26px; margin: 0 auto 18px;">
-      <i class="fas fa-lock"></i>
+      <i class="fas fa-shield-halved"></i>
     </div>
     <h2 style="color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 6px;">لوحة تحكم برق سهيل</h2>
-    <p style="color: #64748b; font-size: 12px; margin-bottom: 24px;">يرجى تسجيل الدخول للوصول وإدارة المخزون</p>
+    <p style="color: #64748b; font-size: 12px; margin-bottom: 24px;">نظام إدارة المخزون والصلاحيات الآمن</p>
 
     <form onsubmit="handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 14px; text-align: right;">
       <div>
         <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">اسم المستخدم (Username)</label>
         <div style="position: relative;">
           <i class="fas fa-user" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 13px;"></i>
-          <input type="text" id="login-username" class="admin-input" style="padding-right: 36px;" placeholder="admin" required autofocus>
+          <input type="text" id="login-username" class="admin-input" style="padding-right: 36px;" placeholder="أدخل اسم المستخدم..." required autofocus>
         </div>
       </div>
 
@@ -100,7 +100,7 @@
         ❌ اسم المستخدم أو كلمة المرور غير صحيحة!
       </div>
 
-      <button type="submit" style="background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; font-weight: 800; padding: 13px; border-radius: 12px; font-size: 14px; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 20px rgba(0,210,255,0.25);">
+      <button type="submit" id="login-btn-text" style="background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; font-weight: 800; padding: 13px; border-radius: 12px; font-size: 14px; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 20px rgba(0,210,255,0.25);">
         <i class="fas fa-right-to-bracket ml-1"></i> تسجيل الدخول
       </button>
 
@@ -128,6 +128,20 @@
     </div>
   </a>
 
+  <!-- Logged User Info Pill -->
+  <div style="padding: 10px 16px; background: rgba(7, 12, 24, 0.6); border-bottom: 1px solid #1e293b; display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <div style="width: 28px; height: 28px; border-radius: 8px; background: rgba(0,210,255,0.1); color: #00D2FF; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div>
+        <div id="current-user-name" style="color: #fff; font-size: 12px; font-weight: 800;">المسؤول</div>
+        <div id="current-user-role-badge" style="font-size: 10px; font-weight: 700; color: #38bdf8;">مسؤول عام</div>
+      </div>
+    </div>
+    <span id="role-pill" style="font-size: 9px; font-weight: 800; background: rgba(0,210,255,0.15); color: #00D2FF; padding: 2px 6px; border-radius: 6px;">كامل الصلاحيات</span>
+  </div>
+
   <nav style="padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 4px;">
     <button class="nav-btn active" id="nav-tab-products" onclick="switchTab('products')">
       <i class="fas fa-boxes-stacked w-5 text-center"></i> إدارة المنتجات
@@ -137,6 +151,10 @@
     </button>
     <button class="nav-btn" id="nav-tab-stats" onclick="switchTab('stats')">
       <i class="fas fa-chart-pie w-5 text-center"></i> إحصائيات المخزون
+    </button>
+    <!-- Super Admin Only Tab -->
+    <button class="nav-btn" id="nav-tab-users" onclick="switchTab('users')" style="color: #c084fc;">
+      <i class="fas fa-users-gear w-5 text-center"></i> إدارة المسؤولين
     </button>
     <div style="border-top: 1px solid #1e293b; margin: 10px 0;"></div>
     <a href="index.html" class="nav-btn">
@@ -353,22 +371,98 @@
       </div>
     </div>
 
+    <!-- Tab 4: Super Admin User Management (إدارة المسؤولين) -->
+    <div id="tab-users" style="display: none;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+        <div>
+          <h2 style="color: #fff; font-size: 18px; font-weight: 800; margin: 0;">👥 إدارة المسؤولين والمديرين</h2>
+          <p style="color: #64748b; font-size: 12px; margin-top: 4px;">إضافة وتعديل حسابات المديرين والمسؤولين وتحديد صلاحياتهم</p>
+        </div>
+        <button onclick="openAddUserModal()" style="display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #a855f7, #c084fc); color: #070C1A; border: none; border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(168,85,247,0.25);">
+          <i class="fas fa-user-plus"></i> إضافة مسؤول / مدير جديد
+        </button>
+      </div>
+
+      <div class="glass-card" style="overflow: hidden;">
+        <div style="display: grid; grid-template-columns: 1fr 140px 140px 140px 100px; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #1e293b; font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase;">
+          <div>الاسم الكامل / الحساب</div>
+          <div>اسم المستخدم (Username)</div>
+          <div style="text-align: center;">الرتبة والصلاحية</div>
+          <div style="text-align: center;">تاريخ الإنشاء</div>
+          <div style="text-align: center;">تحكم</div>
+        </div>
+        <div id="users-rows-container"></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- Edit Modal -->
+<!-- Edit Product Modal -->
 <div id="modal-overlay" onclick="handleOverlayClick(event)">
   <div class="modal-box" id="edit-modal-box"></div>
+</div>
+
+<!-- User Add/Edit Modal -->
+<div id="user-modal-overlay" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 60; display: none; align-items: center; justify-content: center; padding: 16px;" onclick="if(event.target===this)closeUserModal()">
+  <div class="modal-box" style="max-width: 480px; padding: 24px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #1e293b;">
+      <h3 id="user-modal-title" style="color: #fff; font-size: 16px; font-weight: 800; margin: 0;">➕ إضافة مستخدم جديد</h3>
+      <button onclick="closeUserModal()" style="width: 30px; height: 30px; border-radius: 8px; background: #1e293b; border: none; color: #94a3b8; cursor: pointer;"><i class="fas fa-times"></i></button>
+    </div>
+
+    <form onsubmit="handleSaveUser(event)" style="display: flex; flex-direction: column; gap: 12px;">
+      <input type="hidden" id="modal-user-id">
+      <div>
+        <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">الاسم الكامل *</label>
+        <input type="text" id="modal-user-fullname" class="admin-input" placeholder="مثال: أحمد السعيد" required>
+      </div>
+      <div>
+        <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">اسم المستخدم (Username) *</label>
+        <input type="text" id="modal-user-username" class="admin-input" placeholder="مثال: ahmed_admin" required>
+      </div>
+      <div>
+        <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">كلمة المرور (Password) *</label>
+        <input type="password" id="modal-user-password" class="admin-input" placeholder="أدخل كلمة مرور قوية...">
+        <div id="password-hint" style="font-size: 10px; color: #64748b; margin-top: 2px; display: none;">اتركه فارغاً إن لم ترغب بتغيير كلمة المرور الحالية</div>
+      </div>
+      <div>
+        <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">الرتبة والصلاحيات *</label>
+        <select id="modal-user-role" class="admin-input">
+          <option value="manager">مدير (إدارة المنتجات والمخزون والأسعار)</option>
+          <option value="superadmin">مسؤول عام (صلاحيات كاملة للموقع وحذف المديرين)</option>
+        </select>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #1e293b;">
+        <button type="submit" style="flex: 1; background: linear-gradient(135deg, #a855f7, #c084fc); color: #070C1A; border: none; font-weight: 800; padding: 12px; border-radius: 10px; font-size: 13px; cursor: pointer;">
+          <i class="fas fa-save"></i> حفظ الحساب
+        </button>
+        <button type="button" onclick="closeUserModal()" style="padding: 12px 18px; background: #1e293b; color: #94a3b8; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">
+          إلغاء
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <!-- DATA LAYER -->
 <script src="assets/js/data.js"></script>
 <script>
-// ── Auth Credentials ─────────────────────────────────────────
-var ADMIN_USER = "admin";
-var ADMIN_PASS = "admin";
+// ── Cryptographic SHA-256 Utility ────────────────────────────
+async function computeSHA256(message) {
+  var msgBuffer = new TextEncoder().encode(message);
+  var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  var hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+}
+
+// Master Admin Hash (Plain text is never stored in source code)
+var MASTER_ADMIN_HASH = "dd4005f19020a24600e28e0b99753f0b5ca79e269e5a8e69e218e20654f44377";
 
 // State
+var currentUser = null;
+var adminUsersList = [];
 var storeProducts = [];
 var currentEditingId = null;
 var uploadTarget = 'add';
@@ -386,36 +480,93 @@ var CATEGORY_MAP = {
 
 var CATEGORY_PRIORITY = { devices: 1, thuraya: 2, garmin: 3, accessories: 4, cards: 5, services: 6 };
 
-// ── Auth Check on Load ──────────────────────────────────────
+// ── Initialize ──────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function () {
+  initUsersDatabase();
   checkAuth();
 });
 
-function checkAuth() {
-  var isAuth = sessionStorage.getItem('barq_admin_logged_in') === 'true' || localStorage.getItem('barq_admin_logged_in') === 'true';
-  var loginOverlay = document.getElementById('login-overlay');
-
-  if (isAuth) {
-    if (loginOverlay) loginOverlay.style.display = 'none';
-    loadData();
-  } else {
-    if (loginOverlay) loginOverlay.style.display = 'flex';
+function initUsersDatabase() {
+  var saved = localStorage.getItem('barq_admin_users');
+  if (saved) {
+    try { adminUsersList = JSON.parse(saved); } catch(e) { adminUsersList = []; }
+  }
+  if (!adminUsersList || adminUsersList.length === 0) {
+    adminUsersList = [
+      {
+        id: 'usr-master',
+        username: 'admin',
+        fullname: 'المسؤول العام',
+        role: 'superadmin',
+        passwordHash: MASTER_ADMIN_HASH,
+        createdAt: '2026-08-21'
+      }
+    ];
+    localStorage.setItem('barq_admin_users', JSON.stringify(adminUsersList));
   }
 }
 
-function handleLoginSubmit(e) {
+function checkAuth() {
+  var sessionUser = sessionStorage.getItem('barq_logged_user') || localStorage.getItem('barq_logged_user');
+  var loginOverlay = document.getElementById('login-overlay');
+
+  if (sessionUser) {
+    try {
+      currentUser = JSON.parse(sessionUser);
+      if (loginOverlay) loginOverlay.style.display = 'none';
+      applyUserPermissions();
+      loadData();
+      return;
+    } catch(e) {}
+  }
+
+  if (loginOverlay) loginOverlay.style.display = 'flex';
+}
+
+function applyUserPermissions() {
+  if (!currentUser) return;
+
+  var nameEl = document.getElementById('current-user-name');
+  var roleBadgeEl = document.getElementById('current-user-role-badge');
+  var rolePill = document.getElementById('role-pill');
+  var usersTabBtn = document.getElementById('nav-tab-users');
+
+  if (nameEl) nameEl.textContent = currentUser.fullname || currentUser.username;
+  
+  if (currentUser.role === 'superadmin') {
+    if (roleBadgeEl) { roleBadgeEl.textContent = 'مسؤول عام (الرئيسي)'; roleBadgeEl.style.color = '#c084fc'; }
+    if (rolePill) { rolePill.textContent = 'صلاحيات كاملة'; rolePill.style.background = 'rgba(192,132,252,0.2)'; rolePill.style.color = '#c084fc'; }
+    if (usersTabBtn) usersTabBtn.style.display = 'flex';
+  } else {
+    if (roleBadgeEl) { roleBadgeEl.textContent = 'مدير المخزون'; roleBadgeEl.style.color = '#38bdf8'; }
+    if (rolePill) { rolePill.textContent = 'إدارة المخزون'; rolePill.style.background = 'rgba(56,189,248,0.2)'; rolePill.style.color = '#38bdf8'; }
+    if (usersTabBtn) usersTabBtn.style.display = 'none';
+  }
+}
+
+async function handleLoginSubmit(e) {
   e.preventDefault();
-  var u = (document.getElementById('login-username').value || '').trim();
+  var u = (document.getElementById('login-username').value || '').trim().toLowerCase();
   var p = (document.getElementById('login-password').value || '').trim();
   var err = document.getElementById('login-error');
 
-  // Accept 'admin' or custom credentials
-  if ((u === 'admin' || u === 'barq') && (p === 'admin' || p === 'barq2026' || p === '123456')) {
-    sessionStorage.setItem('barq_admin_logged_in', 'true');
-    localStorage.setItem('barq_admin_logged_in', 'true');
+  initUsersDatabase();
+
+  var enteredHash = await computeSHA256(p);
+
+  // Check in users database
+  var matched = adminUsersList.find(function(user) {
+    return user.username.toLowerCase() === u && user.passwordHash === enteredHash;
+  });
+
+  if (matched) {
+    currentUser = matched;
+    sessionStorage.setItem('barq_logged_user', JSON.stringify(matched));
+    localStorage.setItem('barq_logged_user', JSON.stringify(matched));
     document.getElementById('login-overlay').style.display = 'none';
+    applyUserPermissions();
     loadData();
-    showToast('👋 مرحباً بك! تم تسجيل الدخول بنجاح');
+    showToast('👋 مرحباً بك ' + (matched.fullname || matched.username) + '! تم تسجيل الدخول بنجاح');
   } else {
     if (err) {
       err.style.display = 'block';
@@ -426,29 +577,175 @@ function handleLoginSubmit(e) {
 
 function handleLogout() {
   if (!confirm('هل تريد تسجيل الخروج من لوحة التحكم؟')) return;
-  sessionStorage.removeItem('barq_admin_logged_in');
-  localStorage.removeItem('barq_admin_logged_in');
+  sessionStorage.removeItem('barq_logged_user');
+  localStorage.removeItem('barq_logged_user');
   window.location.reload();
 }
 
-function loadData() {
-  // 1. Try to get from localStorage
-  var saved = localStorage.getItem('barq_products');
-  if (saved) {
-    try {
-      storeProducts = JSON.parse(saved);
-    } catch(e) {
-      storeProducts = [];
-    }
+// ── Tab Switcher ────────────────────────────────────────────
+function switchTab(tabId) {
+  if (tabId === 'users' && (!currentUser || currentUser.role !== 'superadmin')) {
+    showToast('❌ ليس لديك صلاحية للوصول لإدارة المسؤولين!');
+    return;
   }
 
-  // 2. If empty, grab from INITIAL_PRODUCTS or INVENTORY_PRODUCTS from data.js
+  ['products', 'add', 'stats', 'users'].forEach(function(t) {
+    var el = document.getElementById('tab-' + t);
+    var btn = document.getElementById('nav-tab-' + t);
+    if (el) el.style.display = (t === tabId) ? 'block' : 'none';
+    if (btn) btn.classList.toggle('active', t === tabId);
+  });
+  if (tabId === 'stats') renderStats();
+  if (tabId === 'users') renderUsersTable();
+}
+
+// ── Users Management (Super Admin Only) ─────────────────────
+function renderUsersTable() {
+  initUsersDatabase();
+  var container = document.getElementById('users-rows-container');
+  if (!container) return;
+
+  container.innerHTML = adminUsersList.map(function(u) {
+    var isSuper = u.role === 'superadmin';
+    var roleBadge = isSuper
+      ? '<span style="background: rgba(192,132,252,0.15); color: #c084fc; border: 1px solid rgba(192,132,252,0.3); font-size: 11px; font-weight: 800; padding: 2px 10px; border-radius: 999px;">👑 مسؤول عام</span>'
+      : '<span style="background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); font-size: 11px; font-weight: 800; padding: 2px 10px; border-radius: 999px;">💼 مدير</span>';
+
+    var isSelf = (currentUser && currentUser.username === u.username);
+
+    return '<div style="display: grid; grid-template-columns: 1fr 140px 140px 140px 100px; gap: 12px; padding: 14px 18px; align-items: center; border-bottom: 1px solid rgba(30, 41, 59, 0.5);">' +
+      '<div style="display: flex; align-items: center; gap: 10px;">' +
+        '<div style="width: 38px; height: 38px; border-radius: 10px; background: ' + (isSuper ? 'rgba(192,132,252,0.15)' : 'rgba(56,189,248,0.15)') + '; color: ' + (isSuper ? '#c084fc' : '#38bdf8') + '; display: flex; align-items: center; justify-content: center; font-size: 15px;">' +
+          '<i class="' + (isSuper ? 'fas fa-crown' : 'fas fa-user-tie') + '"></i>' +
+        '</div>' +
+        '<div>' +
+          '<div style="color: #fff; font-size: 13px; font-weight: 800;">' + u.fullname + ' ' + (isSelf ? '<span style="color:#00D2FF; font-size:10px;">(حسابك الحالي)</span>' : '') + '</div>' +
+          '<div style="color: #64748b; font-size: 11px;">' + (isSuper ? 'صلاحية كاملة للموقع وحذف المديرين' : 'صلاحية إدارة المخزون والأسعار') + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="font-family: monospace; color: #00D2FF; font-weight: 700; font-size: 13px;">@' + u.username + '</div>' +
+      '<div style="text-align: center;">' + roleBadge + '</div>' +
+      '<div style="text-align: center; color: #64748b; font-size: 12px; font-family: monospace;">' + (u.createdAt || '2026-08-21') + '</div>' +
+      '<div style="display: flex; gap: 6px; justify-content: center;">' +
+        '<button onclick="openEditUserModal(\'' + u.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,210,255,0.12); color: #00D2FF; border: none; cursor: pointer; font-size: 13px;" title="تعديل الحساب وكلمة المرور"><i class="fas fa-pen"></i></button>' +
+        (isSelf
+          ? '<button disabled style="width: 32px; height: 32px; border-radius: 8px; background: rgba(100,116,139,0.1); color: #475569; border: none; cursor: not-allowed;" title="لا يمكن حذف حسابك الحالي"><i class="fas fa-lock"></i></button>'
+          : '<button onclick="deleteUser(\'' + u.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(239,68,68,0.12); color: #f87171; border: none; cursor: pointer; font-size: 13px;" title="حذف المدير"><i class="fas fa-trash"></i></button>') +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function openAddUserModal() {
+  document.getElementById('user-modal-title').textContent = '➕ إضافة مسؤول أو مدير جديد';
+  document.getElementById('modal-user-id').value = '';
+  document.getElementById('modal-user-fullname').value = '';
+  document.getElementById('modal-user-username').value = '';
+  document.getElementById('modal-user-password').value = '';
+  document.getElementById('modal-user-password').required = true;
+  document.getElementById('password-hint').style.display = 'none';
+  document.getElementById('modal-user-role').value = 'manager';
+  document.getElementById('user-modal-overlay').style.display = 'flex';
+}
+
+function openEditUserModal(userId) {
+  initUsersDatabase();
+  var u = adminUsersList.find(function(x) { return x.id === userId; });
+  if (!u) return;
+
+  document.getElementById('user-modal-title').textContent = '✏️ تعديل بيانات الحساب';
+  document.getElementById('modal-user-id').value = u.id;
+  document.getElementById('modal-user-fullname').value = u.fullname || '';
+  document.getElementById('modal-user-username').value = u.username || '';
+  document.getElementById('modal-user-password').value = '';
+  document.getElementById('modal-user-password').required = false;
+  document.getElementById('password-hint').style.display = 'block';
+  document.getElementById('modal-user-role').value = u.role || 'manager';
+  document.getElementById('user-modal-overlay').style.display = 'flex';
+}
+
+function closeUserModal() {
+  document.getElementById('user-modal-overlay').style.display = 'none';
+}
+
+async function handleSaveUser(e) {
+  e.preventDefault();
+  initUsersDatabase();
+
+  var uid = document.getElementById('modal-user-id').value;
+  var fullname = (document.getElementById('modal-user-fullname').value || '').trim();
+  var username = (document.getElementById('modal-user-username').value || '').trim().toLowerCase();
+  var password = (document.getElementById('modal-user-password').value || '').trim();
+  var role = document.getElementById('modal-user-role').value;
+
+  if (uid) {
+    // Edit existing
+    var idx = adminUsersList.findIndex(function(x) { return x.id === uid; });
+    if (idx === -1) return;
+
+    adminUsersList[idx].fullname = fullname;
+    adminUsersList[idx].username = username;
+    adminUsersList[idx].role = role;
+
+    if (password) {
+      adminUsersList[idx].passwordHash = await computeSHA256(password);
+    }
+
+    localStorage.setItem('barq_admin_users', JSON.stringify(adminUsersList));
+    closeUserModal();
+    renderUsersTable();
+    showToast('✅ تم تعديل الحساب بنجاح!');
+  } else {
+    // Add new
+    if (!password) { showToast('❌ يجب تحديد كلمة مرور للحساب الجديد!'); return; }
+
+    // Check duplicate username
+    var exists = adminUsersList.some(function(x) { return x.username.toLowerCase() === username; });
+    if (exists) { showToast('❌ اسم المستخدم مستخدم بالفعل! اختر اسماً آخر'); return; }
+
+    var pHash = await computeSHA256(password);
+    var newUser = {
+      id: 'usr-' + Date.now().toString(36),
+      username: username,
+      fullname: fullname,
+      role: role,
+      passwordHash: pHash,
+      createdAt: new Date().toISOString().slice(0, 10)
+    };
+
+    adminUsersList.push(newUser);
+    localStorage.setItem('barq_admin_users', JSON.stringify(adminUsersList));
+    closeUserModal();
+    renderUsersTable();
+    showToast('✅ تم إنشاء حساب ' + (role === 'superadmin' ? 'المسؤول العام' : 'المدير') + ' بنجاح!');
+  }
+}
+
+function deleteUser(userId) {
+  initUsersDatabase();
+  var u = adminUsersList.find(function(x) { return x.id === userId; });
+  if (!u) return;
+
+  if (!confirm('هل أنت متأكد من حذف الحساب: "' + u.fullname + ' (@' + u.username + ')" نهائياً؟')) return;
+
+  adminUsersList = adminUsersList.filter(function(x) { return x.id !== userId; });
+  localStorage.setItem('barq_admin_users', JSON.stringify(adminUsersList));
+  renderUsersTable();
+  showToast('🗑️ تم حذف حساب المدير بنجاح!');
+}
+
+// ── Products Data ───────────────────────────────────────────
+function loadData() {
+  var saved = localStorage.getItem('barq_products');
+  if (saved) {
+    try { storeProducts = JSON.parse(saved); } catch(e) { storeProducts = []; }
+  }
+
   if (!storeProducts || storeProducts.length === 0) {
     if (typeof INITIAL_PRODUCTS !== 'undefined' && INITIAL_PRODUCTS.length > 0) {
       storeProducts = JSON.parse(JSON.stringify(INITIAL_PRODUCTS));
     } else if (typeof INVENTORY_PRODUCTS !== 'undefined' && INVENTORY_PRODUCTS.length > 0) {
       storeProducts = JSON.parse(JSON.stringify(INVENTORY_PRODUCTS));
-      // Sort
       storeProducts.sort(function(a, b) {
         return (CATEGORY_PRIORITY[a.category] || 9) - (CATEGORY_PRIORITY[b.category] || 9);
       });
@@ -485,16 +782,6 @@ function resetToDefault() {
   showToast('✅ تم استعادة بيانات الجرد الأصلية!');
 }
 
-function switchTab(tabId) {
-  ['products', 'add', 'stats'].forEach(function(t) {
-    var el = document.getElementById('tab-' + t);
-    var btn = document.getElementById('nav-tab-' + t);
-    if (el) el.style.display = (t === tabId) ? 'block' : 'none';
-    if (btn) btn.classList.toggle('active', t === tabId);
-  });
-  if (tabId === 'stats') renderStats();
-}
-
 // ── Pricing Calculations ────────────────────────────────────
 function calcAddPricing(changedField) {
   var baseEl = document.getElementById('add-base-price');
@@ -509,18 +796,12 @@ function calcAddPricing(changedField) {
 
   if (changedField === 'base' || changedField === 'discount') {
     if (base > 0) {
-      if (disc > 0) {
-        finalEl.value = Math.max(0, base - disc);
-      } else {
-        finalEl.value = base;
-      }
+      if (disc > 0) { finalEl.value = Math.max(0, base - disc); }
+      else { finalEl.value = base; }
     }
   } else if (changedField === 'final') {
-    if (base > 0 && final < base) {
-      discEl.value = base - final;
-    } else {
-      discEl.value = 0;
-    }
+    if (base > 0 && final < base) { discEl.value = base - final; }
+    else { discEl.value = 0; }
   }
 
   var currentDisc = parseFloat(discEl.value) || 0;
@@ -545,18 +826,12 @@ function calcEditPricing(changedField) {
 
   if (changedField === 'base' || changedField === 'discount') {
     if (base > 0) {
-      if (disc > 0) {
-        finalEl.value = Math.max(0, base - disc);
-      } else {
-        finalEl.value = base;
-      }
+      if (disc > 0) { finalEl.value = Math.max(0, base - disc); }
+      else { finalEl.value = base; }
     }
   } else if (changedField === 'final') {
-    if (base > 0 && final < base) {
-      discEl.value = base - final;
-    } else {
-      discEl.value = 0;
-    }
+    if (base > 0 && final < base) { discEl.value = base - final; }
+    else { discEl.value = 0; }
   }
 
   var currentDisc = parseFloat(discEl.value) || 0;
@@ -576,12 +851,10 @@ function renderProductsTable() {
 
   var filtered = storeProducts.slice();
 
-  // Filter category
   if (catFilter !== 'all') {
     filtered = filtered.filter(function(p) { return p.category === catFilter; });
   }
 
-  // Filter search
   if (search) {
     filtered = filtered.filter(function(p) {
       return (p.name || '').toLowerCase().includes(search) ||
@@ -590,7 +863,6 @@ function renderProductsTable() {
     });
   }
 
-  // Sort
   if (sortFilter === 'name') {
     filtered.sort(function(a, b) { return (a.name || '').localeCompare(b.name || '', 'ar'); });
   } else if (sortFilter === 'price-asc') {
@@ -602,7 +874,6 @@ function renderProductsTable() {
   } else if (sortFilter === 'stock-desc') {
     filtered.sort(function(a, b) { return (b.stock || 0) - (a.stock || 0); });
   } else {
-    // default
     filtered.sort(function(a, b) {
       return ((CATEGORY_PRIORITY[a.category] || 9) - (CATEGORY_PRIORITY[b.category] || 9)) ||
              ((a.displayIndex || 0) - (b.displayIndex || 0));
@@ -689,7 +960,6 @@ function openEditModal(productId) {
       '</div>' +
       '<!-- Right -->' +
       '<div style="display: flex; flex-direction: column; gap: 14px;">' +
-        '<!-- Pricing 3-Box System -->' +
         '<div style="background: rgba(7,12,24,0.6); border: 1px solid #1e293b; border-radius: 12px; padding: 12px;">' +
           '<div style="font-size: 12px; font-weight: 800; color: #00D2FF; margin-bottom: 8px;">💰 تسعير الصنف والتخفيض</div>' +
           '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">' +
@@ -890,7 +1160,7 @@ function saveNewProduct() {
   showToast('✅ تم إضافة "' + name + '" للموقع بنجاح!');
 }
 
-// ── Delete / Duplicate ──────────────────────────────────────
+// ── Delete / Duplicate Product ──────────────────────────────
 function deleteProduct(id, fromModal) {
   var p = storeProducts.find(function(x) { return x.id === id; });
   if (!p) return;
