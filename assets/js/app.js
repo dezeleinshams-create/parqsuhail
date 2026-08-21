@@ -46,16 +46,12 @@ function applyThemeConfig() {
       });
     }
 
-    // 2. Hero Banner Customization (Image, Stretch, Height, Texts, CTA Button)
+    // 2. Hero Banner (home)
     if (config.banner) {
       const bannerImg = document.getElementById("hero-banner-img");
       const bannerImgContainer = document.getElementById("hero-banner-img-container");
-      if (bannerImg && config.banner.image) {
-        bannerImg.src = config.banner.image;
-      }
-      if (bannerImg && config.banner.fit) {
-        bannerImg.style.objectFit = config.banner.fit;
-      }
+      if (bannerImg && config.banner.image) bannerImg.src = config.banner.image;
+      if (bannerImg && config.banner.fit) bannerImg.style.objectFit = config.banner.fit;
       if (bannerImgContainer && config.banner.height) {
         bannerImgContainer.style.height = config.banner.height;
         if (bannerImg) bannerImg.style.height = "100%";
@@ -78,7 +74,77 @@ function applyThemeConfig() {
       }
     }
 
-    // 3. Header Quote Button
+    // 3. Thuraya Spotlight Section
+    if (config.thuraya) {
+      const thurayaImg = document.getElementById("thuraya-banner-img");
+      const thurayaImgContainer = document.getElementById("thuraya-banner-img-container");
+      if (thurayaImg && config.thuraya.image) thurayaImg.src = config.thuraya.image;
+      if (thurayaImg && config.thuraya.fit) thurayaImg.style.objectFit = config.thuraya.fit;
+      if (thurayaImgContainer && config.thuraya.height) {
+        thurayaImgContainer.style.height = config.thuraya.height;
+        if (thurayaImg) thurayaImg.style.height = "100%";
+      }
+      const titleEl = document.getElementById("thuraya-title");
+      if (titleEl && config.thuraya.title) titleEl.textContent = config.thuraya.title;
+      const descEl = document.getElementById("thuraya-desc");
+      if (descEl && config.thuraya.desc) descEl.textContent = config.thuraya.desc;
+      const btnTextEl = document.getElementById("thuraya-cta-btn-text");
+      if (btnTextEl && config.thuraya.btnText) btnTextEl.textContent = config.thuraya.btnText;
+      const btnEl = document.getElementById("thuraya-cta-btn");
+      if (btnEl && config.thuraya.btnLink) btnEl.href = config.thuraya.btnLink;
+    }
+
+    // 4. Garmin GPS Section
+    if (config.garmin) {
+      const garminImg = document.getElementById("garmin-banner-img");
+      const garminImgContainer = document.getElementById("garmin-banner-img-container");
+      if (garminImg && config.garmin.image) garminImg.src = config.garmin.image;
+      if (garminImg && config.garmin.fit) garminImg.style.objectFit = config.garmin.fit;
+      if (garminImgContainer && config.garmin.height) {
+        garminImgContainer.style.height = config.garmin.height;
+        if (garminImg) garminImg.style.height = "100%";
+      }
+      const titleEl = document.getElementById("garmin-title");
+      if (titleEl && config.garmin.title) titleEl.textContent = config.garmin.title;
+      const descEl = document.getElementById("garmin-desc");
+      if (descEl && config.garmin.desc) descEl.textContent = config.garmin.desc;
+      const btnTextEl = document.getElementById("garmin-cta-btn-text");
+      if (btnTextEl && config.garmin.btnText) btnTextEl.textContent = config.garmin.btnText;
+      const btnEl = document.getElementById("garmin-cta-btn");
+      if (btnEl && config.garmin.btnLink) btnEl.href = config.garmin.btnLink;
+    }
+
+    // 5. B2B Quote Section
+    if (config.b2b) {
+      const titleEl = document.getElementById("b2b-title");
+      if (titleEl && config.b2b.title) titleEl.textContent = config.b2b.title;
+      const descEl = document.getElementById("b2b-desc");
+      if (descEl && config.b2b.desc) descEl.textContent = config.b2b.desc;
+    }
+
+    // 6. Showroom Card Section
+    if (config.showroom) {
+      const showroomImg = document.getElementById("showroom-banner-img");
+      const showroomImgContainer = document.getElementById("showroom-banner-img-container");
+      if (showroomImg && config.showroom.image) showroomImg.src = config.showroom.image;
+      if (showroomImg && config.showroom.fit) showroomImg.style.objectFit = config.showroom.fit;
+      if (showroomImgContainer && config.showroom.height) {
+        showroomImgContainer.style.height = config.showroom.height;
+        if (showroomImg) showroomImg.style.height = "100%";
+      }
+      const titleEl = document.getElementById("showroom-title");
+      if (titleEl && config.showroom.title) titleEl.textContent = config.showroom.title;
+      const descEl = document.getElementById("showroom-desc");
+      if (descEl && config.showroom.desc) descEl.textContent = config.showroom.desc;
+      const addrEl = document.getElementById("showroom-address-text");
+      if (addrEl && config.showroom.address) addrEl.textContent = config.showroom.address;
+      const hoursEl = document.getElementById("showroom-hours-text");
+      if (hoursEl && config.showroom.hours) hoursEl.textContent = config.showroom.hours;
+      const phoneEl = document.getElementById("showroom-phone-text");
+      if (phoneEl && config.showroom.phone) phoneEl.textContent = config.showroom.phone;
+    }
+
+    // 7. Header Quote Button
     if (config.headerBtn) {
       const hBtn = document.getElementById("header-quote-btn");
       const hBtnText = document.getElementById("header-quote-btn-text");
@@ -86,7 +152,7 @@ function applyThemeConfig() {
       if (hBtn && config.headerBtn.link) hBtn.href = config.headerBtn.link;
     }
 
-    // 4. WhatsApp Floating Button
+    // 8. WhatsApp Floating Button
     if (config.whatsapp) {
       const waBtn = document.querySelector('a[href*="wa.me"]');
       if (waBtn) {
@@ -96,7 +162,7 @@ function applyThemeConfig() {
       }
     }
 
-    // 5. Grid Layout Columns & Sizing
+    // 9. Grid Layout Columns & Sizing
     if (config.layout && config.layout.gridCols) {
       const prodContainer = document.getElementById("products-container");
       if (prodContainer && viewMode === "grid") {
@@ -108,7 +174,6 @@ function applyThemeConfig() {
         } else if (cols === "6") {
           prodContainer.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 transition-all";
         } else {
-          // Default 5 cols
           prodContainer.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 transition-all";
         }
       }
@@ -117,6 +182,7 @@ function applyThemeConfig() {
     console.error("Error applying theme config:", e);
   }
 }
+
 
 
 // ----------------- THEME MANAGEMENT (Light / Dark) -----------------

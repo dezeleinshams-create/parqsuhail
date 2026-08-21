@@ -64,9 +64,10 @@
     #login-overlay { position: fixed; inset: 0; background: #050811; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
     .login-box { background: rgba(15, 23, 42, 0.95); border: 1px solid #1e293b; border-radius: 24px; padding: 36px 30px; width: 100%; max-width: 420px; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 40px rgba(0,210,255,0.08); text-align: center; }
 
-    /* Visual Builder Drag Item */
-    .builder-section-item { background: #0b1120; border: 1px solid #1e293b; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; user-select: none; }
-    .builder-section-item:hover { border-color: #00D2FF66; background: #0e172a; }
+    /* Visual Builder Drag & Selection Items */
+    .builder-section-item { background: #0b1120; border: 1px solid #1e293b; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; user-select: none; cursor: pointer; }
+    .builder-section-item:hover { border-color: #00D2FF88; background: #0e172a; }
+    .builder-section-item.active-sec { border: 2px solid #00D2FF !important; background: rgba(0,210,255,0.08) !important; box-shadow: 0 0 20px rgba(0,210,255,0.15); }
     .builder-section-item.hidden-sec { opacity: 0.5; background: #070c18; }
     
     .fit-btn { padding: 8px 14px; border-radius: 8px; border: 1px solid #1e293b; background: #070c18; color: #94a3b8; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
@@ -381,7 +382,7 @@
           <h2 style="color: #fff; font-size: 19px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">
             <span style="color: #00D2FF;">🎨</span> مخصص تصميم وهياكل المتجر
           </h2>
-          <p style="color: #64748b; font-size: 12px; margin-top: 4px;">تحكم في ترتيب الأقسام بالتحريك، أبعاد وتمدد الصور والبنرات، وربط أزرار الموقع والواتساب</p>
+          <p style="color: #64748b; font-size: 12px; margin-top: 4px;">اضغط على أي قسم بالأعلى لتعديل صوره وتمددها ونصوصه ومربعاته بالأسفل فوراً</p>
         </div>
         <div style="display: flex; gap: 10px;">
           <button onclick="resetThemeBuilderConfig()" style="background: #1e293b; color: #94a3b8; border: none; border-radius: 10px; padding: 10px 16px; font-size: 12px; font-weight: 700; cursor: pointer;">
@@ -395,93 +396,28 @@
 
       <div style="display: flex; flex-direction: column; gap: 24px;">
 
-        <!-- 1. Reordering Sections Card -->
+        <!-- 1. Interactive Sections Reordering & Click Selector List -->
         <div class="glass-card" style="padding: 20px;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
             <div>
               <h3 style="color: #fff; font-size: 15px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-up-down-left-right" style="color: #00D2FF;"></i> 1. ترتيب وظهور أقسام المتجر في الصفحة الرئيسية
+                <i class="fas fa-layer-group" style="color: #00D2FF;"></i> 1. أقسام المتجر (اضغط على أي قسم لعرض وتعديل تفاصيله بالأسفل 👇)
               </h3>
-              <p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">استخدم أزرار الأسهم لتحريك أي قسم للأعلى أو للأسفل بسلاسة، وزر العين لإظهاره أو إخفائه</p>
+              <p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">يمكنك الضغط على أي قسم لتعديله، أو استخدام الأسهم لتحريك ترتيبه في الصفحة</p>
             </div>
           </div>
           <div id="builder-sections-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
 
-        <!-- 2. Hero Banner & Image Stretch Customizer -->
+        <!-- 2. Dynamic Section Customizer Container (Switches based on clicked section) -->
+        <div id="dynamic-section-customizer-container"></div>
+
+        <!-- 3. Global Buttons & WhatsApp Connector -->
         <div class="glass-card" style="padding: 20px;">
           <h3 style="color: #fff; font-size: 15px; font-weight: 800; margin: 0 0 4px; display: flex; align-items: center; gap: 8px;">
-            <i class="fas fa-image" style="color: #38bdf8;"></i> 2. البنر الإعلاني الرئيسي وتمدد الصور (Banner & Stretch)
+            <i class="fas fa-link" style="color: #4ade80;"></i> ربط أزرار الموقع والواتساب (Global Buttons & WhatsApp)
           </h3>
-          <p style="color: #64748b; font-size: 11.5px; margin-bottom: 18px;">تعديل صورة البنر الرئيسي، طريقة تمددها وملاءمتها للمربع، ونصوص وأزرار البنر</p>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <!-- Banner Image Box & Sizing -->
-            <div>
-              <label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📷 صورة البنر الإعلاني</label>
-              <div class="img-upload-box" id="builder-banner-img-box" onclick="triggerUpload('builder-banner')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, 'builder-banner')" style="min-height: 180px; position: relative;">
-                <img id="builder-banner-preview-img" src="assets/images/hero_banner_1_refined.jpg" style="width: 100%; height: 180px; object-fit: cover;">
-              </div>
-              <input type="text" id="builder-banner-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" placeholder="رابط صورة البنر..." oninput="previewBuilderBannerUrl()">
-
-              <!-- Stretch Mode Options -->
-              <div style="margin-top: 14px;">
-                <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📐 طريقة ملاءمة وتمدد الصورة داخل المربع (Image Fit):</label>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
-                  <button type="button" class="fit-btn active" id="fit-btn-cover" onclick="setBannerFit('cover')">
-                    <i class="fas fa-crop-simple"></i> تغطية وتناسب (Cover)
-                  </button>
-                  <button type="button" class="fit-btn" id="fit-btn-contain" onclick="setBannerFit('contain')">
-                    <i class="fas fa-expand"></i> احتواء كامل (Contain)
-                  </button>
-                  <button type="button" class="fit-btn" id="fit-btn-fill" onclick="setBannerFit('fill')">
-                    <i class="fas fa-up-right-and-down-left-from-center"></i> تمدد كامل (Stretch)
-                  </button>
-                </div>
-              </div>
-
-              <!-- Banner Height Dimension -->
-              <div style="margin-top: 14px;">
-                <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📏 ارتفاع مربع البنر في الصفحة:</label>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;">
-                  <button type="button" class="fit-btn" id="height-btn-260" onclick="setBannerHeight('260px')">260px (صغير)</button>
-                  <button type="button" class="fit-btn active" id="height-btn-380" onclick="setBannerHeight('380px')">380px (متوسط)</button>
-                  <button type="button" class="fit-btn" id="height-btn-480" onclick="setBannerHeight('480px')">480px (كبير)</button>
-                  <button type="button" class="fit-btn" id="height-btn-auto" onclick="setBannerHeight('auto')">تلقائي</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Banner Texts & CTA Button -->
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-              <div>
-                <label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📌 عنوان البنر الرئيسي</label>
-                <input type="text" id="builder-banner-title" class="admin-input" value="حلول الاتصالات الفضائية واللاسلكية والملاحة في المملكة">
-              </div>
-              <div>
-                <label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📝 النص التوضيحي للبنر</label>
-                <textarea id="builder-banner-desc" class="admin-input" rows="3" style="resize: vertical;">مؤسسة برق سهيل التجارية وجهتكم الرائدة لتجهيز الرحلات البرية والبحرية بأحدث هواتف الثريا، أجهزة اللاسلكي المرخصة من هيئة الاتصالات (CST)، وملاحة وخرائط قارمن مع الضمان والدعم الفني المباشر بالدمام.</textarea>
-              </div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div>
-                  <label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔘 نص زر البنر الرئيسي</label>
-                  <input type="text" id="builder-banner-btn-text" class="admin-input" value="تصفح كتالوج الأجهزة">
-                </div>
-                <div>
-                  <label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔗 رابط الزر</label>
-                  <input type="text" id="builder-banner-btn-link" class="admin-input" value="#products" style="direction: ltr; font-family: monospace;">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3. Button Actions & WhatsApp Customizer -->
-        <div class="glass-card" style="padding: 20px;">
-          <h3 style="color: #fff; font-size: 15px; font-weight: 800; margin: 0 0 4px; display: flex; align-items: center; gap: 8px;">
-            <i class="fas fa-link" style="color: #4ade80;"></i> 3. ربط أزرار الموقع والواتساب (Buttons & WhatsApp)
-          </h3>
-          <p style="color: #64748b; font-size: 11.5px; margin-bottom: 16px;">تحديد وجهات ونصوص أزرار المتجر ورقم ورسالة الواتساب</p>
+          <p style="color: #64748b; font-size: 11.5px; margin-bottom: 16px;">تحديد وجهة زر الهيدر ورقم ورسالة الواتساب العائم</p>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <!-- Header Quote Button -->
@@ -495,7 +431,7 @@
                   <input type="text" id="builder-header-btn-text" class="admin-input" value="طلب تسعيرة">
                 </div>
                 <div>
-                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">رابط الزر (URL أو معرف قسم)</label>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">رابط الزر</label>
                   <input type="text" id="builder-header-btn-link" class="admin-input" value="#b2b" style="direction: ltr; font-family: monospace;">
                 </div>
               </div>
@@ -512,38 +448,11 @@
                   <input type="text" id="builder-wa-phone" class="admin-input" value="966507181115" style="direction: ltr; font-family: monospace;">
                 </div>
                 <div>
-                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">رسالة الترحيب الافتتاحية التلقائية</label>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">رسالة الترحيب الافتتاحية</label>
                   <input type="text" id="builder-wa-msg" class="admin-input" value="السلام عليكم، أود الاستفسار عن أجهزة برق سهيل">
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <!-- 4. Grid Density & Columns -->
-        <div class="glass-card" style="padding: 20px;">
-          <h3 style="color: #fff; font-size: 15px; font-weight: 800; margin: 0 0 4px; display: flex; align-items: center; gap: 8px;">
-            <i class="fas fa-table-cells-large" style="color: #c084fc;"></i> 4. كثافة وأعمدة شبكة المنتجات (Catalog Grid Layout)
-          </h3>
-          <p style="color: #64748b; font-size: 11.5px; margin-bottom: 14px;">اختر عدد أعمدة عرض كروت المنتجات على الشاشات الكبيرة</p>
-
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
-            <button type="button" class="fit-btn" id="grid-cols-3" onclick="setGridCols('3')">
-              <div style="font-size: 14px; font-weight: 800;">3 أعمدة</div>
-              <div style="font-size: 10px; color: #64748b;">كروت كبيرة وعريضة</div>
-            </button>
-            <button type="button" class="fit-btn" id="grid-cols-4" onclick="setGridCols('4')">
-              <div style="font-size: 14px; font-weight: 800;">4 أعمدة</div>
-              <div style="font-size: 10px; color: #64748b;">كروت متوسطة متوازنة</div>
-            </button>
-            <button type="button" class="fit-btn active" id="grid-cols-5" onclick="setGridCols('5')">
-              <div style="font-size: 14px; font-weight: 800;">5 أعمدة (افتراضي)</div>
-              <div style="font-size: 10px; color: #64748b;">مدمجة وعالية الكثافة</div>
-            </button>
-            <button type="button" class="fit-btn" id="grid-cols-6" onclick="setGridCols('6')">
-              <div style="font-size: 14px; font-weight: 800;">6 أعمدة</div>
-              <div style="font-size: 10px; color: #64748b;">أقصى سعة للمنتجات</div>
-            </button>
           </div>
         </div>
 
@@ -666,14 +575,16 @@ var addSpecsList = [];
 var editSpecsList = [];
 
 // Visual Builder State
+var selectedBuilderSectionId = 'home';
+
 var DEFAULT_SECTIONS_META = [
-  { id: 'home', title: 'البنر الإعلاني الرئيسي (Hero Banner)', icon: 'fas fa-image' },
-  { id: 'section-features', title: 'شريط المميزات والضمان (Features Strip)', icon: 'fas fa-shield-halved' },
-  { id: 'products', title: 'كتالوج المنتجات والفئات (Products Catalog)', icon: 'fas fa-boxes-stacked' },
-  { id: 'thuraya', title: 'قسم هواتف وأجهزة الثريا (Thuraya Spotlight)', icon: 'fas fa-satellite' },
-  { id: 'garmin', title: 'قسم قارمن والملاحة والخرائط (Garmin GPS)', icon: 'fas fa-map-location-dot' },
-  { id: 'b2b', title: 'نموذج طلب عروض الأسعار (B2B Quote Request)', icon: 'fas fa-file-invoice' },
-  { id: 'showroom', title: 'بطاقة المعرض وخريطة الدمام (Showroom Card)', icon: 'fas fa-store' }
+  { id: 'home', title: 'البنر الإعلاني الرئيسي (Hero Banner)', icon: 'fas fa-image', desc: 'صورة البنر وتمددها، والعناوين وزر الكتالوج' },
+  { id: 'section-features', title: 'شريط المميزات والضمان (Features Strip)', icon: 'fas fa-shield-halved', desc: 'ميزات المتجر، ترخيص CST، والشحن والتوصيل' },
+  { id: 'products', title: 'كتالوج المنتجات والفئات (Products Catalog)', icon: 'fas fa-boxes-stacked', desc: 'عدد الأعمدة، نمط العرض، وكثافة المنتجات' },
+  { id: 'thuraya', title: 'قسم هواتف وأجهزة الثريا (Thuraya Spotlight)', icon: 'fas fa-satellite', desc: 'بنر الثريا الفضائية ومواصفاتها وزر الواتساب' },
+  { id: 'garmin', title: 'قسم قارمن والملاحة والخرائط (Garmin GPS)', icon: 'fas fa-map-location-dot', desc: 'بنر قارمن الصحراوي ومميزات الملاحة والتحديث' },
+  { id: 'b2b', title: 'نموذج طلب عروض الأسعار (B2B Quote Request)', icon: 'fas fa-file-invoice', desc: 'عناوين نموذج تسعيرات الشركات والمقناص' },
+  { id: 'showroom', title: 'بطاقة المعرض وخريطة الدمام (Showroom Card)', icon: 'fas fa-store', desc: 'صورة المعرض، العنوان، أوقات العمل، ورابط الخرائط' }
 ];
 
 var currentThemeConfig = {
@@ -695,6 +606,38 @@ var currentThemeConfig = {
     desc: 'مؤسسة برق سهيل التجارية وجهتكم الرائدة لتجهيز الرحلات البرية والبحرية بأحدث هواتف الثريا، أجهزة اللاسلكي المرخصة من هيئة الاتصالات (CST)، وملاحة وخرائط قارمن مع الضمان والدعم الفني المباشر بالدمام.',
     btnText: 'تصفح كتالوج الأجهزة',
     btnLink: '#products'
+  },
+  thuraya: {
+    image: 'assets/images/thuraya_banner_3.jpg',
+    fit: 'cover',
+    height: '340px',
+    title: 'اتصال فضائي لا ينقطع أينما ذهبت',
+    desc: 'نوفر في مؤسسة برق سهيل أحدث هواتف وأجهزة الأقمار الصناعية وشبكة الثريا، الحل الأمثل للرحالة، أصحاب المقناص، عمال المناجم، والسفن البحرية في أي نقطة خارج تغطية شبكات الجوال.',
+    btnText: 'استفسر عن عروض الثريا واتساب',
+    btnLink: 'https://wa.me/966507181115?text=استفسار%20عن%20أجهزة%20وشرائح%20الثريا'
+  },
+  garmin: {
+    image: 'assets/images/garmin_banner_2.jpg',
+    fit: 'cover',
+    height: '340px',
+    title: 'استكشف دروب الصحراء والبحر بدقة متناهية',
+    desc: 'أجهزة الملاحة اليدوية والمثبتة من شركة قارمن (Garmin) العالمية، محملة مسبقاً بأحدث خرائط تضاريس المملكة، الفياض، الشعبان، والمعالم الجغرافية البرية والبحرية.',
+    btnText: 'عرض أجهزة قارمن والخرائط',
+    btnLink: '#products'
+  },
+  b2b: {
+    title: 'طلب عرض أسعار رسمي للشركات والمقناص',
+    desc: 'للشركات، المقاولات، الجهات الحكومية، ومجموعات الرحلات البرية والبحرية. نجهز لكم عروض أسعار تفصيلية شاملة التراخيص والتوريد.'
+  },
+  showroom: {
+    image: 'assets/images/store_identity_card.jpg',
+    fit: 'cover',
+    height: '380px',
+    title: 'تفضل بزيارة معرضنا بالدمام',
+    desc: 'يسعدنا استقبالكم في معرضنا للاطلاع المباشر على الأجهزة، تجربة الهواتف، وبرمجة وتحديث خرائط القارمن الفورية.',
+    address: 'الدمام - حي بدر (المخطط 91) - داخل محل القناص الدولي، بجوار رفيق الدرب ومقابل مطعم البيك، طريق الملك فهد (خط المطار).',
+    hours: 'السبت إلى الخميس: 9:00 صباحاً - 10:00 مساءً',
+    phone: '0507181115 / +966507181115'
   },
   headerBtn: {
     text: 'طلب تسعيرة',
@@ -866,20 +809,7 @@ function loadThemeBuilderConfig() {
 
 function populateBuilderUI() {
   renderBuilderSectionsList();
-
-  // Populate Banner
-  var b = currentThemeConfig.banner || {};
-  var previewImg = document.getElementById('builder-banner-preview-img');
-  var urlInp = document.getElementById('builder-banner-img-url');
-  if (previewImg && b.image) previewImg.src = b.image;
-  if (urlInp && b.image) urlInp.value = b.image;
-  if (document.getElementById('builder-banner-title')) document.getElementById('builder-banner-title').value = b.title || '';
-  if (document.getElementById('builder-banner-desc')) document.getElementById('builder-banner-desc').value = b.desc || '';
-  if (document.getElementById('builder-banner-btn-text')) document.getElementById('builder-banner-btn-text').value = b.btnText || '';
-  if (document.getElementById('builder-banner-btn-link')) document.getElementById('builder-banner-btn-link').value = b.btnLink || '';
-
-  setBannerFit(b.fit || 'cover', false);
-  setBannerHeight(b.height || '380px', false);
+  renderSectionCustomizer(selectedBuilderSectionId);
 
   // Populate Header Button
   var hb = currentThemeConfig.headerBtn || {};
@@ -890,10 +820,12 @@ function populateBuilderUI() {
   var wa = currentThemeConfig.whatsapp || {};
   if (document.getElementById('builder-wa-phone')) document.getElementById('builder-wa-phone').value = wa.phone || '966507181115';
   if (document.getElementById('builder-wa-msg')) document.getElementById('builder-wa-msg').value = wa.message || '';
+}
 
-  // Populate Grid
-  var lay = currentThemeConfig.layout || {};
-  setGridCols(lay.gridCols || '5', false);
+function selectBuilderSection(secId) {
+  selectedBuilderSectionId = secId;
+  renderBuilderSectionsList();
+  renderSectionCustomizer(secId);
 }
 
 function renderBuilderSectionsList() {
@@ -904,29 +836,278 @@ function renderBuilderSectionsList() {
   var visibleMap = currentThemeConfig.sectionsVisible || {};
 
   container.innerHTML = order.map(function(secId, idx) {
-    var meta = DEFAULT_SECTIONS_META.find(function(m) { return m.id === secId; }) || { id: secId, title: secId, icon: 'fas fa-cube' };
+    var meta = DEFAULT_SECTIONS_META.find(function(m) { return m.id === secId; }) || { id: secId, title: secId, icon: 'fas fa-cube', desc: '' };
     var isVisible = (visibleMap[secId] !== false);
+    var isSelected = (selectedBuilderSectionId === secId);
     var isFirst = (idx === 0);
     var isLast = (idx === order.length - 1);
 
-    return '<div class="builder-section-item ' + (isVisible ? '' : 'hidden-sec') + '">' +
-      '<div style="display: flex; align-items: center; gap: 12px;">' +
-        '<div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,210,255,0.1); color: #00D2FF; display: flex; align-items: center; justify-content: center; font-size: 14px;">' +
+    return '<div class="builder-section-item ' + (isSelected ? 'active-sec' : '') + ' ' + (isVisible ? '' : 'hidden-sec') + '" onclick="selectBuilderSection(\'' + secId + '\')">' +
+      '<div style="display: flex; align-items: center; gap: 14px;">' +
+        '<div style="width: 36px; height: 36px; border-radius: 10px; background: ' + (isSelected ? 'rgba(0,210,255,0.25)' : 'rgba(0,210,255,0.1)') + '; color: #00D2FF; display: flex; align-items: center; justify-content: center; font-size: 15px;">' +
           '<i class="' + meta.icon + '"></i>' +
         '</div>' +
         '<div>' +
-          '<div style="color: #fff; font-size: 13.5px; font-weight: 700;">' + meta.title + '</div>' +
-          '<div style="color: #64748b; font-size: 11px; font-family: monospace;">معرف القسم: #' + meta.id + '</div>' +
+          '<div style="color: #fff; font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px;">' +
+            '<span>' + meta.title + '</span>' +
+            (isSelected ? '<span style="font-size: 10px; background: #00D2FF; color: #070C1A; padding: 2px 8px; border-radius: 999px; font-weight: 800;">محدد للتعديل بالأسفل 👇</span>' : '') +
+          '</div>' +
+          '<div style="color: #64748b; font-size: 11px; margin-top: 2px;">' + meta.desc + '</div>' +
         '</div>' +
       '</div>' +
-      '<div style="display: flex; align-items: center; gap: 8px;">' +
-        '<span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; ' + (isVisible ? 'background:rgba(52,211,153,0.15);color:#34d399;' : 'background:rgba(239,68,68,0.15);color:#f87171;') + '">' + (isVisible ? 'ظاهر' : 'مخفي') + '</span>' +
+      '<div style="display: flex; align-items: center; gap: 8px;" onclick="event.stopPropagation();">' +
+        '<span style="font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; ' + (isVisible ? 'background:rgba(52,211,153,0.15);color:#34d399;' : 'background:rgba(239,68,68,0.15);color:#f87171;') + '">' + (isVisible ? 'ظاهر' : 'مخفي') + '</span>' +
         '<button type="button" onclick="toggleBuilderSectionVisibility(\'' + secId + '\')" style="width: 34px; height: 34px; border-radius: 8px; background: #1e293b; color: ' + (isVisible ? '#00D2FF' : '#94a3b8') + '; border: none; cursor: pointer; font-size: 13px;" title="' + (isVisible ? 'إخفاء القسم' : 'إظهار القسم') + '"><i class="fas ' + (isVisible ? 'fa-eye' : 'fa-eye-slash') + '"></i></button>' +
         '<button type="button" onclick="moveBuilderSection(' + idx + ', -1)" ' + (isFirst ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : '') + ' style="width: 34px; height: 34px; border-radius: 8px; background: #1e293b; color: #fff; border: none; cursor: pointer; font-size: 13px;" title="تحريك لأعلى ⬆"><i class="fas fa-arrow-up"></i></button>' +
         '<button type="button" onclick="moveBuilderSection(' + idx + ', 1)" ' + (isLast ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : '') + ' style="width: 34px; height: 34px; border-radius: 8px; background: #1e293b; color: #fff; border: none; cursor: pointer; font-size: 13px;" title="تحريك لأسفل ⬇"><i class="fas fa-arrow-down"></i></button>' +
       '</div>' +
     '</div>';
   }).join('');
+}
+
+// ── Dynamic Section Customizer Renderer ─────────────────────
+function renderSectionCustomizer(secId) {
+  var container = document.getElementById('dynamic-section-customizer-container');
+  if (!container) return;
+
+  var meta = DEFAULT_SECTIONS_META.find(function(m) { return m.id === secId; }) || { id: secId, title: secId, icon: 'fas fa-cube' };
+  var html = '';
+
+  if (secId === 'home') {
+    var b = currentThemeConfig.banner || {};
+    var fit = b.fit || 'cover';
+    var height = b.height || '380px';
+
+    html = '<div class="glass-card" style="padding: 22px; border: 2px solid rgba(0,210,255,0.4);">' +
+      '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">' +
+        '<div>' +
+          '<h3 style="color: #fff; font-size: 16px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="' + meta.icon + '" style="color: #00D2FF;"></i> تعديل: ' + meta.title +
+          '</h3>' +
+          '<p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">تعديل صورة البنر الرئيسي، تمددها وملاءمتها للمربع، والنصوص وأزرار التصفح</p>' +
+        '</div>' +
+        '<span style="background: rgba(0,210,255,0.15); color: #00D2FF; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800;">القسم الحالي</span>' +
+      '</div>' +
+      '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">' +
+        '<div>' +
+          '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📷 صورة البنر الإعلاني (اضغط للرفع أو الصق رابط)</label>' +
+          '<div class="img-upload-box" id="builder-banner-img-box" onclick="triggerUpload(\'builder-banner\')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, \'builder-banner\')" style="min-height: 180px; position: relative;">' +
+            '<img id="builder-banner-preview-img" src="' + (b.image || 'assets/images/hero_banner_1_refined.jpg') + '" style="width: 100%; height: 180px; object-fit: ' + fit + ';">' +
+          '</div>' +
+          '<input type="text" id="builder-banner-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" value="' + (b.image || '') + '" placeholder="رابط صورة البنر..." oninput="previewBuilderBannerUrl()">' +
+          '<div style="margin-top: 14px;">' +
+            '<label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📐 طريقة ملاءمة وتمدد الصورة داخل المربع (Image Fit):</label>' +
+            '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">' +
+              '<button type="button" class="fit-btn ' + (fit==='cover'?'active':'') + '" id="fit-btn-cover" onclick="setBannerFit(\'cover\')"><i class="fas fa-crop-simple"></i> Cover (تغطية)</button>' +
+              '<button type="button" class="fit-btn ' + (fit==='contain'?'active':'') + '" id="fit-btn-contain" onclick="setBannerFit(\'contain\')"><i class="fas fa-expand"></i> Contain (احتواء)</button>' +
+              '<button type="button" class="fit-btn ' + (fit==='fill'?'active':'') + '" id="fit-btn-fill" onclick="setBannerFit(\'fill\')"><i class="fas fa-up-right-and-down-left-from-center"></i> Fill (تمدد)</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="margin-top: 14px;">' +
+            '<label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📏 ارتفاع مربع البنر:</label>' +
+            '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;">' +
+              '<button type="button" class="fit-btn ' + (height==='260px'?'active':'') + '" id="height-btn-260" onclick="setBannerHeight(\'260px\')">260px</button>' +
+              '<button type="button" class="fit-btn ' + (height==='380px'?'active':'') + '" id="height-btn-380" onclick="setBannerHeight(\'380px\')">380px</button>' +
+              '<button type="button" class="fit-btn ' + (height==='480px'?'active':'') + '" id="height-btn-480" onclick="setBannerHeight(\'480px\')">480px</button>' +
+              '<button type="button" class="fit-btn ' + (height==='auto'?'active':'') + '" id="height-btn-auto" onclick="setBannerHeight(\'auto\')">تلقائي</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display: flex; flex-direction: column; gap: 12px;">' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📌 عنوان البنر الرئيسي</label><input type="text" id="builder-banner-title" class="admin-input" value="' + (b.title || '') + '"></div>' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📝 النص التوضيحي للبنر</label><textarea id="builder-banner-desc" class="admin-input" rows="3" style="resize: vertical;">' + (b.desc || '') + '</textarea></div>' +
+          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">' +
+            '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔘 نص زر البنر</label><input type="text" id="builder-banner-btn-text" class="admin-input" value="' + (b.btnText || '') + '"></div>' +
+            '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔗 رابط الزر</label><input type="text" id="builder-banner-btn-link" class="admin-input" value="' + (b.btnLink || '') + '" style="direction: ltr; font-family: monospace;"></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  } else if (secId === 'thuraya') {
+    var t = currentThemeConfig.thuraya || {};
+    var fit = t.fit || 'cover';
+
+    html = '<div class="glass-card" style="padding: 22px; border: 2px solid rgba(56,189,248,0.4);">' +
+      '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">' +
+        '<div>' +
+          '<h3 style="color: #fff; font-size: 16px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="' + meta.icon + '" style="color: #38bdf8;"></i> تعديل: ' + meta.title +
+          '</h3>' +
+          '<p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">تخصيص صورة هواتف الثريا، تمددها، النصوص والأزرار</p>' +
+        '</div>' +
+        '<span style="background: rgba(56,189,248,0.15); color: #38bdf8; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800;">القسم الحالي</span>' +
+      '</div>' +
+      '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">' +
+        '<div>' +
+          '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📷 صورة بنر أجهزة الثريا</label>' +
+          '<div class="img-upload-box" id="builder-thuraya-img-box" onclick="triggerUpload(\'builder-thuraya\')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, \'builder-thuraya\')" style="min-height: 180px; position: relative;">' +
+            '<img id="builder-thuraya-preview-img" src="' + (t.image || 'assets/images/thuraya_banner_3.jpg') + '" style="width: 100%; height: 180px; object-fit: ' + fit + ';">' +
+          '</div>' +
+          '<input type="text" id="builder-thuraya-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" value="' + (t.image || '') + '" placeholder="رابط صورة الثريا..." oninput="previewGenericImageUrl(\'thuraya\')">' +
+          '<div style="margin-top: 14px;">' +
+            '<label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📐 طريقة ملاءمة وتمدد صورة الثريا (Image Fit):</label>' +
+            '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">' +
+              '<button type="button" class="fit-btn ' + (fit==='cover'?'active':'') + '" onclick="setGenericFit(\'thuraya\', \'cover\')">Cover (تغطية)</button>' +
+              '<button type="button" class="fit-btn ' + (fit==='contain'?'active':'') + '" onclick="setGenericFit(\'thuraya\', \'contain\')">Contain (احتواء)</button>' +
+              '<button type="button" class="fit-btn ' + (fit==='fill'?'active':'') + '" onclick="setGenericFit(\'thuraya\', \'fill\')">Fill (تمدد)</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display: flex; flex-direction: column; gap: 12px;">' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📌 عنوان قسم الثريا</label><input type="text" id="builder-thuraya-title" class="admin-input" value="' + (t.title || '') + '"></div>' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📝 وصف وتفاصيل الثريا</label><textarea id="builder-thuraya-desc" class="admin-input" rows="3" style="resize: vertical;">' + (t.desc || '') + '</textarea></div>' +
+          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">' +
+            '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔘 نص زر واتساب</label><input type="text" id="builder-thuraya-btn-text" class="admin-input" value="' + (t.btnText || '') + '"></div>' +
+            '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔗 رابط الزر</label><input type="text" id="builder-thuraya-btn-link" class="admin-input" value="' + (t.btnLink || '') + '" style="direction: ltr; font-family: monospace;"></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  } else if (secId === 'garmin') {
+    var g = currentThemeConfig.garmin || {};
+    var fit = g.fit || 'cover';
+
+    html = '<div class="glass-card" style="padding: 22px; border: 2px solid rgba(74,222,128,0.4);">' +
+      '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">' +
+        '<div>' +
+          '<h3 style="color: #fff; font-size: 16px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="' + meta.icon + '" style="color: #4ade80;"></i> تعديل: ' + meta.title +
+          '</h3>' +
+          '<p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">تخصيص صورة ملاحة وخرائط قارمن، تمددها، والنصوص والأزرار</p>' +
+        '</div>' +
+        '<span style="background: rgba(74,222,128,0.15); color: #4ade80; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800;">القسم الحالي</span>' +
+      '</div>' +
+      '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">' +
+        '<div>' +
+          '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📷 صورة بنر قارمن والملاحة</label>' +
+          '<div class="img-upload-box" id="builder-garmin-img-box" onclick="triggerUpload(\'builder-garmin\')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, \'builder-garmin\')" style="min-height: 180px; position: relative;">' +
+            '<img id="builder-garmin-preview-img" src="' + (g.image || 'assets/images/garmin_banner_2.jpg') + '" style="width: 100%; height: 180px; object-fit: ' + fit + ';">' +
+          '</div>' +
+          '<input type="text" id="builder-garmin-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" value="' + (g.image || '') + '" placeholder="رابط صورة قارمن..." oninput="previewGenericImageUrl(\'garmin\')">' +
+          '<div style="margin-top: 14px;">' +
+            '<label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📐 طريقة ملاءمة وتمدد صورة قارمن (Image Fit):</label>' +
+            '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">' +
+              '<button type="button" class="fit-btn ' + (fit==='cover'?'active':'') + '" onclick="setGenericFit(\'garmin\', \'cover\')">Cover (تغطية)</button>' +
+              '<button type="button" class="fit-btn ' + (fit==='contain'?'active':'') + '" onclick="setGenericFit(\'garmin\', \'contain\')">Contain (احتواء)</button>' +
+              '<button type="button" class="fit-btn ' + (fit==='fill'?'active':'') + '" onclick="setGenericFit(\'garmin\', \'fill\')">Fill (تمدد)</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display: flex; flex-direction: column; gap: 12px;">' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📌 عنوان قسم قارمن</label><input type="text" id="builder-garmin-title" class="admin-input" value="' + (g.title || '') + '"></div>' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📝 وصف وتفاصيل قارمن والخرائط</label><textarea id="builder-garmin-desc" class="admin-input" rows="3" style="resize: vertical;">' + (g.desc || '') + '</textarea></div>' +
+          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">' +
+            '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔘 نص الزر</label><input type="text" id="builder-garmin-btn-text" class="admin-input" value="' + (g.btnText || '') + '"></div>' +
+            '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔗 رابط الزر</label><input type="text" id="builder-garmin-btn-link" class="admin-input" value="' + (g.btnLink || '') + '" style="direction: ltr; font-family: monospace;"></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  } else if (secId === 'products') {
+    var lay = currentThemeConfig.layout || {};
+    var cols = lay.gridCols || '5';
+
+    html = '<div class="glass-card" style="padding: 22px; border: 2px solid rgba(192,132,252,0.4);">' +
+      '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">' +
+        '<div>' +
+          '<h3 style="color: #fff; font-size: 16px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="' + meta.icon + '" style="color: #c084fc;"></i> تعديل: ' + meta.title +
+          '</h3>' +
+          '<p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">التحكم في كثافة وهيكل شبكة عرض المنتجات وعدد الأعمدة</p>' +
+        '</div>' +
+        '<span style="background: rgba(192,132,252,0.15); color: #c084fc; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800;">القسم الحالي</span>' +
+      '</div>' +
+      '<div>' +
+        '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 8px;">📐 عدد أعمدة عرض كروت المنتجات على الشاشات الكبيرة:</label>' +
+        '<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">' +
+          '<button type="button" class="fit-btn ' + (cols==='3'?'active':'') + '" id="grid-cols-3" onclick="setGridCols(\'3\')"><div style="font-size: 14px; font-weight: 800;">3 أعمدة</div><div style="font-size: 10px; color: #64748b;">كروت كبيرة وعريضة</div></button>' +
+          '<button type="button" class="fit-btn ' + (cols==='4'?'active':'') + '" id="grid-cols-4" onclick="setGridCols(\'4\')"><div style="font-size: 14px; font-weight: 800;">4 أعمدة</div><div style="font-size: 10px; color: #64748b;">كروت متوسطة متوازنة</div></button>' +
+          '<button type="button" class="fit-btn ' + (cols==='5'?'active':'') + '" id="grid-cols-5" onclick="setGridCols(\'5\')"><div style="font-size: 14px; font-weight: 800;">5 أعمدة (افتراضي)</div><div style="font-size: 10px; color: #64748b;">مدمجة وعالية الكثافة</div></button>' +
+          '<button type="button" class="fit-btn ' + (cols==='6'?'active':'') + '" id="grid-cols-6" onclick="setGridCols(\'6\')"><div style="font-size: 14px; font-weight: 800;">6 أعمدة</div><div style="font-size: 10px; color: #64748b;">أقصى سعة للمنتجات</div></button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  } else if (secId === 'b2b') {
+    var b2b = currentThemeConfig.b2b || {};
+
+    html = '<div class="glass-card" style="padding: 22px; border: 2px solid rgba(251,191,36,0.4);">' +
+      '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">' +
+        '<div>' +
+          '<h3 style="color: #fff; font-size: 16px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="' + meta.icon + '" style="color: #fbbf24;"></i> تعديل: ' + meta.title +
+          '</h3>' +
+          '<p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">تعديل عناوين ونصوص نموذج طلب عروض أسعار الشركات والمقناص</p>' +
+        '</div>' +
+        '<span style="background: rgba(251,191,36,0.15); color: #fbbf24; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800;">القسم الحالي</span>' +
+      '</div>' +
+      '<div style="display: flex; flex-direction: column; gap: 12px;">' +
+        '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📌 عنوان نموذج الأسعار</label><input type="text" id="builder-b2b-title" class="admin-input" value="' + (b2b.title || '') + '"></div>' +
+        '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📝 الوصف التوضيحي للنموذج</label><textarea id="builder-b2b-desc" class="admin-input" rows="3" style="resize: vertical;">' + (b2b.desc || '') + '</textarea></div>' +
+      '</div>' +
+    '</div>';
+
+  } else if (secId === 'showroom') {
+    var sh = currentThemeConfig.showroom || {};
+    var fit = sh.fit || 'cover';
+
+    html = '<div class="glass-card" style="padding: 22px; border: 2px solid rgba(45,212,191,0.4);">' +
+      '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">' +
+        '<div>' +
+          '<h3 style="color: #fff; font-size: 16px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="' + meta.icon + '" style="color: #2dd4bf;"></i> تعديل: ' + meta.title +
+          '</h3>' +
+          '<p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">تعديل صورة بطاقة المعرض، أبعاد تمددها، العنوان التفصيلي وأوقات العمل</p>' +
+        '</div>' +
+        '<span style="background: rgba(45,212,191,0.15); color: #2dd4bf; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800;">القسم الحالي</span>' +
+      '</div>' +
+      '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">' +
+        '<div>' +
+          '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📷 صورة بطاقة المعرض والهوية</label>' +
+          '<div class="img-upload-box" id="builder-showroom-img-box" onclick="triggerUpload(\'builder-showroom\')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, \'builder-showroom\')" style="min-height: 180px; position: relative;">' +
+            '<img id="builder-showroom-preview-img" src="' + (sh.image || 'assets/images/store_identity_card.jpg') + '" style="width: 100%; height: 180px; object-fit: ' + fit + ';">' +
+          '</div>' +
+          '<input type="text" id="builder-showroom-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" value="' + (sh.image || '') + '" placeholder="رابط صورة المعرض..." oninput="previewGenericImageUrl(\'showroom\')">' +
+          '<div style="margin-top: 14px;">' +
+            '<label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📐 طريقة ملاءمة وتمدد صورة المعرض (Image Fit):</label>' +
+            '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">' +
+              '<button type="button" class="fit-btn ' + (fit==='cover'?'active':'') + '" onclick="setGenericFit(\'showroom\', \'cover\')">Cover (تغطية)</button>' +
+              '<button type="button" class="fit-btn ' + (fit==='contain'?'active':'') + '" onclick="setGenericFit(\'showroom\', \'contain\')">Contain (احتواء)</button>' +
+              '<button type="button" class="fit-btn ' + (fit==='fill'?'active':'') + '" onclick="setGenericFit(\'showroom\', \'fill\')">Fill (تمدد)</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display: flex; flex-direction: column; gap: 10px;">' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📌 عنوان المعرض</label><input type="text" id="builder-showroom-title" class="admin-input" value="' + (sh.title || '') + '"></div>' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📝 الوصف الترحيبي</label><textarea id="builder-showroom-desc" class="admin-input" rows="2">' + (sh.desc || '') + '</textarea></div>' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📍 العنوان التفصيلي</label><input type="text" id="builder-showroom-address" class="admin-input" value="' + (sh.address || '') + '"></div>' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">⏰ أوقات العمل</label><input type="text" id="builder-showroom-hours" class="admin-input" value="' + (sh.hours || '') + '"></div>' +
+          '<div><label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📞 الهاتف والمبيعات</label><input type="text" id="builder-showroom-phone" class="admin-input" value="' + (sh.phone || '') + '"></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+  } else if (secId === 'section-features') {
+    html = '<div class="glass-card" style="padding: 22px; border: 2px solid rgba(0,210,255,0.4);">' +
+      '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #1e293b; padding-bottom: 12px;">' +
+        '<div>' +
+          '<h3 style="color: #fff; font-size: 16px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">' +
+            '<i class="' + meta.icon + '" style="color: #00D2FF;"></i> تعديل: ' + meta.title +
+          '</h3>' +
+          '<p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">شريط الميزات السريعة (الترخيص CST، سرعة التوصيل، الدعم الفني، وخرائط قارمن)</p>' +
+        '</div>' +
+        '<span style="background: rgba(0,210,255,0.15); color: #00D2FF; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800;">القسم الحالي</span>' +
+      '</div>' +
+      '<div style="color: #cbd5e1; font-size: 13px; line-height: 1.6; padding: 12px; background: rgba(7,12,24,0.6); border-radius: 12px;">' +
+        '✅ شريط المميزات مفعل ومضبوط تلقائياً بالهوية المعتمدة لهيئة الاتصالات (CST) وخدمات الصيانة والضمان والتوصيل.' +
+      '</div>' +
+    '</div>';
+  }
+
+  container.innerHTML = html;
 }
 
 function moveBuilderSection(idx, dir) {
@@ -963,6 +1144,15 @@ function setBannerFit(fitMode, notify) {
   if (previewImg) previewImg.style.objectFit = fitMode;
 
   if (notify !== false) showToast('📐 نمط التمدد: ' + fitMode);
+}
+
+function setGenericFit(secKey, fitMode) {
+  if (!currentThemeConfig[secKey]) currentThemeConfig[secKey] = {};
+  currentThemeConfig[secKey].fit = fitMode;
+  var previewImg = document.getElementById('builder-' + secKey + '-preview-img');
+  if (previewImg) previewImg.style.objectFit = fitMode;
+  renderSectionCustomizer(secKey);
+  showToast('📐 نمط التمدد: ' + fitMode);
 }
 
 function setBannerHeight(heightVal, notify) {
@@ -1007,23 +1197,79 @@ function previewBuilderBannerUrl() {
   }
 }
 
+function previewGenericImageUrl(secKey) {
+  var urlInp = document.getElementById('builder-' + secKey + '-img-url');
+  var previewImg = document.getElementById('builder-' + secKey + '-preview-img');
+  if (urlInp && previewImg && urlInp.value.trim()) {
+    previewImg.src = urlInp.value.trim();
+    if (!currentThemeConfig[secKey]) currentThemeConfig[secKey] = {};
+    currentThemeConfig[secKey].image = urlInp.value.trim();
+  }
+}
+
 function saveThemeBuilderConfig() {
-  if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
-  currentThemeConfig.banner.image = (document.getElementById('builder-banner-img-url').value || '').trim() || currentThemeConfig.banner.image;
-  currentThemeConfig.banner.title = (document.getElementById('builder-banner-title').value || '').trim();
-  currentThemeConfig.banner.desc = (document.getElementById('builder-banner-desc').value || '').trim();
-  currentThemeConfig.banner.btnText = (document.getElementById('builder-banner-btn-text').value || '').trim();
-  currentThemeConfig.banner.btnLink = (document.getElementById('builder-banner-btn-link').value || '').trim();
+  // Collect Banner
+  if (document.getElementById('builder-banner-title')) {
+    if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
+    currentThemeConfig.banner.image = (document.getElementById('builder-banner-img-url') ? document.getElementById('builder-banner-img-url').value : '').trim() || currentThemeConfig.banner.image;
+    currentThemeConfig.banner.title = (document.getElementById('builder-banner-title').value || '').trim();
+    currentThemeConfig.banner.desc = (document.getElementById('builder-banner-desc').value || '').trim();
+    currentThemeConfig.banner.btnText = (document.getElementById('builder-banner-btn-text').value || '').trim();
+    currentThemeConfig.banner.btnLink = (document.getElementById('builder-banner-btn-link').value || '').trim();
+  }
 
-  currentThemeConfig.headerBtn = {
-    text: (document.getElementById('builder-header-btn-text').value || '').trim(),
-    link: (document.getElementById('builder-header-btn-link').value || '').trim()
-  };
+  // Collect Thuraya
+  if (document.getElementById('builder-thuraya-title')) {
+    if (!currentThemeConfig.thuraya) currentThemeConfig.thuraya = {};
+    currentThemeConfig.thuraya.image = (document.getElementById('builder-thuraya-img-url') ? document.getElementById('builder-thuraya-img-url').value : '').trim() || currentThemeConfig.thuraya.image;
+    currentThemeConfig.thuraya.title = (document.getElementById('builder-thuraya-title').value || '').trim();
+    currentThemeConfig.thuraya.desc = (document.getElementById('builder-thuraya-desc').value || '').trim();
+    currentThemeConfig.thuraya.btnText = (document.getElementById('builder-thuraya-btn-text').value || '').trim();
+    currentThemeConfig.thuraya.btnLink = (document.getElementById('builder-thuraya-btn-link').value || '').trim();
+  }
 
-  currentThemeConfig.whatsapp = {
-    phone: (document.getElementById('builder-wa-phone').value || '').trim(),
-    message: (document.getElementById('builder-wa-msg').value || '').trim()
-  };
+  // Collect Garmin
+  if (document.getElementById('builder-garmin-title')) {
+    if (!currentThemeConfig.garmin) currentThemeConfig.garmin = {};
+    currentThemeConfig.garmin.image = (document.getElementById('builder-garmin-img-url') ? document.getElementById('builder-garmin-img-url').value : '').trim() || currentThemeConfig.garmin.image;
+    currentThemeConfig.garmin.title = (document.getElementById('builder-garmin-title').value || '').trim();
+    currentThemeConfig.garmin.desc = (document.getElementById('builder-garmin-desc').value || '').trim();
+    currentThemeConfig.garmin.btnText = (document.getElementById('builder-garmin-btn-text').value || '').trim();
+    currentThemeConfig.garmin.btnLink = (document.getElementById('builder-garmin-btn-link').value || '').trim();
+  }
+
+  // Collect B2B
+  if (document.getElementById('builder-b2b-title')) {
+    if (!currentThemeConfig.b2b) currentThemeConfig.b2b = {};
+    currentThemeConfig.b2b.title = (document.getElementById('builder-b2b-title').value || '').trim();
+    currentThemeConfig.b2b.desc = (document.getElementById('builder-b2b-desc').value || '').trim();
+  }
+
+  // Collect Showroom
+  if (document.getElementById('builder-showroom-title')) {
+    if (!currentThemeConfig.showroom) currentThemeConfig.showroom = {};
+    currentThemeConfig.showroom.image = (document.getElementById('builder-showroom-img-url') ? document.getElementById('builder-showroom-img-url').value : '').trim() || currentThemeConfig.showroom.image;
+    currentThemeConfig.showroom.title = (document.getElementById('builder-showroom-title').value || '').trim();
+    currentThemeConfig.showroom.desc = (document.getElementById('builder-showroom-desc').value || '').trim();
+    currentThemeConfig.showroom.address = (document.getElementById('builder-showroom-address').value || '').trim();
+    currentThemeConfig.showroom.hours = (document.getElementById('builder-showroom-hours').value || '').trim();
+    currentThemeConfig.showroom.phone = (document.getElementById('builder-showroom-phone').value || '').trim();
+  }
+
+  // Collect Global
+  if (document.getElementById('builder-header-btn-text')) {
+    currentThemeConfig.headerBtn = {
+      text: (document.getElementById('builder-header-btn-text').value || '').trim(),
+      link: (document.getElementById('builder-header-btn-link').value || '').trim()
+    };
+  }
+
+  if (document.getElementById('builder-wa-phone')) {
+    currentThemeConfig.whatsapp = {
+      phone: (document.getElementById('builder-wa-phone').value || '').trim(),
+      message: (document.getElementById('builder-wa-msg').value || '').trim()
+    };
+  }
 
   localStorage.setItem('barq_theme_config', JSON.stringify(currentThemeConfig));
   showToast('🚀 تم حفظ ونشر تصميم وهياكل المتجر بنجاح!');
@@ -1052,10 +1298,43 @@ function resetThemeBuilderConfig() {
       btnText: 'تصفح كتالوج الأجهزة',
       btnLink: '#products'
     },
+    thuraya: {
+      image: 'assets/images/thuraya_banner_3.jpg',
+      fit: 'cover',
+      height: '340px',
+      title: 'اتصال فضائي لا ينقطع أينما ذهبت',
+      desc: 'نوفر في مؤسسة برق سهيل أحدث هواتف وأجهزة الأقمار الصناعية وشبكة الثريا، الحل الأمثل للرحالة، أصحاب المقناص، عمال المناجم، والسفن البحرية في أي نقطة خارج تغطية شبكات الجوال.',
+      btnText: 'استفسر عن عروض الثريا واتساب',
+      btnLink: 'https://wa.me/966507181115?text=استفسار%20عن%20أجهزة%20وشرائح%20الثريا'
+    },
+    garmin: {
+      image: 'assets/images/garmin_banner_2.jpg',
+      fit: 'cover',
+      height: '340px',
+      title: 'استكشف دروب الصحراء والبحر بدقة متناهية',
+      desc: 'أجهزة الملاحة اليدوية والمثبتة من شركة قارمن (Garmin) العالمية، محملة مسبقاً بأحدث خرائط تضاريس المملكة، الفياض، الشعبان، والمعالم الجغرافية البرية والبحرية.',
+      btnText: 'عرض أجهزة قارمن والخرائط',
+      btnLink: '#products'
+    },
+    b2b: {
+      title: 'طلب عرض أسعار رسمي للشركات والمقناص',
+      desc: 'للشركات، المقاولات، الجهات الحكومية، ومجموعات الرحلات البرية والبحرية. نجهز لكم عروض أسعار تفصيلية شاملة التراخيص والتوريد.'
+    },
+    showroom: {
+      image: 'assets/images/store_identity_card.jpg',
+      fit: 'cover',
+      height: '380px',
+      title: 'تفضل بزيارة معرضنا بالدمام',
+      desc: 'يسعدنا استقبالكم في معرضنا للاطلاع المباشر على الأجهزة، تجربة الهواتف، وبرمجة وتحديث خرائط القارمن الفورية.',
+      address: 'الدمام - حي بدر (المخطط 91) - داخل محل القناص الدولي، بجوار رفيق الدرب ومقابل مطعم البيك، طريق الملك فهد (خط المطار).',
+      hours: 'السبت إلى الخميس: 9:00 صباحاً - 10:00 مساءً',
+      phone: '0507181115 / +966507181115'
+    },
     headerBtn: { text: 'طلب تسعيرة', link: '#b2b' },
     whatsapp: { phone: '966507181115', message: 'السلام عليكم، أود الاستفسار عن أجهزة برق سهيل' },
     layout: { gridCols: '5' }
   };
+  selectedBuilderSectionId = 'home';
   populateBuilderUI();
   showToast('🔄 تم استعادة التصميم الافتراضي!');
 }
@@ -1682,6 +1961,14 @@ function handleFileChosen(e) {
       if (urlInp) urlInp.value = evt.target.result;
       if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
       currentThemeConfig.banner.image = evt.target.result;
+    } else if (uploadTarget.startsWith('builder-')) {
+      var secKey = uploadTarget.replace('builder-', '');
+      var previewImg = document.getElementById('builder-' + secKey + '-preview-img');
+      var urlInp = document.getElementById('builder-' + secKey + '-img-url');
+      if (previewImg) previewImg.src = evt.target.result;
+      if (urlInp) urlInp.value = evt.target.result;
+      if (!currentThemeConfig[secKey]) currentThemeConfig[secKey] = {};
+      currentThemeConfig[secKey].image = evt.target.result;
     } else {
       setBoxImage(uploadTarget, evt.target.result);
     }
@@ -1714,6 +2001,14 @@ function dropHandler(e, mode) {
       if (urlInp) urlInp.value = evt.target.result;
       if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
       currentThemeConfig.banner.image = evt.target.result;
+    } else if (mode.startsWith('builder-')) {
+      var secKey = mode.replace('builder-', '');
+      var previewImg = document.getElementById('builder-' + secKey + '-preview-img');
+      var urlInp = document.getElementById('builder-' + secKey + '-img-url');
+      if (previewImg) previewImg.src = evt.target.result;
+      if (urlInp) urlInp.value = evt.target.result;
+      if (!currentThemeConfig[secKey]) currentThemeConfig[secKey] = {};
+      currentThemeConfig[secKey].image = evt.target.result;
     } else {
       setBoxImage(mode, evt.target.result);
     }
