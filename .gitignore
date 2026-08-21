@@ -7,5 +7,7 @@ Thumbs.db
 # Temp & build scripts
 check_data.py
 inventory_data.txt
+build_seo.py
+products_dump.json
 *.pyc
 __pycache__/

@@ -1,0 +1,25 @@
+# Robots.txt for Barq Suhail Trading Est. (www.barqsuhail.com / parqsuhail)
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /assets/
+Disallow: /admin.html
+
+# Googlebot & Bingbot Priority Crawling
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+
+User-agent: Googlebot-Image
+Allow: /assets/images/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin.html
+
+User-agent: Applebot
+Allow: /
+
+# Sitemap Location
+Sitemap: https://dezeleinshams-create.github.io/parqsuhail/sitemap.xml
+Sitemap: https://www.barqsuhail.com/sitemap.xml

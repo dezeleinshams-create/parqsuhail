@@ -1,0 +1,979 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Homepage & Core Store -->
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/official_logo_white.png</image:loc>
+      <image:title>شعار مؤسسة برق سهيل التجارية</image:title>
+    </image:image>
+  </url>
+  <!-- Main Category Hubs -->
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#devices</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#thuraya</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#garmin</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#accessories</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#cards</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#b2b</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#showroom</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-5624-350</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز آيكوم IC-V3500</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-5624-230</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز آيكوم IC-2300H</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-10111-W</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز آيكوم IC-2730 أبيض</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-10111-B</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز آيكوم IC-2730 أسود</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-82737-800</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز TYT MD-8000 لاسلكي رقمي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-82737-88</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز TYT TH-88 يدوي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-15W</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز TYT 15W لاسلكي يدوي قوي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-46668-53</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/garmin_banner_2.jpg</image:loc>
+      <image:title>قارمن DriveSmart 53</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-46668-66</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/garmin_banner_2.jpg</image:loc>
+      <image:title>قارمن DriveSmart 66</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-46668-76</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/garmin_banner_2.jpg</image:loc>
+      <image:title>قارمن DriveSmart 76</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-26656</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز بوفنق لاسلكي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-23721</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>جهاز موتورولا لاسلكي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-14275</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/thuraya_banner_3.jpg</image:loc>
+      <image:title>هاتف الثريا الفضائي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-81435</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>ريشة TYT يدوي (مايك ريشة)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-53488-L</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي تجاري طويل للسيارات</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-53488-S</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي تجاري صغير للسيارات</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-99831-4DB</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي ترام مكس 4dB</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-99831-3DB</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي ترام مكس 3dB</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-99831-1DB</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي ترام مكس 1dB</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-27312-L</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي لارسن طويل</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-27312-S</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي لارسن صغير</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-90780-3DB</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي أبعد المدى 3dB</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-90780-R</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي أبعد المدى ريل</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-25737</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي ديموند (أبو عقال)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-6558</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي سيريو - وصلة</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-7867</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي سيريو - وصلتين</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-768687</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي سيريو - ثلاث وصلات</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-61831</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي سيريو أبو عقال</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-19085</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي كومت - وصلة</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-19022</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي كومت - وصلتين</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-19253</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي كومت - ثلاث وصلات</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-57287</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي سحاب مرن للسيارات</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-7592</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي مطاري (للمطارات والطائرات)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-4566</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي بحري للقوارب</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-4567</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي يدوي (للأجهزة اليدوية)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-0006-5</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي بوفنق</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-0006-4</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي أسود سحاب</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-0006-7</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي كومت-7</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-2533</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>هوائي دار البوصلة</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-35272</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سلك هوائي إيطالي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-35274</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سلك هوائي ناقويا</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-35277</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سلك هوائي ترام مكس</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-25321</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سلك وصل شاشتين</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-25358</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سلك ريشة (مايكروفون)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-25326</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سلك بلمتر (قياس)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-8536-B</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سلك كهرباء - بطارية</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-8536-L</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سلك كهرباء - ولاعة</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-56576</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>ريشة آيكوم (مايكروفون)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-56596</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>ريشة كنوود (مايكروفون)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-56595</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>ريشة عسكرية (مايكروفون)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-21943</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>ريشة بلوتوث لاسلكية</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-45848</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة مغناطيس إيطالي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-45847</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة مغناطيس ترام مكس</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-45846</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة مغناطيس تجارية</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-276226</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة سلة (تثبيت على صندوق السيارة)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-276426</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة شاص (تثبيت على الشاص)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-227626</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة باب شنطة (تثبيت على باب الخلفي)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-3279-S</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة شاص بسلك</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-3279-T</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة ترام مكس صغير</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-55087</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة مغناطيس جانبي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-99244</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>كرسي جوال سحاب (حامل سقف التكييف)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-949284</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>كرسي جهاز / كرسي مرتبة (حامل داشبورد)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-403210</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة جوال كبيرة (مغناطيس)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-410320</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة جوال شفط لزق</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-140320</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة جوال شفط</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-40320</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة جوال لزق</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-4564</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قاعدة جوال كوب</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-919284</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>شاحن ولاعة TYT</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-49051-T</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/thuraya_banner_3.jpg</image:loc>
+      <image:title>شاحن ثريا</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-49051-G</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/garmin_banner_2.jpg</image:loc>
+      <image:title>شاحن قارمن</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-49051-TY</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>شاحن TYT ولاعة</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-79118-25</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>محول كهرباء 25 أمبير</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-79118-35</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>محول كهرباء 35 أمبير</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-24370-4</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>استيشن - 4 وصلات</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-24370-3</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>استيشن - 3 وصلات</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-24370</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>استيشن - وصلتين</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-891350</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>كونكتر وصل (PL-259)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-893450</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>كونكتر يدوي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-789350</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>كونكتر آيكوم</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-95472</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>علّاق ريشة (حامل المايكروفون)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-71896</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>سماعة أذن لاسلكي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-93317</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/thuraya_banner_3.jpg</image:loc>
+      <image:title>جراب ثريا</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-4568</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/thuraya_banner_3.jpg</image:loc>
+      <image:title>حافظة جهاز ثريا مشبك/مغناطيس</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-72474-F</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قطعة غيار - مروحة</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-72474-P</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>قطعة غيار - فصال</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-0002</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>بطارية TYT</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-0001</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>وصلة TYT (ملحق)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-26695</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/thuraya_banner_3.jpg</image:loc>
+      <image:title>رصيد ثريا الفضائي</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-66044</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/thuraya_banner_3.jpg</image:loc>
+      <image:title>شريحة ثريا الفضائية</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-2675</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/garmin_banner_2.jpg</image:loc>
+      <image:title>تحديث خرائط قارمن</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-14300</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>خدمة تنظيف الجهاز</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://dezeleinshams-create.github.io/parqsuhail/#product-Sku-46030</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://dezeleinshams-create.github.io/parqsuhail/assets/images/hero_banner_1_refined.jpg</image:loc>
+      <image:title>خدمة تركيب وتمديد</image:title>
+    </image:image>
+  </url>
+</urlset>
