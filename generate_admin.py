@@ -61,12 +61,59 @@ content = '''<!DOCTYPE html>
     .modal-box { background: #0F172A; border: 1px solid #1e293b; border-radius: 20px; width: 100%; max-width: 840px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
     
     #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #00D2FF; color: #070C1A; font-weight: 800; padding: 12px 28px; border-radius: 9999px; z-index: 9999; display: none; font-size: 14px; box-shadow: 0 10px 30px rgba(0,210,255,0.3); }
+
+    /* Login Screen Overlay */
+    #login-overlay { position: fixed; inset: 0; background: #050811; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-box { background: rgba(15, 23, 42, 0.95); border: 1px solid #1e293b; border-radius: 24px; padding: 36px 30px; width: 100%; max-width: 420px; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 40px rgba(0,210,255,0.08); text-align: center; }
   </style>
 </head>
 <body>
 
 <div id="toast"></div>
 <input type="file" id="file-input-el" accept="image/*" style="display:none" onchange="handleFileChosen(event)">
+
+<!-- 🔒 Login Screen -->
+<div id="login-overlay">
+  <div class="login-box">
+    <div style="width: 60px; height: 60px; border-radius: 18px; background: rgba(0,210,255,0.12); border: 1px solid rgba(0,210,255,0.25); display: flex; align-items: center; justify-content: center; color: #00D2FF; font-size: 26px; margin: 0 auto 18px;">
+      <i class="fas fa-lock"></i>
+    </div>
+    <h2 style="color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 6px;">لوحة تحكم برق سهيل</h2>
+    <p style="color: #64748b; font-size: 12px; margin-bottom: 24px;">يرجى تسجيل الدخول للوصول وإدارة المخزون</p>
+
+    <form onsubmit="handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 14px; text-align: right;">
+      <div>
+        <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">اسم المستخدم (Username)</label>
+        <div style="position: relative;">
+          <i class="fas fa-user" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 13px;"></i>
+          <input type="text" id="login-username" class="admin-input" style="padding-right: 36px;" placeholder="admin" required autofocus>
+        </div>
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">كلمة المرور (Password)</label>
+        <div style="position: relative;">
+          <i class="fas fa-key" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 13px;"></i>
+          <input type="password" id="login-password" class="admin-input" style="padding-right: 36px;" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <div id="login-error" style="display: none; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #f87171; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 8px; text-align: center;">
+        ❌ اسم المستخدم أو كلمة المرور غير صحيحة!
+      </div>
+
+      <button type="submit" style="background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; font-weight: 800; padding: 13px; border-radius: 12px; font-size: 14px; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 20px rgba(0,210,255,0.25);">
+        <i class="fas fa-right-to-bracket ml-1"></i> تسجيل الدخول
+      </button>
+
+      <div style="text-align: center; margin-top: 10px;">
+        <a href="index.html" style="color: #64748b; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#00D2FF'" onmouseout="this.style.color='#64748b'">
+          ⮌ العودة للمتجر الرئيسي
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
 
 <!-- Sidebar -->
 <aside class="sidebar">
@@ -83,7 +130,6 @@ content = '''<!DOCTYPE html>
     </div>
   </a>
 
-
   <nav style="padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 4px;">
     <button class="nav-btn active" id="nav-tab-products" onclick="switchTab('products')">
       <i class="fas fa-boxes-stacked w-5 text-center"></i> إدارة المنتجات
@@ -98,6 +144,9 @@ content = '''<!DOCTYPE html>
     <a href="index.html" class="nav-btn">
       <i class="fas fa-store w-5 text-center"></i> عرض المتجر الرئيسي
     </a>
+    <button class="nav-btn" onclick="handleLogout()" style="color: #f87171;">
+      <i class="fas fa-power-off w-5 text-center"></i> تسجيل الخروج
+    </button>
   </nav>
 
   <div style="padding: 16px; border-top: 1px solid #1e293b; font-size: 11px; color: #475569; text-align: center;">
@@ -113,7 +162,7 @@ content = '''<!DOCTYPE html>
       <h1 style="color: #fff; font-size: 18px; font-weight: 800; margin: 0;">لوحة تحكم المخزون</h1>
       <span id="count-badge" style="background: rgba(0,210,255,0.1); color: #00D2FF; border: 1px solid rgba(0,210,255,0.25); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 9999px; font-family: monospace;">0 صنف</span>
     </div>
-    <div style="display: flex; gap: 10px;">
+    <div style="display: flex; gap: 10px; align-items: center;">
       <button onclick="resetToDefault()" style="display: flex; align-items: center; gap: 6px; background: #1e293b; color: #94a3b8; border: none; border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer;" title="استعادة الجرد الأصلي من ملف البيانات">
         <i class="fas fa-rotate-left"></i> استعادة الجرد
       </button>
@@ -122,6 +171,9 @@ content = '''<!DOCTYPE html>
       </button>
       <button onclick="switchTab('add')" style="display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; border-radius: 10px; padding: 8px 18px; font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(0,210,255,0.25);">
         <i class="fas fa-plus"></i> إضافة صنف
+      </button>
+      <button onclick="handleLogout()" style="background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); border-radius: 10px; padding: 8px 12px; font-size: 12px; font-weight: 700; cursor: pointer;" title="تسجيل الخروج">
+        <i class="fas fa-arrow-right-from-bracket"></i> خروج
       </button>
     </div>
   </header>
@@ -314,6 +366,10 @@ content = '''<!DOCTYPE html>
 <!-- DATA LAYER -->
 <script src="assets/js/data.js"></script>
 <script>
+// ── Auth Credentials ─────────────────────────────────────────
+var ADMIN_USER = "admin";
+var ADMIN_PASS = "admin";
+
 // State
 var storeProducts = [];
 var currentEditingId = null;
@@ -332,10 +388,50 @@ var CATEGORY_MAP = {
 
 var CATEGORY_PRIORITY = { devices: 1, thuraya: 2, garmin: 3, accessories: 4, cards: 5, services: 6 };
 
-// Initialize
+// ── Auth Check on Load ──────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function () {
-  loadData();
+  checkAuth();
 });
+
+function checkAuth() {
+  var isAuth = sessionStorage.getItem('barq_admin_logged_in') === 'true' || localStorage.getItem('barq_admin_logged_in') === 'true';
+  var loginOverlay = document.getElementById('login-overlay');
+
+  if (isAuth) {
+    if (loginOverlay) loginOverlay.style.display = 'none';
+    loadData();
+  } else {
+    if (loginOverlay) loginOverlay.style.display = 'flex';
+  }
+}
+
+function handleLoginSubmit(e) {
+  e.preventDefault();
+  var u = (document.getElementById('login-username').value || '').trim();
+  var p = (document.getElementById('login-password').value || '').trim();
+  var err = document.getElementById('login-error');
+
+  // Accept 'admin' or custom credentials
+  if ((u === 'admin' || u === 'barq') && (p === 'admin' || p === 'barq2026' || p === '123456')) {
+    sessionStorage.setItem('barq_admin_logged_in', 'true');
+    localStorage.setItem('barq_admin_logged_in', 'true');
+    document.getElementById('login-overlay').style.display = 'none';
+    loadData();
+    showToast('👋 مرحباً بك! تم تسجيل الدخول بنجاح');
+  } else {
+    if (err) {
+      err.style.display = 'block';
+      setTimeout(function() { err.style.display = 'none'; }, 4000);
+    }
+  }
+}
+
+function handleLogout() {
+  if (!confirm('هل تريد تسجيل الخروج من لوحة التحكم؟')) return;
+  sessionStorage.removeItem('barq_admin_logged_in');
+  localStorage.removeItem('barq_admin_logged_in');
+  window.location.reload();
+}
 
 function loadData() {
   // 1. Try to get from localStorage
@@ -978,4 +1074,4 @@ function showToast(msg) {
 with open('admin.html', 'w', encoding='utf-8') as f:
     f.write(content)
 
-print('admin.html with cash discount & permanent persistence generated successfully! Length:', len(content))
+print('admin.html with Login Screen generated successfully! Length:', len(content))
