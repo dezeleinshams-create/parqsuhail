@@ -14,12 +14,110 @@ let itemsPerPage = 20; // 20 products per page default
 
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
+  applyThemeConfig();
   updateCategoryPillCounts();
   applyViewModeUI();
   renderProducts();
   updateCartUI();
   setupEventListeners();
 });
+
+// ----------------- VISUAL THEME & LAYOUT BUILDER SYNC -----------------
+function applyThemeConfig() {
+  const raw = localStorage.getItem("barq_theme_config");
+  if (!raw) return;
+  try {
+    const config = JSON.parse(raw);
+    if (!config) return;
+
+    // 1. Reorder & Toggle Sections Visibility
+    const mainContainer = document.getElementById("main-sections-container");
+    if (mainContainer && Array.isArray(config.sectionsOrder)) {
+      config.sectionsOrder.forEach(secId => {
+        const secEl = document.getElementById(secId);
+        if (secEl) {
+          mainContainer.appendChild(secEl);
+          if (config.sectionsVisible && config.sectionsVisible[secId] === false) {
+            secEl.style.display = "none";
+          } else {
+            secEl.style.display = "";
+          }
+        }
+      });
+    }
+
+    // 2. Hero Banner Customization (Image, Stretch, Height, Texts, CTA Button)
+    if (config.banner) {
+      const bannerImg = document.getElementById("hero-banner-img");
+      const bannerImgContainer = document.getElementById("hero-banner-img-container");
+      if (bannerImg && config.banner.image) {
+        bannerImg.src = config.banner.image;
+      }
+      if (bannerImg && config.banner.fit) {
+        bannerImg.style.objectFit = config.banner.fit;
+      }
+      if (bannerImgContainer && config.banner.height) {
+        bannerImgContainer.style.height = config.banner.height;
+        if (bannerImg) bannerImg.style.height = "100%";
+      }
+      if (config.banner.title) {
+        const titleEl = document.getElementById("hero-main-title");
+        if (titleEl) titleEl.innerHTML = config.banner.title;
+      }
+      if (config.banner.desc) {
+        const descEl = document.getElementById("hero-main-desc");
+        if (descEl) descEl.innerHTML = config.banner.desc;
+      }
+      if (config.banner.btnText) {
+        const btnTextEl = document.getElementById("hero-cta-btn-text");
+        if (btnTextEl) btnTextEl.textContent = config.banner.btnText;
+      }
+      if (config.banner.btnLink) {
+        const btnEl = document.getElementById("hero-cta-btn");
+        if (btnEl) btnEl.href = config.banner.btnLink;
+      }
+    }
+
+    // 3. Header Quote Button
+    if (config.headerBtn) {
+      const hBtn = document.getElementById("header-quote-btn");
+      const hBtnText = document.getElementById("header-quote-btn-text");
+      if (hBtnText && config.headerBtn.text) hBtnText.textContent = config.headerBtn.text;
+      if (hBtn && config.headerBtn.link) hBtn.href = config.headerBtn.link;
+    }
+
+    // 4. WhatsApp Floating Button
+    if (config.whatsapp) {
+      const waBtn = document.querySelector('a[href*="wa.me"]');
+      if (waBtn) {
+        const phone = config.whatsapp.phone || STORE_PHONE;
+        const msg = encodeURIComponent(config.whatsapp.message || "");
+        waBtn.href = `https://wa.me/${phone}${msg ? '?text=' + msg : ''}`;
+      }
+    }
+
+    // 5. Grid Layout Columns & Sizing
+    if (config.layout && config.layout.gridCols) {
+      const prodContainer = document.getElementById("products-container");
+      if (prodContainer && viewMode === "grid") {
+        const cols = config.layout.gridCols;
+        if (cols === "3") {
+          prodContainer.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 transition-all";
+        } else if (cols === "4") {
+          prodContainer.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 transition-all";
+        } else if (cols === "6") {
+          prodContainer.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 transition-all";
+        } else {
+          // Default 5 cols
+          prodContainer.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 transition-all";
+        }
+      }
+    }
+  } catch(e) {
+    console.error("Error applying theme config:", e);
+  }
+}
+
 
 // ----------------- THEME MANAGEMENT (Light / Dark) -----------------
 function initTheme() {

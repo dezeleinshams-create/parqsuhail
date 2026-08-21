@@ -63,6 +63,15 @@
     /* Login Screen Overlay */
     #login-overlay { position: fixed; inset: 0; background: #050811; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
     .login-box { background: rgba(15, 23, 42, 0.95); border: 1px solid #1e293b; border-radius: 24px; padding: 36px 30px; width: 100%; max-width: 420px; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 40px rgba(0,210,255,0.08); text-align: center; }
+
+    /* Visual Builder Drag Item */
+    .builder-section-item { background: #0b1120; border: 1px solid #1e293b; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; user-select: none; }
+    .builder-section-item:hover { border-color: #00D2FF66; background: #0e172a; }
+    .builder-section-item.hidden-sec { opacity: 0.5; background: #070c18; }
+    
+    .fit-btn { padding: 8px 14px; border-radius: 8px; border: 1px solid #1e293b; background: #070c18; color: #94a3b8; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .fit-btn:hover { color: #fff; border-color: #334155; }
+    .fit-btn.active { background: rgba(0,210,255,0.15); border-color: #00D2FF; color: #00D2FF; }
   </style>
 </head>
 <body>
@@ -149,6 +158,10 @@
     <button class="nav-btn" id="nav-tab-add" onclick="switchTab('add')">
       <i class="fas fa-plus-circle w-5 text-center"></i> إضافة صنف جديد
     </button>
+    <!-- 🎨 Visual Theme & Layout Builder Tab Button -->
+    <button class="nav-btn" id="nav-tab-builder" onclick="switchTab('builder')" style="color: #00D2FF;">
+      <i class="fas fa-wand-magic-sparkles w-5 text-center"></i> مخصص التصميم والهياكل
+    </button>
     <button class="nav-btn" id="nav-tab-stats" onclick="switchTab('stats')">
       <i class="fas fa-chart-pie w-5 text-center"></i> إحصائيات المخزون
     </button>
@@ -175,7 +188,7 @@
   <!-- Header -->
   <header style="position: sticky; top: 0; z-index: 30; background: rgba(5, 8, 17, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #1e293b; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;">
     <div style="display: flex; align-items: center; gap: 12px;">
-      <h1 style="color: #fff; font-size: 18px; font-weight: 800; margin: 0;">لوحة تحكم المخزون</h1>
+      <h1 id="page-main-title" style="color: #fff; font-size: 18px; font-weight: 800; margin: 0;">لوحة تحكم المخزون</h1>
       <span id="count-badge" style="background: rgba(0,210,255,0.1); color: #00D2FF; border: 1px solid rgba(0,210,255,0.25); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 9999px; font-family: monospace;">0 صنف</span>
     </div>
     <div style="display: flex; gap: 10px; align-items: center;">
@@ -361,6 +374,189 @@
       </div>
     </div>
 
+    <!-- 🎨 Tab: Visual Builder (مخصص التصميم والهياكل) -->
+    <div id="tab-builder" style="display: none; max-width: 960px; margin: 0 auto;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h2 style="color: #fff; font-size: 19px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">
+            <span style="color: #00D2FF;">🎨</span> مخصص تصميم وهياكل المتجر
+          </h2>
+          <p style="color: #64748b; font-size: 12px; margin-top: 4px;">تحكم في ترتيب الأقسام بالتحريك، أبعاد وتمدد الصور والبنرات، وربط أزرار الموقع والواتساب</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="resetThemeBuilderConfig()" style="background: #1e293b; color: #94a3b8; border: none; border-radius: 10px; padding: 10px 16px; font-size: 12px; font-weight: 700; cursor: pointer;">
+            <i class="fas fa-rotate-left"></i> استعادة الافتراضي
+          </button>
+          <button onclick="saveThemeBuilderConfig()" style="background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; border-radius: 10px; padding: 10px 22px; font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(0,210,255,0.25);">
+            <i class="fas fa-cloud-arrow-up"></i> حفظ ونشر التصميم
+          </button>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+
+        <!-- 1. Reordering Sections Card -->
+        <div class="glass-card" style="padding: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+            <div>
+              <h3 style="color: #fff; font-size: 15px; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-up-down-left-right" style="color: #00D2FF;"></i> 1. ترتيب وظهور أقسام المتجر في الصفحة الرئيسية
+              </h3>
+              <p style="color: #64748b; font-size: 11.5px; margin-top: 2px;">استخدم أزرار الأسهم لتحريك أي قسم للأعلى أو للأسفل بسلاسة، وزر العين لإظهاره أو إخفائه</p>
+            </div>
+          </div>
+          <div id="builder-sections-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+
+        <!-- 2. Hero Banner & Image Stretch Customizer -->
+        <div class="glass-card" style="padding: 20px;">
+          <h3 style="color: #fff; font-size: 15px; font-weight: 800; margin: 0 0 4px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-image" style="color: #38bdf8;"></i> 2. البنر الإعلاني الرئيسي وتمدد الصور (Banner & Stretch)
+          </h3>
+          <p style="color: #64748b; font-size: 11.5px; margin-bottom: 18px;">تعديل صورة البنر الرئيسي، طريقة تمددها وملاءمتها للمربع، ونصوص وأزرار البنر</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <!-- Banner Image Box & Sizing -->
+            <div>
+              <label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📷 صورة البنر الإعلاني</label>
+              <div class="img-upload-box" id="builder-banner-img-box" onclick="triggerUpload('builder-banner')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, 'builder-banner')" style="min-height: 180px; position: relative;">
+                <img id="builder-banner-preview-img" src="assets/images/hero_banner_1_refined.jpg" style="width: 100%; height: 180px; object-fit: cover;">
+              </div>
+              <input type="text" id="builder-banner-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" placeholder="رابط صورة البنر..." oninput="previewBuilderBannerUrl()">
+
+              <!-- Stretch Mode Options -->
+              <div style="margin-top: 14px;">
+                <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📐 طريقة ملاءمة وتمدد الصورة داخل المربع (Image Fit):</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
+                  <button type="button" class="fit-btn active" id="fit-btn-cover" onclick="setBannerFit('cover')">
+                    <i class="fas fa-crop-simple"></i> تغطية وتناسب (Cover)
+                  </button>
+                  <button type="button" class="fit-btn" id="fit-btn-contain" onclick="setBannerFit('contain')">
+                    <i class="fas fa-expand"></i> احتواء كامل (Contain)
+                  </button>
+                  <button type="button" class="fit-btn" id="fit-btn-fill" onclick="setBannerFit('fill')">
+                    <i class="fas fa-up-right-and-down-left-from-center"></i> تمدد كامل (Stretch)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Banner Height Dimension -->
+              <div style="margin-top: 14px;">
+                <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📏 ارتفاع مربع البنر في الصفحة:</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;">
+                  <button type="button" class="fit-btn" id="height-btn-260" onclick="setBannerHeight('260px')">260px (صغير)</button>
+                  <button type="button" class="fit-btn active" id="height-btn-380" onclick="setBannerHeight('380px')">380px (متوسط)</button>
+                  <button type="button" class="fit-btn" id="height-btn-480" onclick="setBannerHeight('480px')">480px (كبير)</button>
+                  <button type="button" class="fit-btn" id="height-btn-auto" onclick="setBannerHeight('auto')">تلقائي</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Banner Texts & CTA Button -->
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div>
+                <label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📌 عنوان البنر الرئيسي</label>
+                <input type="text" id="builder-banner-title" class="admin-input" value="حلول الاتصالات الفضائية واللاسلكية والملاحة في المملكة">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11.5px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">📝 النص التوضيحي للبنر</label>
+                <textarea id="builder-banner-desc" class="admin-input" rows="3" style="resize: vertical;">مؤسسة برق سهيل التجارية وجهتكم الرائدة لتجهيز الرحلات البرية والبحرية بأحدث هواتف الثريا، أجهزة اللاسلكي المرخصة من هيئة الاتصالات (CST)، وملاحة وخرائط قارمن مع الضمان والدعم الفني المباشر بالدمام.</textarea>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                  <label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔘 نص زر البنر الرئيسي</label>
+                  <input type="text" id="builder-banner-btn-text" class="admin-input" value="تصفح كتالوج الأجهزة">
+                </div>
+                <div>
+                  <label style="display: block; font-size: 11.5px; font-weight: 700; color: #34d399; margin-bottom: 4px;">🔗 رابط الزر</label>
+                  <input type="text" id="builder-banner-btn-link" class="admin-input" value="#products" style="direction: ltr; font-family: monospace;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Button Actions & WhatsApp Customizer -->
+        <div class="glass-card" style="padding: 20px;">
+          <h3 style="color: #fff; font-size: 15px; font-weight: 800; margin: 0 0 4px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-link" style="color: #4ade80;"></i> 3. ربط أزرار الموقع والواتساب (Buttons & WhatsApp)
+          </h3>
+          <p style="color: #64748b; font-size: 11.5px; margin-bottom: 16px;">تحديد وجهات ونصوص أزرار المتجر ورقم ورسالة الواتساب</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <!-- Header Quote Button -->
+            <div style="background: rgba(7,12,24,0.6); border: 1px solid #1e293b; border-radius: 12px; padding: 14px;">
+              <div style="font-size: 12px; font-weight: 800; color: #00D2FF; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-file-invoice"></i> زر الهيدر العلوي
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">نص الزر</label>
+                  <input type="text" id="builder-header-btn-text" class="admin-input" value="طلب تسعيرة">
+                </div>
+                <div>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">رابط الزر (URL أو معرف قسم)</label>
+                  <input type="text" id="builder-header-btn-link" class="admin-input" value="#b2b" style="direction: ltr; font-family: monospace;">
+                </div>
+              </div>
+            </div>
+
+            <!-- WhatsApp Floating Button -->
+            <div style="background: rgba(7,12,24,0.6); border: 1px solid #1e293b; border-radius: 12px; padding: 14px;">
+              <div style="font-size: 12px; font-weight: 800; color: #34d399; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                <i class="fab fa-whatsapp"></i> زر الواتساب العائم
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">رقم الواتساب (مع كود الدولة 966)</label>
+                  <input type="text" id="builder-wa-phone" class="admin-input" value="966507181115" style="direction: ltr; font-family: monospace;">
+                </div>
+                <div>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">رسالة الترحيب الافتتاحية التلقائية</label>
+                  <input type="text" id="builder-wa-msg" class="admin-input" value="السلام عليكم، أود الاستفسار عن أجهزة برق سهيل">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Grid Density & Columns -->
+        <div class="glass-card" style="padding: 20px;">
+          <h3 style="color: #fff; font-size: 15px; font-weight: 800; margin: 0 0 4px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-table-cells-large" style="color: #c084fc;"></i> 4. كثافة وأعمدة شبكة المنتجات (Catalog Grid Layout)
+          </h3>
+          <p style="color: #64748b; font-size: 11.5px; margin-bottom: 14px;">اختر عدد أعمدة عرض كروت المنتجات على الشاشات الكبيرة</p>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+            <button type="button" class="fit-btn" id="grid-cols-3" onclick="setGridCols('3')">
+              <div style="font-size: 14px; font-weight: 800;">3 أعمدة</div>
+              <div style="font-size: 10px; color: #64748b;">كروت كبيرة وعريضة</div>
+            </button>
+            <button type="button" class="fit-btn" id="grid-cols-4" onclick="setGridCols('4')">
+              <div style="font-size: 14px; font-weight: 800;">4 أعمدة</div>
+              <div style="font-size: 10px; color: #64748b;">كروت متوسطة متوازنة</div>
+            </button>
+            <button type="button" class="fit-btn active" id="grid-cols-5" onclick="setGridCols('5')">
+              <div style="font-size: 14px; font-weight: 800;">5 أعمدة (افتراضي)</div>
+              <div style="font-size: 10px; color: #64748b;">مدمجة وعالية الكثافة</div>
+            </button>
+            <button type="button" class="fit-btn" id="grid-cols-6" onclick="setGridCols('6')">
+              <div style="font-size: 14px; font-weight: 800;">6 أعمدة</div>
+              <div style="font-size: 10px; color: #64748b;">أقصى سعة للمنتجات</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Save Floating Bar -->
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button onclick="saveThemeBuilderConfig()" style="background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; border-radius: 12px; padding: 14px 28px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 20px rgba(0,210,255,0.3);">
+            <i class="fas fa-check-circle ml-1"></i> حفظ ونشر جميع التعديلات فوراً
+          </button>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Tab 3: Stats -->
     <div id="tab-stats" style="display: none;">
       <h2 style="color: #fff; font-size: 18px; font-weight: 800; margin-bottom: 20px;">📊 تقرير وإحصائيات المخزون</h2>
@@ -469,6 +665,50 @@ var uploadTarget = 'add';
 var addSpecsList = [];
 var editSpecsList = [];
 
+// Visual Builder State
+var DEFAULT_SECTIONS_META = [
+  { id: 'home', title: 'البنر الإعلاني الرئيسي (Hero Banner)', icon: 'fas fa-image' },
+  { id: 'section-features', title: 'شريط المميزات والضمان (Features Strip)', icon: 'fas fa-shield-halved' },
+  { id: 'products', title: 'كتالوج المنتجات والفئات (Products Catalog)', icon: 'fas fa-boxes-stacked' },
+  { id: 'thuraya', title: 'قسم هواتف وأجهزة الثريا (Thuraya Spotlight)', icon: 'fas fa-satellite' },
+  { id: 'garmin', title: 'قسم قارمن والملاحة والخرائط (Garmin GPS)', icon: 'fas fa-map-location-dot' },
+  { id: 'b2b', title: 'نموذج طلب عروض الأسعار (B2B Quote Request)', icon: 'fas fa-file-invoice' },
+  { id: 'showroom', title: 'بطاقة المعرض وخريطة الدمام (Showroom Card)', icon: 'fas fa-store' }
+];
+
+var currentThemeConfig = {
+  sectionsOrder: ['home', 'section-features', 'products', 'thuraya', 'garmin', 'b2b', 'showroom'],
+  sectionsVisible: {
+    'home': true,
+    'section-features': true,
+    'products': true,
+    'thuraya': true,
+    'garmin': true,
+    'b2b': true,
+    'showroom': true
+  },
+  banner: {
+    image: 'assets/images/hero_banner_1_refined.jpg',
+    fit: 'cover',
+    height: '380px',
+    title: 'حلول الاتصالات الفضائية واللاسلكية والملاحة في المملكة',
+    desc: 'مؤسسة برق سهيل التجارية وجهتكم الرائدة لتجهيز الرحلات البرية والبحرية بأحدث هواتف الثريا، أجهزة اللاسلكي المرخصة من هيئة الاتصالات (CST)، وملاحة وخرائط قارمن مع الضمان والدعم الفني المباشر بالدمام.',
+    btnText: 'تصفح كتالوج الأجهزة',
+    btnLink: '#products'
+  },
+  headerBtn: {
+    text: 'طلب تسعيرة',
+    link: '#b2b'
+  },
+  whatsapp: {
+    phone: '966507181115',
+    message: 'السلام عليكم، أود الاستفسار عن أجهزة برق سهيل'
+  },
+  layout: {
+    gridCols: '5'
+  }
+};
+
 var CATEGORY_MAP = {
   devices: { name: 'أجهزة اللاسلكي', icon: '📡', badgeClass: 'background:#1e3a5f;color:#60a5fa;' },
   thuraya: { name: 'أجهزة الثريا', icon: '🛰️', badgeClass: 'background:#1a2e4a;color:#38bdf8;' },
@@ -483,6 +723,7 @@ var CATEGORY_PRIORITY = { devices: 1, thuraya: 2, garmin: 3, accessories: 4, car
 // ── Initialize ──────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function () {
   initUsersDatabase();
+  loadThemeBuilderConfig();
   checkAuth();
 });
 
@@ -589,14 +830,234 @@ function switchTab(tabId) {
     return;
   }
 
-  ['products', 'add', 'stats', 'users'].forEach(function(t) {
+  var titleMap = {
+    products: 'لوحة تحكم المخزون',
+    add: 'إضافة صنف جديد للمخزون',
+    builder: 'مخصص تصميم وهياكل المتجر',
+    stats: 'تقرير وإحصائيات المخزون',
+    users: 'إدارة المسؤولين والمشرفين'
+  };
+
+  var titleEl = document.getElementById('page-main-title');
+  if (titleEl && titleMap[tabId]) titleEl.textContent = titleMap[tabId];
+
+  ['products', 'add', 'builder', 'stats', 'users'].forEach(function(t) {
     var el = document.getElementById('tab-' + t);
     var btn = document.getElementById('nav-tab-' + t);
     if (el) el.style.display = (t === tabId) ? 'block' : 'none';
     if (btn) btn.classList.toggle('active', t === tabId);
   });
+
   if (tabId === 'stats') renderStats();
   if (tabId === 'users') renderUsersTable();
+  if (tabId === 'builder') populateBuilderUI();
+}
+
+// ── Visual Theme & Layout Builder Logic ─────────────────────
+function loadThemeBuilderConfig() {
+  var saved = localStorage.getItem('barq_theme_config');
+  if (saved) {
+    try {
+      var parsed = JSON.parse(saved);
+      if (parsed) currentThemeConfig = Object.assign({}, currentThemeConfig, parsed);
+    } catch(e) {}
+  }
+}
+
+function populateBuilderUI() {
+  renderBuilderSectionsList();
+
+  // Populate Banner
+  var b = currentThemeConfig.banner || {};
+  var previewImg = document.getElementById('builder-banner-preview-img');
+  var urlInp = document.getElementById('builder-banner-img-url');
+  if (previewImg && b.image) previewImg.src = b.image;
+  if (urlInp && b.image) urlInp.value = b.image;
+  if (document.getElementById('builder-banner-title')) document.getElementById('builder-banner-title').value = b.title || '';
+  if (document.getElementById('builder-banner-desc')) document.getElementById('builder-banner-desc').value = b.desc || '';
+  if (document.getElementById('builder-banner-btn-text')) document.getElementById('builder-banner-btn-text').value = b.btnText || '';
+  if (document.getElementById('builder-banner-btn-link')) document.getElementById('builder-banner-btn-link').value = b.btnLink || '';
+
+  setBannerFit(b.fit || 'cover', false);
+  setBannerHeight(b.height || '380px', false);
+
+  // Populate Header Button
+  var hb = currentThemeConfig.headerBtn || {};
+  if (document.getElementById('builder-header-btn-text')) document.getElementById('builder-header-btn-text').value = hb.text || 'طلب تسعيرة';
+  if (document.getElementById('builder-header-btn-link')) document.getElementById('builder-header-btn-link').value = hb.link || '#b2b';
+
+  // Populate WhatsApp
+  var wa = currentThemeConfig.whatsapp || {};
+  if (document.getElementById('builder-wa-phone')) document.getElementById('builder-wa-phone').value = wa.phone || '966507181115';
+  if (document.getElementById('builder-wa-msg')) document.getElementById('builder-wa-msg').value = wa.message || '';
+
+  // Populate Grid
+  var lay = currentThemeConfig.layout || {};
+  setGridCols(lay.gridCols || '5', false);
+}
+
+function renderBuilderSectionsList() {
+  var container = document.getElementById('builder-sections-list');
+  if (!container) return;
+
+  var order = currentThemeConfig.sectionsOrder || [];
+  var visibleMap = currentThemeConfig.sectionsVisible || {};
+
+  container.innerHTML = order.map(function(secId, idx) {
+    var meta = DEFAULT_SECTIONS_META.find(function(m) { return m.id === secId; }) || { id: secId, title: secId, icon: 'fas fa-cube' };
+    var isVisible = (visibleMap[secId] !== false);
+    var isFirst = (idx === 0);
+    var isLast = (idx === order.length - 1);
+
+    return '<div class="builder-section-item ' + (isVisible ? '' : 'hidden-sec') + '">' +
+      '<div style="display: flex; align-items: center; gap: 12px;">' +
+        '<div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,210,255,0.1); color: #00D2FF; display: flex; align-items: center; justify-content: center; font-size: 14px;">' +
+          '<i class="' + meta.icon + '"></i>' +
+        '</div>' +
+        '<div>' +
+          '<div style="color: #fff; font-size: 13.5px; font-weight: 700;">' + meta.title + '</div>' +
+          '<div style="color: #64748b; font-size: 11px; font-family: monospace;">معرف القسم: #' + meta.id + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display: flex; align-items: center; gap: 8px;">' +
+        '<span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; ' + (isVisible ? 'background:rgba(52,211,153,0.15);color:#34d399;' : 'background:rgba(239,68,68,0.15);color:#f87171;') + '">' + (isVisible ? 'ظاهر' : 'مخفي') + '</span>' +
+        '<button type="button" onclick="toggleBuilderSectionVisibility(\'' + secId + '\')" style="width: 34px; height: 34px; border-radius: 8px; background: #1e293b; color: ' + (isVisible ? '#00D2FF' : '#94a3b8') + '; border: none; cursor: pointer; font-size: 13px;" title="' + (isVisible ? 'إخفاء القسم' : 'إظهار القسم') + '"><i class="fas ' + (isVisible ? 'fa-eye' : 'fa-eye-slash') + '"></i></button>' +
+        '<button type="button" onclick="moveBuilderSection(' + idx + ', -1)" ' + (isFirst ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : '') + ' style="width: 34px; height: 34px; border-radius: 8px; background: #1e293b; color: #fff; border: none; cursor: pointer; font-size: 13px;" title="تحريك لأعلى ⬆"><i class="fas fa-arrow-up"></i></button>' +
+        '<button type="button" onclick="moveBuilderSection(' + idx + ', 1)" ' + (isLast ? 'disabled style="opacity:0.3;cursor:not-allowed;"' : '') + ' style="width: 34px; height: 34px; border-radius: 8px; background: #1e293b; color: #fff; border: none; cursor: pointer; font-size: 13px;" title="تحريك لأسفل ⬇"><i class="fas fa-arrow-down"></i></button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function moveBuilderSection(idx, dir) {
+  var order = currentThemeConfig.sectionsOrder;
+  var targetIdx = idx + dir;
+  if (targetIdx < 0 || targetIdx >= order.length) return;
+
+  var temp = order[idx];
+  order[idx] = order[targetIdx];
+  order[targetIdx] = temp;
+
+  renderBuilderSectionsList();
+  showToast('🔄 تم تحريك القسم!');
+}
+
+function toggleBuilderSectionVisibility(secId) {
+  if (!currentThemeConfig.sectionsVisible) currentThemeConfig.sectionsVisible = {};
+  var current = (currentThemeConfig.sectionsVisible[secId] !== false);
+  currentThemeConfig.sectionsVisible[secId] = !current;
+  renderBuilderSectionsList();
+  showToast(!current ? '👁️ تم إظهار القسم' : '🙈 تم إخفاء القسم');
+}
+
+function setBannerFit(fitMode, notify) {
+  if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
+  currentThemeConfig.banner.fit = fitMode;
+
+  ['cover', 'contain', 'fill'].forEach(function(m) {
+    var btn = document.getElementById('fit-btn-' + m);
+    if (btn) btn.classList.toggle('active', m === fitMode);
+  });
+
+  var previewImg = document.getElementById('builder-banner-preview-img');
+  if (previewImg) previewImg.style.objectFit = fitMode;
+
+  if (notify !== false) showToast('📐 نمط التمدد: ' + fitMode);
+}
+
+function setBannerHeight(heightVal, notify) {
+  if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
+  currentThemeConfig.banner.height = heightVal;
+
+  var keys = ['260', '380', '480', 'auto'];
+  keys.forEach(function(k) {
+    var btn = document.getElementById('height-btn-' + k);
+    if (btn) btn.classList.toggle('active', (k === 'auto' && heightVal === 'auto') || (heightVal === k + 'px'));
+  });
+
+  var box = document.getElementById('builder-banner-img-box');
+  var previewImg = document.getElementById('builder-banner-preview-img');
+  if (box && previewImg) {
+    box.style.minHeight = (heightVal === 'auto' ? '180px' : heightVal);
+    previewImg.style.height = (heightVal === 'auto' ? '180px' : heightVal);
+  }
+
+  if (notify !== false) showToast('📏 تم تحديد الارتفاع: ' + heightVal);
+}
+
+function setGridCols(colsVal, notify) {
+  if (!currentThemeConfig.layout) currentThemeConfig.layout = {};
+  currentThemeConfig.layout.gridCols = colsVal;
+
+  ['3', '4', '5', '6'].forEach(function(c) {
+    var btn = document.getElementById('grid-cols-' + c);
+    if (btn) btn.classList.toggle('active', c === colsVal);
+  });
+
+  if (notify !== false) showToast('📐 تم ضبط عدد الأعمدة: ' + colsVal + ' أعمدة');
+}
+
+function previewBuilderBannerUrl() {
+  var urlInp = document.getElementById('builder-banner-img-url');
+  var previewImg = document.getElementById('builder-banner-preview-img');
+  if (urlInp && previewImg && urlInp.value.trim()) {
+    previewImg.src = urlInp.value.trim();
+    if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
+    currentThemeConfig.banner.image = urlInp.value.trim();
+  }
+}
+
+function saveThemeBuilderConfig() {
+  if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
+  currentThemeConfig.banner.image = (document.getElementById('builder-banner-img-url').value || '').trim() || currentThemeConfig.banner.image;
+  currentThemeConfig.banner.title = (document.getElementById('builder-banner-title').value || '').trim();
+  currentThemeConfig.banner.desc = (document.getElementById('builder-banner-desc').value || '').trim();
+  currentThemeConfig.banner.btnText = (document.getElementById('builder-banner-btn-text').value || '').trim();
+  currentThemeConfig.banner.btnLink = (document.getElementById('builder-banner-btn-link').value || '').trim();
+
+  currentThemeConfig.headerBtn = {
+    text: (document.getElementById('builder-header-btn-text').value || '').trim(),
+    link: (document.getElementById('builder-header-btn-link').value || '').trim()
+  };
+
+  currentThemeConfig.whatsapp = {
+    phone: (document.getElementById('builder-wa-phone').value || '').trim(),
+    message: (document.getElementById('builder-wa-msg').value || '').trim()
+  };
+
+  localStorage.setItem('barq_theme_config', JSON.stringify(currentThemeConfig));
+  showToast('🚀 تم حفظ ونشر تصميم وهياكل المتجر بنجاح!');
+}
+
+function resetThemeBuilderConfig() {
+  if (!confirm('هل تريد استعادة تصميم الموقع الافتراضي بالكامل؟')) return;
+  localStorage.removeItem('barq_theme_config');
+  currentThemeConfig = {
+    sectionsOrder: ['home', 'section-features', 'products', 'thuraya', 'garmin', 'b2b', 'showroom'],
+    sectionsVisible: {
+      'home': true,
+      'section-features': true,
+      'products': true,
+      'thuraya': true,
+      'garmin': true,
+      'b2b': true,
+      'showroom': true
+    },
+    banner: {
+      image: 'assets/images/hero_banner_1_refined.jpg',
+      fit: 'cover',
+      height: '380px',
+      title: 'حلول الاتصالات الفضائية واللاسلكية والملاحة في المملكة',
+      desc: 'مؤسسة برق سهيل التجارية وجهتكم الرائدة لتجهيز الرحلات البرية والبحرية بأحدث هواتف الثريا، أجهزة اللاسلكي المرخصة من هيئة الاتصالات (CST)، وملاحة وخرائط قارمن مع الضمان والدعم الفني المباشر بالدمام.',
+      btnText: 'تصفح كتالوج الأجهزة',
+      btnLink: '#products'
+    },
+    headerBtn: { text: 'طلب تسعيرة', link: '#b2b' },
+    whatsapp: { phone: '966507181115', message: 'السلام عليكم، أود الاستفسار عن أجهزة برق سهيل' },
+    layout: { gridCols: '5' }
+  };
+  populateBuilderUI();
+  showToast('🔄 تم استعادة التصميم الافتراضي!');
 }
 
 // ── Users Management (Super Admin Only) ─────────────────────
@@ -1214,7 +1675,16 @@ function handleFileChosen(e) {
   if (!file) return;
   var reader = new FileReader();
   reader.onload = function(evt) {
-    setBoxImage(uploadTarget, evt.target.result);
+    if (uploadTarget === 'builder-banner') {
+      var previewImg = document.getElementById('builder-banner-preview-img');
+      var urlInp = document.getElementById('builder-banner-img-url');
+      if (previewImg) previewImg.src = evt.target.result;
+      if (urlInp) urlInp.value = evt.target.result;
+      if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
+      currentThemeConfig.banner.image = evt.target.result;
+    } else {
+      setBoxImage(uploadTarget, evt.target.result);
+    }
   };
   reader.readAsDataURL(file);
   e.target.value = '';
@@ -1237,7 +1707,16 @@ function dropHandler(e, mode) {
   uploadTarget = mode;
   var reader = new FileReader();
   reader.onload = function(evt) {
-    setBoxImage(mode, evt.target.result);
+    if (mode === 'builder-banner') {
+      var previewImg = document.getElementById('builder-banner-preview-img');
+      var urlInp = document.getElementById('builder-banner-img-url');
+      if (previewImg) previewImg.src = evt.target.result;
+      if (urlInp) urlInp.value = evt.target.result;
+      if (!currentThemeConfig.banner) currentThemeConfig.banner = {};
+      currentThemeConfig.banner.image = evt.target.result;
+    } else {
+      setBoxImage(mode, evt.target.result);
+    }
   };
   reader.readAsDataURL(file);
 }
@@ -1333,6 +1812,8 @@ function showToast(msg) {
   t._timer = setTimeout(function() {
     t.style.display = 'none';
   }, 3000);
+}
+
 // ── Security & Anti-Theft Guard ─────────────────────────────
 (function(){
   if(window.top!==window.self){try{window.top.location=window.self.location;}catch(e){}}
