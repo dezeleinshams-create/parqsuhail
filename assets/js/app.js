@@ -233,22 +233,23 @@ function renderGridCard(p) {
     <div class="product-card group relative bg-slate-900/90 border border-slate-800/90 hover:border-cyan-500/50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-md hover:shadow-xl hover:shadow-cyan-500/10 flex flex-col justify-between">
       
       <!-- Top Action & Badges Overlay -->
-      <div class="absolute top-2.5 inset-x-2.5 z-10 flex items-start justify-between pointer-events-none">
-        ${p.badge ? `<span class="bg-slate-950/80 text-cyan-300 border border-cyan-500/40 text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-lg backdrop-blur-md shadow-sm">${p.badge}</span>` : '<span></span>'}
-        <button onclick="openProductModal('${p.id}')" class="pointer-events-auto w-7 h-7 rounded-lg bg-slate-950/80 hover:bg-cyan-500 text-slate-300 hover:text-slate-950 flex items-center justify-center text-xs transition border border-slate-800 backdrop-blur-md" title="نظرة سريعة">
-          <i class="fas fa-eye"></i>
-        </button>
+      <div class="absolute top-2 inset-x-2 z-10 flex items-center justify-between gap-1.5 pointer-events-none">
+        ${p.badge ? `<span class="bg-slate-950/90 text-cyan-300 border border-cyan-500/40 text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-lg backdrop-blur-md shadow-sm shrink-0 truncate max-w-[45%]">${p.badge}</span>` : '<span></span>'}
+        
+        <div class="flex items-center gap-1.5 shrink-0">
+          ${(p.oldPrice && p.oldPrice > p.price) ? `
+            <span class="bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 text-white text-[10px] sm:text-[11px] font-black px-2 py-0.5 rounded-lg shadow-md border border-rose-400/40 flex items-center gap-1 font-mono tracking-tight">
+              <i class="fas fa-bolt text-[8px] text-amber-200"></i>
+              <span>خصم ${(p.oldPrice - p.price).toLocaleString()} ر.س</span>
+            </span>
+          ` : ''}
+
+          <button onclick="openProductModal('${p.id}')" class="pointer-events-auto w-7 h-7 rounded-lg bg-slate-950/90 hover:bg-cyan-500 text-slate-300 hover:text-slate-950 flex items-center justify-center text-xs transition border border-slate-800 backdrop-blur-md" title="نظرة سريعة">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
       </div>
 
-      <!-- Corner Discount Ribbon Badge -->
-      ${(p.oldPrice && p.oldPrice > p.price) ? `
-        <div class="absolute top-0 right-0 z-20 pointer-events-none">
-          <div class="bg-gradient-to-l from-rose-600 via-rose-500 to-amber-500 text-white text-[10px] sm:text-[11px] font-extrabold px-3 py-1 rounded-bl-2xl shadow-xl shadow-rose-950/60 flex items-center gap-1 border-b border-l border-rose-400/40 font-mono tracking-tight animate-pulse">
-            <i class="fas fa-bolt text-[9px] text-amber-200"></i>
-            <span>خصم ${(p.oldPrice - p.price).toLocaleString()} ر.س</span>
-          </div>
-        </div>
-      ` : ''}
 
       <!-- Image Container (Compact h-36 to h-40) -->
       <div class="relative h-36 sm:h-40 w-full bg-slate-950 overflow-hidden cursor-pointer flex items-center justify-center p-2" onclick="openProductModal('${p.id}')">
