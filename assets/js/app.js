@@ -285,19 +285,104 @@ function updateCategoryPillCounts() {
   if (badgeTotal) badgeTotal.textContent = `${products.length} منتج في المخزون`;
 }
 
+// ----------------- INTELLIGENT ARABIC & MULTILINGUAL SEARCH ENGINE -----------------
+function normalizeSearchText(str) {
+  if (!str) return "";
+  return str
+    .toString()
+    .toLowerCase()
+    .replace(/[\u064B-\u065F\u0670]/g, "") // remove tashkeel (diacritics)
+    .replace(/[أإآ]/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/[ىي]/g, "ي")
+    .replace(/[ؤئ]/g, "ء")
+    .replace(/[-_.,/\\()]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const SEARCH_ALIASES = {
+  "ايك": ["ايكوم", "آيكوم", "icom", "v3500", "2300", "2730", "f1000", "hm 133"],
+  "ايكوم": ["icom", "آيكوم", "v3500", "2300", "2730", "f1000", "hm 133"],
+  "icom": ["ايكوم", "آيكوم", "v3500", "2300", "2730"],
+  "كنود": ["كينوود", "kenwood", "tm 281", "281"],
+  "كينوود": ["kenwood", "كنود", "tm 281", "281"],
+  "kenwood": ["كينوود", "كنود"],
+  "ثريا": ["thuraya", "xt", "xt pro", "xt lite", "x5"],
+  "ثرياء": ["thuraya", "ثريا"],
+  "thuraya": ["ثريا", "xt pro", "xt lite", "x5"],
+  "قارمن": ["garmin", "جارمن", "montana", "gpsmap", "tread", "drivesmart", "خرائط"],
+  "جارمن": ["garmin", "قارمن", "montana", "gpsmap"],
+  "garmin": ["قارمن", "جارمن", "gps", "montana"],
+  "موتورولا": ["motorola", "موتورلا", "gp328", "cp040"],
+  "motorola": ["موتورولا", "موتورلا"],
+  "هوائي": ["انتل", "دايموند", "diamond", "comet", "اريال", "سوطي"],
+  "انتل": ["هوائي", "دايموند", "diamond", "comet", "سوطي"],
+  "دايموند": ["diamond", "دايموند", "هوائي", "انتل"],
+  "diamond": ["دايموند", "هوائي", "انتل"],
+  "ريشه": ["مايك", "ميكروفون", "ريشة", "mic", "hm 133"],
+  "ريشة": ["مايك", "ميكروفون", "ريشه", "mic", "hm 133"],
+  "مايك": ["ريشه", "ريشة", "ميكروفون", "mic", "hm 133"],
+  "شاحن": ["شواحن", "شاحن سياره", "قاعده شحن", "charger", "محول"],
+  "بطاريه": ["بطارية", "بطاريات", "battery", "bp"],
+  "كيبل": ["كابل", "سلك", "توصيله", "rg58", "rg8", "cable", "كونكتر"],
+  "قاعده": ["قاعدة", "مغناطيس", "تثبيت", "mount", "ستاند"],
+  "قاعدة": ["قاعده", "مغناطيس", "تثبيت", "mount"],
+  "شريحه": ["شريحة", "شرائح", "sim", "رصيد", "تجديد", "كارت", "بطاقه"],
+  "شريحة": ["شريحه", "شرائح", "sim", "رصيد", "تجديد", "كارت", "بطاقه"],
+  "خرائط": ["خريطه", "برمجه", "تحديث", "صحراء", "براري", "maps"]
+};
+
+function matchProductSearch(p, query) {
+  const normQ = normalizeSearchText(query);
+  if (!normQ) return true;
+
+  const pName = normalizeSearchText(p.name);
+  const pNameEn = normalizeSearchText(p.nameEn);
+  const pId = normalizeSearchText(p.id);
+  const pDesc = normalizeSearchText(p.shortDesc);
+  const pCat = normalizeSearchText(p.categoryName);
+  const pBadge = normalizeSearchText(p.badge);
+  const pSpecs = Array.isArray(p.specs) ? p.specs.map(s => normalizeSearchText(s)).join(" ") : "";
+  const fullProductText = `${pName} ${pNameEn} ${pId} ${pCat} ${pBadge} ${pDesc} ${pSpecs}`;
+
+  // 1. Exact or partial substring match in product text
+  if (fullProductText.includes(normQ)) return true;
+
+  // 2. Tokenize search query words
+  const queryTokens = normQ.split(" ").filter(Boolean);
+  const allTokensMatch = queryTokens.every(tok => {
+    if (fullProductText.includes(tok)) return true;
+
+    // Check aliases for this token
+    for (const [key, aliases] of Object.entries(SEARCH_ALIASES)) {
+      if (tok.startsWith(key) || key.startsWith(tok) || tok === key) {
+        if (aliases.some(alias => fullProductText.includes(alias))) return true;
+      }
+    }
+    return false;
+  });
+
+  if (allTokensMatch) return true;
+
+  // 3. Check alias triggers
+  for (const [key, aliases] of Object.entries(SEARCH_ALIASES)) {
+    if (key.includes(normQ) || normQ.includes(key)) {
+      if (aliases.some(alias => fullProductText.includes(alias))) return true;
+    }
+  }
+
+  return false;
+}
+
 // Filter and Sort Products
 function getFilteredAndSortedProducts() {
   const products = getProducts();
 
-  // 1. Filter by category & search query
+  // 1. Filter by category & smart search matching
   let filtered = products.filter(p => {
-    const matchCat = activeCategory === "all" || p.category === activeCategory;
-    const query = searchQuery.trim().toLowerCase();
-    const matchSearch = !query || 
-      p.name.toLowerCase().includes(query) || 
-      (p.nameEn && p.nameEn.toLowerCase().includes(query)) ||
-      (p.shortDesc && p.shortDesc.toLowerCase().includes(query)) ||
-      (p.id && p.id.toLowerCase().includes(query));
+    const matchCat = (activeCategory === "all" || p.category === activeCategory);
+    const matchSearch = matchProductSearch(p, searchQuery);
     return matchCat && matchSearch;
   });
 
@@ -317,8 +402,6 @@ function getFilteredAndSortedProducts() {
       break;
     case "featured":
     default:
-      // Keep natural inventory order: devices first, then accessories
-      // (order is already set by displayIndex in data.js)
       filtered.sort((a, b) => (a.displayIndex || 0) - (b.displayIndex || 0));
       break;
   }
@@ -978,12 +1061,194 @@ function showToast(message) {
   }, 3500);
 }
 
+// ----------------- AUTO-SUGGESTIONS DROPDOWN SYSTEM -----------------
+function highlightSearchMatch(text, query) {
+  if (!text || !query) return text || "";
+  const normQ = normalizeSearchText(query);
+  if (!normQ) return text;
+
+  // Simple token highlight regex
+  try {
+    const tokens = normQ.split(" ").filter(t => t.length > 0);
+    let result = text;
+    tokens.forEach(tok => {
+      // Look for match ignoring case
+      const regex = new RegExp(`(${tok.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})`, "gi");
+      result = result.replace(regex, `<span class="bg-cyan-500/20 text-cyan-300 font-bold px-1 rounded">$1</span>`);
+    });
+    return result;
+  } catch(e) {
+    return text;
+  }
+}
+
+function renderSearchSuggestions(query) {
+  const dropdown = document.getElementById("search-suggestions-dropdown");
+  if (!dropdown) return;
+
+  const products = getProducts();
+  const trimmed = (query || "").trim();
+
+  // If query is empty -> show Popular Quick Searches
+  if (!trimmed) {
+    dropdown.innerHTML = `
+      <div class="p-4">
+        <div class="flex items-center justify-between mb-3 text-xs text-slate-400 font-bold">
+          <span class="flex items-center gap-1.5 text-cyan-400">
+            <i class="fas fa-fire"></i> الأكثر بحثاً في المتجر:
+          </span>
+          <span class="text-[10px] text-slate-400">اضغط للبحث السريع</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="quickSearch('آيكوم V3500')" class="px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-cyan-500/20 hover:border-cyan-500/50 border border-slate-700 text-xs text-slate-200 hover:text-cyan-300 transition flex items-center gap-1.5">
+            <i class="fas fa-search text-[10px] text-cyan-400"></i> آيكوم V3500
+          </button>
+          <button type="button" onclick="quickSearch('ثريا XT-PRO')" class="px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-cyan-500/20 hover:border-cyan-500/50 border border-slate-700 text-xs text-slate-200 hover:text-cyan-300 transition flex items-center gap-1.5">
+            <i class="fas fa-search text-[10px] text-cyan-400"></i> ثريا XT-PRO
+          </button>
+          <button type="button" onclick="quickSearch('قارمن 67')" class="px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-cyan-500/20 hover:border-cyan-500/50 border border-slate-700 text-xs text-slate-200 hover:text-cyan-300 transition flex items-center gap-1.5">
+            <i class="fas fa-search text-[10px] text-cyan-400"></i> قارمن GPSMAP 67
+          </button>
+          <button type="button" onclick="quickSearch('ريشة مايك')" class="px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-cyan-500/20 hover:border-cyan-500/50 border border-slate-700 text-xs text-slate-200 hover:text-cyan-300 transition flex items-center gap-1.5">
+            <i class="fas fa-search text-[10px] text-cyan-400"></i> ريشة مايك آيكوم
+          </button>
+          <button type="button" onclick="quickSearch('هوائي دايموند')" class="px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-cyan-500/20 hover:border-cyan-500/50 border border-slate-700 text-xs text-slate-200 hover:text-cyan-300 transition flex items-center gap-1.5">
+            <i class="fas fa-search text-[10px] text-cyan-400"></i> هوائي دايموند أصلي
+          </button>
+          <button type="button" onclick="quickSearch('شريحة ثريا')" class="px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-cyan-500/20 hover:border-cyan-500/50 border border-slate-700 text-xs text-slate-200 hover:text-cyan-300 transition flex items-center gap-1.5">
+            <i class="fas fa-search text-[10px] text-cyan-400"></i> شريحة وتجديد ثريا
+          </button>
+          <button type="button" onclick="quickSearch('تحديث خرائط')" class="px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-cyan-500/20 hover:border-cyan-500/50 border border-slate-700 text-xs text-slate-200 hover:text-cyan-300 transition flex items-center gap-1.5">
+            <i class="fas fa-search text-[10px] text-cyan-400"></i> تحديث وبرمجة خرائط
+          </button>
+        </div>
+      </div>
+    `;
+    dropdown.classList.remove("hidden");
+    return;
+  }
+
+  // Filter matching products
+  const matching = products.filter(p => matchProductSearch(p, trimmed));
+
+  if (matching.length === 0) {
+    dropdown.innerHTML = `
+      <div class="p-6 text-center text-slate-400 space-y-2">
+        <i class="fas fa-magnifying-glass text-2xl text-slate-500"></i>
+        <div class="text-sm font-bold text-white">لا توجد نتائج مطابقة لـ "${trimmed}"</div>
+        <p class="text-xs text-slate-400">جرب كتابة: "ايكوم"، "ثريا"، "قارمن"، "ريشة"، "هوائي"، أو "شاحن"</p>
+      </div>
+    `;
+    dropdown.classList.remove("hidden");
+    return;
+  }
+
+  // Display top 6 suggestions
+  const topMatches = matching.slice(0, 6);
+  const itemsHtml = topMatches.map(p => {
+    const stock = (p.stock !== undefined) ? p.stock : 10;
+    const isOut = (stock === 0);
+    const categoryBadge = p.categoryName || "منتج معتمد";
+
+    return `
+      <div onclick="selectSuggestedProduct('${p.id}')" class="p-3 hover:bg-slate-800/90 border-b border-slate-800/80 cursor-pointer transition flex items-center justify-between gap-3 group">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-12 h-12 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden flex items-center justify-center shrink-0 p-1 group-hover:border-cyan-400/50 transition">
+            <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain" onerror="this.src='assets/images/hero_banner_1_refined.jpg'">
+          </div>
+          <div class="min-w-0">
+            <div class="text-xs sm:text-sm font-bold text-white truncate group-hover:text-cyan-300 transition">
+              ${highlightSearchMatch(p.name, trimmed)}
+            </div>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full">${categoryBadge}</span>
+              ${p.nameEn ? `<span class="text-[10px] text-slate-400 font-mono hidden sm:inline">${p.nameEn}</span>` : ''}
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-left shrink-0">
+          <div class="text-xs sm:text-sm font-black font-mono text-cyan-400">${p.price.toLocaleString()} ر.س</div>
+          ${p.oldPrice && p.oldPrice > p.price ? `<div class="text-[10px] text-slate-400 line-through font-mono">-${(p.oldPrice - p.price).toLocaleString()} ر.س</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  dropdown.innerHTML = `
+    <div class="p-2.5 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between text-xs">
+      <span class="font-bold text-cyan-400 flex items-center gap-1.5">
+        <i class="fas fa-wand-magic-sparkles"></i> نتائج الاقتراحات السريعة لـ "${trimmed}"
+      </span>
+      <span class="bg-cyan-500/10 text-cyan-300 font-mono font-bold px-2 py-0.5 rounded-full text-[10px]">
+        ${matching.length} منتج متوفر
+      </span>
+    </div>
+
+    <div class="divide-y divide-slate-800/40">
+      ${itemsHtml}
+    </div>
+
+    <div class="p-2.5 bg-slate-950/90 text-center border-t border-slate-800">
+      <button type="button" onclick="closeSearchSuggestions(); scrollToCatalog();" class="w-full py-2 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-xs shadow-md transition flex items-center justify-center gap-2">
+        <i class="fas fa-list-check"></i>
+        <span>عرض كافة النتائج في الكتالوج (${matching.length} منتج)</span>
+      </button>
+    </div>
+  `;
+
+  dropdown.classList.remove("hidden");
+}
+
+function closeSearchSuggestions() {
+  const dropdown = document.getElementById("search-suggestions-dropdown");
+  if (dropdown) dropdown.classList.add("hidden");
+}
+
+function selectSuggestedProduct(productId) {
+  closeSearchSuggestions();
+  openProductModal(productId);
+}
+
+function quickSearch(term) {
+  const input = document.getElementById("search-input");
+  const clearBtn = document.getElementById("search-clear-btn");
+  if (input) {
+    input.value = term;
+    searchQuery = term;
+    if (clearBtn) clearBtn.classList.remove("hidden");
+    currentPage = 1;
+    renderProducts();
+    renderSearchSuggestions(term);
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById("search-input");
+  const clearBtn = document.getElementById("search-clear-btn");
+  if (input) input.value = "";
+  if (clearBtn) clearBtn.classList.add("hidden");
+  searchQuery = "";
+  currentPage = 1;
+  renderProducts();
+  closeSearchSuggestions();
+}
+
+function scrollToCatalog() {
+  const catSection = document.getElementById("products");
+  if (catSection) {
+    catSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 // ----------------- EVENT LISTENERS -----------------
 function setupEventListeners() {
   const searchInput = document.getElementById("search-input");
   const clearBtn = document.getElementById("search-clear-btn");
+  const searchWrapper = document.getElementById("search-wrapper");
 
   if (searchInput) {
+    // Input Event -> Filter Catalog & Show Live Suggestions
     searchInput.addEventListener("input", (e) => {
       searchQuery = e.target.value;
       if (clearBtn) {
@@ -991,6 +1256,30 @@ function setupEventListeners() {
       }
       currentPage = 1;
       renderProducts();
+      renderSearchSuggestions(searchQuery);
+    });
+
+    // Focus Event -> Open Suggestions Dropdown
+    searchInput.addEventListener("focus", () => {
+      renderSearchSuggestions(searchInput.value);
+    });
+
+    // Keydown for Escape & Enter
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeSearchSuggestions();
+      } else if (e.key === "Enter") {
+        closeSearchSuggestions();
+        scrollToCatalog();
+      }
     });
   }
+
+  // Click Outside to Close Suggestions Dropdown
+  document.addEventListener("click", (e) => {
+    if (searchWrapper && !searchWrapper.contains(e.target)) {
+      closeSearchSuggestions();
+    }
+  });
 }
+

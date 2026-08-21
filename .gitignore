@@ -9,5 +9,6 @@ check_data.py
 inventory_data.txt
 build_seo.py
 products_dump.json
+test_search.js
 *.pyc
 __pycache__/
