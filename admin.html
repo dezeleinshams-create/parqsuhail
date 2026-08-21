@@ -56,7 +56,7 @@
     
     #modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 50; display: none; align-items: center; justify-content: center; padding: 16px; }
     #modal-overlay.active { display: flex; }
-    .modal-box { background: #0F172A; border: 1px solid #1e293b; border-radius: 20px; width: 100%; max-width: 820px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
+    .modal-box { background: #0F172A; border: 1px solid #1e293b; border-radius: 20px; width: 100%; max-width: 840px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
     
     #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #00D2FF; color: #070C1A; font-weight: 800; padding: 12px 28px; border-radius: 9999px; z-index: 9999; display: none; font-size: 14px; box-shadow: 0 10px 30px rgba(0,210,255,0.3); }
   </style>
@@ -156,12 +156,12 @@
 
       <!-- Table Container -->
       <div class="glass-card" style="overflow: hidden;">
-        <div style="display: grid; grid-template-columns: 60px 1fr 140px 90px 70px 70px 100px; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #1e293b; font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase;">
+        <div style="display: grid; grid-template-columns: 60px 1fr 140px 100px 90px 70px 100px; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #1e293b; font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase;">
           <div>الصورة</div>
           <div>اسم الصنف / الرمز</div>
           <div>الفئة</div>
-          <div style="text-align: center;">السعر</div>
-          <div style="text-align: center;">خصم</div>
+          <div style="text-align: center;">السعر النهائي</div>
+          <div style="text-align: center;">الخصم المباشر</div>
           <div style="text-align: center;">المخزون</div>
           <div style="text-align: center;">تحكم</div>
         </div>
@@ -170,7 +170,7 @@
     </div>
 
     <!-- Tab 2: Add Product Form -->
-    <div id="tab-add" style="display: none; max-width: 760px; margin: 0 auto;">
+    <div id="tab-add" style="display: none; max-width: 780px; margin: 0 auto;">
       <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
         <button onclick="switchTab('products')" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 16px;"><i class="fas fa-arrow-right"></i></button>
         <h2 style="color: #fff; font-size: 18px; margin: 0; font-weight: 800;">➕ إضافة صنف جديد للمخزون</h2>
@@ -217,14 +217,25 @@
 
           <!-- Right Column -->
           <div style="display: flex; flex-direction: column; gap: 14px;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <div>
-                <label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">💰 السعر الحالي (ر.س) *</label>
-                <input type="number" id="add-price" class="admin-input" placeholder="0" min="0" style="color: #00D2FF; font-weight: 800; font-family: monospace;">
+            <!-- Pricing 3-Box System -->
+            <div style="background: rgba(7,12,24,0.6); border: 1px solid #1e293b; border-radius: 12px; padding: 12px;">
+              <div style="font-size: 12px; font-weight: 800; color: #00D2FF; margin-bottom: 8px;">💰 تسعير الصنف والتخفيض</div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+                <div>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">السعر الأساسي (ر.س) *</label>
+                  <input type="number" id="add-base-price" class="admin-input" placeholder="مثال: 100" min="0" style="font-family: monospace;" oninput="calcAddPricing('base')">
+                </div>
+                <div>
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #f87171; margin-bottom: 4px;">قيمة الخصم (ر.س)</label>
+                  <input type="number" id="add-discount-amt" class="admin-input" placeholder="مثال: 30" min="0" style="color: #f87171; font-weight: 800; font-family: monospace;" oninput="calcAddPricing('discount')">
+                </div>
               </div>
               <div>
-                <label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🔖 السعر قبل التخفيض</label>
-                <input type="number" id="add-old-price" class="admin-input" placeholder="اختياري" min="0" style="font-family: monospace;">
+                <label style="display: block; font-size: 11px; font-weight: 700; color: #34d399; margin-bottom: 4px;">السعر النهائي للبيع (ر.س) *</label>
+                <input type="number" id="add-final-price" class="admin-input" placeholder="مثال: 70" min="0" style="color: #34d399; font-weight: 800; font-family: monospace; font-size: 15px;" oninput="calcAddPricing('final')">
+              </div>
+              <div id="add-ribbon-preview" style="display: none; margin-top: 8px; padding: 6px 12px; background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.25); border-radius: 8px; font-size: 11px; color: #fb7185; font-weight: 700; text-align: center;">
+                🏷️ سيظهر شريط في المتجر: <span id="add-ribbon-text" class="font-bold font-mono">خصم 0 ر.س</span>
               </div>
             </div>
 
@@ -250,7 +261,7 @@
 
             <div>
               <label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📝 مواصفات ووصف الصنف</label>
-              <textarea id="add-desc" class="admin-input" rows="4" style="resize: vertical;" placeholder="اكتب وصفاً أو مواصفات فنية..."></textarea>
+              <textarea id="add-desc" class="admin-input" rows="3" style="resize: vertical;" placeholder="اكتب وصفاً أو مواصفات فنية..."></textarea>
             </div>
           </div>
         </div>
@@ -362,7 +373,7 @@ function updateBadge() {
 }
 
 function resetToDefault() {
-  if (!confirm('هل تريد استعادة بيانات الجرد الافتراضية كاملة؟')) return;
+  if (!confirm('هل تريد استعادة بيانات الجرد الافتراضية كاملة؟ سيتم حذف التعديلات والرجوع للأصل.')) return;
   if (typeof INITIAL_PRODUCTS !== 'undefined' && INITIAL_PRODUCTS.length > 0) {
     storeProducts = JSON.parse(JSON.stringify(INITIAL_PRODUCTS));
   } else if (typeof INVENTORY_PRODUCTS !== 'undefined' && INVENTORY_PRODUCTS.length > 0) {
@@ -382,6 +393,79 @@ function switchTab(tabId) {
     if (btn) btn.classList.toggle('active', t === tabId);
   });
   if (tabId === 'stats') renderStats();
+}
+
+// ── Pricing Calculations ────────────────────────────────────
+function calcAddPricing(changedField) {
+  var baseEl = document.getElementById('add-base-price');
+  var discEl = document.getElementById('add-discount-amt');
+  var finalEl = document.getElementById('add-final-price');
+  var ribbonEl = document.getElementById('add-ribbon-preview');
+  var ribbonText = document.getElementById('add-ribbon-text');
+
+  var base = parseFloat(baseEl.value) || 0;
+  var disc = parseFloat(discEl.value) || 0;
+  var final = parseFloat(finalEl.value) || 0;
+
+  if (changedField === 'base' || changedField === 'discount') {
+    if (base > 0) {
+      if (disc > 0) {
+        finalEl.value = Math.max(0, base - disc);
+      } else {
+        finalEl.value = base;
+      }
+    }
+  } else if (changedField === 'final') {
+    if (base > 0 && final < base) {
+      discEl.value = base - final;
+    } else {
+      discEl.value = 0;
+    }
+  }
+
+  var currentDisc = parseFloat(discEl.value) || 0;
+  if (currentDisc > 0 && base > 0) {
+    ribbonText.textContent = 'خصم ' + currentDisc.toLocaleString() + ' ر.س';
+    ribbonEl.style.display = 'block';
+  } else {
+    ribbonEl.style.display = 'none';
+  }
+}
+
+function calcEditPricing(changedField) {
+  var baseEl = document.getElementById('edit-base-price');
+  var discEl = document.getElementById('edit-discount-amt');
+  var finalEl = document.getElementById('edit-final-price');
+  var ribbonEl = document.getElementById('edit-ribbon-preview');
+  var ribbonText = document.getElementById('edit-ribbon-text');
+
+  var base = parseFloat(baseEl.value) || 0;
+  var disc = parseFloat(discEl.value) || 0;
+  var final = parseFloat(finalEl.value) || 0;
+
+  if (changedField === 'base' || changedField === 'discount') {
+    if (base > 0) {
+      if (disc > 0) {
+        finalEl.value = Math.max(0, base - disc);
+      } else {
+        finalEl.value = base;
+      }
+    }
+  } else if (changedField === 'final') {
+    if (base > 0 && final < base) {
+      discEl.value = base - final;
+    } else {
+      discEl.value = 0;
+    }
+  }
+
+  var currentDisc = parseFloat(discEl.value) || 0;
+  if (currentDisc > 0 && base > 0) {
+    ribbonText.textContent = 'خصم ' + currentDisc.toLocaleString() + ' ر.س';
+    ribbonEl.style.display = 'block';
+  } else {
+    ribbonEl.style.display = 'none';
+  }
 }
 
 // ── Render Products Table ───────────────────────────────────
@@ -437,13 +521,13 @@ function renderProductsTable() {
     var cat = CATEGORY_MAP[p.category] || { name: p.category, icon: '📦', badgeClass: 'background:#1e293b;color:#94a3b8;' };
     var stock = (p.stock !== undefined) ? p.stock : 10;
     var stockColor = stock === 0 ? '#f87171' : stock <= 3 ? '#fbbf24' : '#34d399';
-    var discount = (p.oldPrice && p.oldPrice > p.price) ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
+    var discountCash = (p.oldPrice && p.oldPrice > p.price) ? (p.oldPrice - p.price) : 0;
 
     var imgTag = p.image
       ? '<img src="' + p.image + '" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML=\'<i class=\\\"fas fa-image\\\" style=\\\"color:#475569;font-size:16px\\\"></i>\'">'
       : '<i class="fas fa-image" style="color: #475569; font-size: 16px;"></i>';
 
-    return '<div style="display: grid; grid-template-columns: 60px 1fr 140px 90px 70px 70px 100px; gap: 12px; padding: 12px 18px; align-items: center; border-bottom: 1px solid rgba(30, 41, 59, 0.5); transition: background 0.15s;" onmouseover="this.style.background=\'rgba(0,210,255,0.03)\'" onmouseout="this.style.background=\'transparent\'">' +
+    return '<div style="display: grid; grid-template-columns: 60px 1fr 140px 100px 90px 70px 100px; gap: 12px; padding: 12px 18px; align-items: center; border-bottom: 1px solid rgba(30, 41, 59, 0.5); transition: background 0.15s;" onmouseover="this.style.background=\'rgba(0,210,255,0.03)\'" onmouseout="this.style.background=\'transparent\'">' +
       '<div><div style="width: 48px; height: 48px; border-radius: 10px; overflow: hidden; background: #070c18; border: 1px solid #1e293b; display: flex; align-items: center; justify-content: center;">' + imgTag + '</div></div>' +
       '<div>' +
         '<div style="color: #fff; font-size: 13px; font-weight: 700; line-height: 1.35;">' + p.name + '</div>' +
@@ -451,8 +535,8 @@ function renderProductsTable() {
         (p.badge ? '<span style="display: inline-block; font-size: 10px; font-weight: 800; background: rgba(0,210,255,0.1); color: #00D2FF; border: 1px solid rgba(0,210,255,0.2); padding: 1px 8px; border-radius: 999px; margin-top: 2px;">' + p.badge + '</span>' : '') +
       '</div>' +
       '<div><span style="display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; ' + cat.badgeClass + '">' + cat.icon + ' ' + cat.name + '</span></div>' +
-      '<div style="text-align: center;"><div style="color: #00D2FF; font-size: 14px; font-weight: 800; font-family: monospace;">' + (p.price || 0).toLocaleString() + '</div><div style="color: #64748b; font-size: 10px;">ر.س</div></div>' +
-      '<div style="text-align: center;">' + (discount > 0 ? '<span style="font-size: 11px; font-weight: 800; color: #34d399; background: rgba(52,211,153,0.1); padding: 2px 8px; border-radius: 999px;">' + discount + '%</span>' : '<span style="color:#334155;">—</span>') + '</div>' +
+      '<div style="text-align: center;"><div style="color: #34d399; font-size: 14px; font-weight: 800; font-family: monospace;">' + (p.price || 0).toLocaleString() + '</div><div style="color: #64748b; font-size: 10px;">ر.س</div></div>' +
+      '<div style="text-align: center;">' + (discountCash > 0 ? '<span style="font-size: 11px; font-weight: 800; color: #f87171; background: rgba(239,68,68,0.12); padding: 3px 8px; border-radius: 999px; font-family: monospace;">-' + discountCash.toLocaleString() + ' ر.س</span>' : '<span style="color:#334155;">—</span>') + '</div>' +
       '<div style="text-align: center;"><span style="font-size: 14px; font-weight: 800; font-family: monospace; color: ' + stockColor + ';">' + (stock === 999 ? '∞' : stock) + '</span></div>' +
       '<div style="display: flex; gap: 6px; justify-content: center;">' +
         '<button onclick="openEditModal(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,210,255,0.12); color: #00D2FF; border: none; cursor: pointer; font-size: 13px;" title="تحرير كامل للصنف"><i class="fas fa-pen"></i></button>' +
@@ -470,6 +554,10 @@ function openEditModal(productId) {
   currentEditingId = productId;
   uploadTarget = 'edit';
   editSpecsList = (p.specs || []).slice();
+
+  var basePrice = (p.oldPrice && p.oldPrice > p.price) ? p.oldPrice : p.price;
+  var discountAmt = (p.oldPrice && p.oldPrice > p.price) ? (p.oldPrice - p.price) : 0;
+  var finalPrice = p.price || 0;
 
   var catOptionsHtml = Object.keys(CATEGORY_MAP).map(function(key) {
     var c = CATEGORY_MAP[key];
@@ -501,11 +589,27 @@ function openEditModal(productId) {
       '</div>' +
       '<!-- Right -->' +
       '<div style="display: flex; flex-direction: column; gap: 14px;">' +
-        '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">' +
-          '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">💰 السعر الحالي (ر.س)</label><input type="number" id="edit-price" class="admin-input" value="' + (p.price || 0) + '" min="0" style="color: #00D2FF; font-weight: 800; font-family: monospace;" oninput="updateDiscountCalc()"></div>' +
-          '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🔖 السعر القديم (قبل الخصم)</label><input type="number" id="edit-old-price" class="admin-input" value="' + (p.oldPrice || '') + '" min="0" placeholder="اتركه فارغاً إن لم يوجد خصم" style="font-family: monospace;" oninput="updateDiscountCalc()"></div>' +
+        '<!-- Pricing 3-Box System -->' +
+        '<div style="background: rgba(7,12,24,0.6); border: 1px solid #1e293b; border-radius: 12px; padding: 12px;">' +
+          '<div style="font-size: 12px; font-weight: 800; color: #00D2FF; margin-bottom: 8px;">💰 تسعير الصنف والتخفيض</div>' +
+          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">' +
+            '<div>' +
+              '<label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">السعر الأساسي (ر.س) *</label>' +
+              '<input type="number" id="edit-base-price" class="admin-input" value="' + basePrice + '" min="0" style="font-family: monospace;" oninput="calcEditPricing(\'base\')">' +
+            '</div>' +
+            '<div>' +
+              '<label style="display: block; font-size: 11px; font-weight: 700; color: #f87171; margin-bottom: 4px;">قيمة الخصم (ر.س)</label>' +
+              '<input type="number" id="edit-discount-amt" class="admin-input" value="' + discountAmt + '" min="0" style="color: #f87171; font-weight: 800; font-family: monospace;" oninput="calcEditPricing(\'discount\')">' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<label style="display: block; font-size: 11px; font-weight: 700; color: #34d399; margin-bottom: 4px;">السعر النهائي للبيع (ر.س) *</label>' +
+            '<input type="number" id="edit-final-price" class="admin-input" value="' + finalPrice + '" min="0" style="color: #34d399; font-weight: 800; font-family: monospace; font-size: 15px;" oninput="calcEditPricing(\'final\')">' +
+          '</div>' +
+          '<div id="edit-ribbon-preview" style="display: ' + (discountAmt > 0 ? 'block' : 'none') + '; margin-top: 8px; padding: 6px 12px; background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.25); border-radius: 8px; font-size: 11px; color: #fb7185; font-weight: 700; text-align: center;">' +
+            '🏷️ سيظهر شريط في المتجر: <span id="edit-ribbon-text" class="font-bold font-mono">خصم ' + discountAmt.toLocaleString() + ' ر.س</span>' +
+          '</div>' +
         '</div>' +
-        '<div id="edit-discount-preview" style="display: none; background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.2); border-radius: 10px; padding: 10px; text-align: center;"><span id="edit-discount-value" style="color: #34d399; font-weight: 800; font-size: 20px;">0%</span><div style="color: #64748b; font-size: 11px; margin-top: 2px;">نسبة التخفيض المحسوبة تلقائياً</div></div>' +
         '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📦 كمية المخزون</label>' +
           '<div style="display: flex; align-items: center; gap: 8px;">' +
             '<button type="button" onclick="adjustQty(\'edit\', -1)" style="width: 38px; height: 38px; border-radius: 10px; background: #1e293b; color: #fff; border: none; font-size: 18px; font-weight: 800; cursor: pointer;">−</button>' +
@@ -524,7 +628,7 @@ function openEditModal(productId) {
           '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">⭐ التقييم</label><input type="number" id="edit-rating" class="admin-input" value="' + (p.rating || 4.8) + '" min="1" max="5" step="0.1"></div>' +
           '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">💬 التقييمات</label><input type="number" id="edit-reviews" class="admin-input" value="' + (p.reviewsCount || 0) + '" min="0"></div>' +
         '</div>' +
-        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📝 وصف الصنف</label><textarea id="edit-desc" class="admin-input" rows="4" style="resize: vertical;">' + (p.shortDesc || '') + '</textarea></div>' +
+        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📝 وصف الصنف</label><textarea id="edit-desc" class="admin-input" rows="3" style="resize: vertical;">' + (p.shortDesc || '') + '</textarea></div>' +
       '</div>' +
     '</div>' +
     '<div style="margin-top: 18px;">' +
@@ -546,7 +650,6 @@ function openEditModal(productId) {
   document.getElementById('modal-overlay').classList.add('active');
   document.body.style.overflow = 'hidden';
   renderSpecTags('edit');
-  updateDiscountCalc();
 }
 
 function closeEditModal() {
@@ -597,8 +700,13 @@ function saveEditChanges() {
   if (idx === -1) { showToast('❌ الصنف غير موجود!'); return; }
 
   var cat = document.getElementById('edit-category').value;
-  var price = parseFloat(document.getElementById('edit-price').value) || 0;
-  var oldPrice = parseFloat(document.getElementById('edit-old-price').value) || 0;
+  var basePrice = parseFloat(document.getElementById('edit-base-price').value) || 0;
+  var discountAmt = parseFloat(document.getElementById('edit-discount-amt').value) || 0;
+  var finalPrice = parseFloat(document.getElementById('edit-final-price').value) || 0;
+
+  if (!finalPrice && basePrice > 0) {
+    finalPrice = Math.max(0, basePrice - discountAmt);
+  }
 
   storeProducts[idx] = Object.assign({}, storeProducts[idx], {
     name: (document.getElementById('edit-name').value || '').trim(),
@@ -606,8 +714,8 @@ function saveEditChanges() {
     category: cat,
     categoryName: (CATEGORY_MAP[cat] || {}).name || cat,
     badge: (document.getElementById('edit-badge').value || '').trim(),
-    price: price,
-    oldPrice: (oldPrice > price) ? oldPrice : 0,
+    price: finalPrice,
+    oldPrice: (discountAmt > 0 && basePrice > finalPrice) ? basePrice : 0,
     stock: parseInt(document.getElementById('edit-stock').value) || 0,
     rating: parseFloat(document.getElementById('edit-rating').value) || 4.8,
     reviewsCount: parseInt(document.getElementById('edit-reviews').value) || 0,
@@ -620,7 +728,7 @@ function saveEditChanges() {
   closeEditModal();
   renderProductsTable();
   renderStats();
-  showToast('✅ تم حفظ التعديلات بنجاح!');
+  showToast('✅ تم حفظ التعديلات وحفظ الخصم بنجاح!');
 }
 
 // ── Add New Product ─────────────────────────────────────────
@@ -628,11 +736,18 @@ function saveNewProduct() {
   var name = (document.getElementById('add-name').value || '').trim();
   if (!name) { showToast('❌ يجب كتابة اسم الصنف!'); return; }
 
-  var price = parseFloat(document.getElementById('add-price').value) || 0;
-  if (!price) { showToast('❌ يجب تحديد سعر الصنف!'); return; }
+  var basePrice = parseFloat(document.getElementById('add-base-price').value) || 0;
+  var discountAmt = parseFloat(document.getElementById('add-discount-amt').value) || 0;
+  var finalPrice = parseFloat(document.getElementById('add-final-price').value) || 0;
+
+  if (!finalPrice && basePrice > 0) {
+    finalPrice = Math.max(0, basePrice - discountAmt);
+  }
+  if (!finalPrice && !basePrice) {
+    showToast('❌ يجب تحديد سعر الصنف!'); return;
+  }
 
   var cat = document.getElementById('add-category').value;
-  var oldPrice = parseFloat(document.getElementById('add-old-price').value) || 0;
 
   var newProd = {
     id: 'SKU-' + Date.now().toString(36).toUpperCase(),
@@ -641,8 +756,8 @@ function saveNewProduct() {
     category: cat,
     categoryName: (CATEGORY_MAP[cat] || {}).name || cat,
     badge: (document.getElementById('add-badge').value || '').trim(),
-    price: price,
-    oldPrice: (oldPrice > price) ? oldPrice : 0,
+    price: finalPrice,
+    oldPrice: (discountAmt > 0 && basePrice > finalPrice) ? basePrice : 0,
     stock: parseInt(document.getElementById('add-stock').value) || 0,
     rating: parseFloat(document.getElementById('add-rating').value) || 4.8,
     reviewsCount: parseInt(document.getElementById('add-reviews').value) || 0,
@@ -658,12 +773,14 @@ function saveNewProduct() {
   // Reset Form
   document.getElementById('add-name').value = '';
   document.getElementById('add-name-en').value = '';
-  document.getElementById('add-price').value = '';
-  document.getElementById('add-old-price').value = '';
+  document.getElementById('add-base-price').value = '';
+  document.getElementById('add-discount-amt').value = '';
+  document.getElementById('add-final-price').value = '';
   document.getElementById('add-badge').value = '';
   document.getElementById('add-desc').value = '';
   document.getElementById('add-img-url').value = '';
   document.getElementById('add-img-box').innerHTML = '<div style="text-align: center; color: #64748b; padding: 12px;"><i class="fas fa-cloud-arrow-up" style="font-size: 26px; margin-bottom: 6px; color: #00D2FF;"></i><div style="font-size: 12px; font-weight: 700; color: #cbd5e1;">اضغط لرفع صورة أو اسحبها هنا</div></div>';
+  document.getElementById('add-ribbon-preview').style.display = 'none';
   addSpecsList = [];
   renderSpecTags('add');
 
@@ -703,7 +820,7 @@ function duplicateProduct(id) {
   showToast('📋 تم عمل نسخة من "' + p.name + '"');
 }
 
-// ── Quantity & Discount Helpers ─────────────────────────────
+// ── Quantity Helpers ────────────────────────────────────────
 function adjustQty(mode, delta) {
   var input = document.getElementById(mode + '-stock');
   if (!input) return;
@@ -714,24 +831,6 @@ function adjustQty(mode, delta) {
 function setStockValue(val) {
   var input = document.getElementById('edit-stock');
   if (input) input.value = val;
-}
-
-function updateDiscountCalc() {
-  var pInput = document.getElementById('edit-price');
-  var oInput = document.getElementById('edit-old-price');
-  var preview = document.getElementById('edit-discount-preview');
-  var valEl = document.getElementById('edit-discount-value');
-
-  var price = parseFloat(pInput ? pInput.value : 0) || 0;
-  var oldPrice = parseFloat(oInput ? oInput.value : 0) || 0;
-
-  if (oldPrice > price && price > 0) {
-    var pct = Math.round((1 - price / oldPrice) * 100);
-    valEl.textContent = pct + '%';
-    preview.style.display = 'block';
-  } else {
-    preview.style.display = 'none';
-  }
 }
 
 // ── Images Upload & Drag/Drop ────────────────────────────────

@@ -240,6 +240,16 @@ function renderGridCard(p) {
         </button>
       </div>
 
+      <!-- Corner Discount Ribbon Badge -->
+      ${(p.oldPrice && p.oldPrice > p.price) ? `
+        <div class="absolute top-0 right-0 z-20 pointer-events-none">
+          <div class="bg-gradient-to-l from-rose-600 via-rose-500 to-amber-500 text-white text-[10px] sm:text-[11px] font-extrabold px-3 py-1 rounded-bl-2xl shadow-xl shadow-rose-950/60 flex items-center gap-1 border-b border-l border-rose-400/40 font-mono tracking-tight animate-pulse">
+            <i class="fas fa-bolt text-[9px] text-amber-200"></i>
+            <span>خصم ${(p.oldPrice - p.price).toLocaleString()} ر.س</span>
+          </div>
+        </div>
+      ` : ''}
+
       <!-- Image Container (Compact h-36 to h-40) -->
       <div class="relative h-36 sm:h-40 w-full bg-slate-950 overflow-hidden cursor-pointer flex items-center justify-center p-2" onclick="openProductModal('${p.id}')">
         <img 
@@ -251,6 +261,7 @@ function renderGridCard(p) {
         >
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-60"></div>
       </div>
+
 
       <!-- Card Details (Compact padding p-3 sm:p-3.5) -->
       <div class="p-3 sm:p-3.5 flex-1 flex flex-col justify-between bg-slate-900/60">
@@ -306,6 +317,7 @@ function renderListCard(p) {
         <div class="flex-1 min-w-0 space-y-1">
           <div class="flex items-center gap-2 flex-wrap">
             <span class="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-md border border-cyan-500/20">${p.categoryName}</span>
+            ${(p.oldPrice && p.oldPrice > p.price) ? `<span class="text-[10px] font-bold text-white bg-gradient-to-r from-rose-600 to-amber-500 px-2 py-0.5 rounded-md shadow-sm font-mono">خصم ${(p.oldPrice - p.price).toLocaleString()} ر.س</span>` : ''}
             ${p.badge ? `<span class="text-[10px] font-bold text-slate-300 bg-slate-800 px-2 py-0.5 rounded-md">${p.badge}</span>` : ''}
             <div class="flex items-center text-amber-400 font-mono text-xs">
               <i class="fas fa-star text-[10px] ml-1"></i>

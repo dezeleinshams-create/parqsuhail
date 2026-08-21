@@ -1544,5 +1544,7 @@ const INITIAL_PRODUCTS = INVENTORY_PRODUCTS
   })
   .map((p, i) => ({ ...p, displayIndex: i + 1 }));
 
-// Save to localStorage with version key
-localStorage.setItem("barq_products", JSON.stringify(INITIAL_PRODUCTS));
+// Save to localStorage ONLY if not already initialized, to preserve admin edits
+if (!localStorage.getItem("barq_products")) {
+  localStorage.setItem("barq_products", JSON.stringify(INITIAL_PRODUCTS));
+}
