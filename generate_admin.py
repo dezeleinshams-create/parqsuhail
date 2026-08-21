@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+import os
+
+content = '''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -440,10 +442,10 @@ function renderProductsTable() {
     var discount = (p.oldPrice && p.oldPrice > p.price) ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
 
     var imgTag = p.image
-      ? '<img src="' + p.image + '" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML=\'<i class=\\\"fas fa-image\\\" style=\\\"color:#475569;font-size:16px\\\"></i>\'">'
+      ? '<img src="' + p.image + '" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML=\\'<i class=\\\\\\"fas fa-image\\\\\\" style=\\\\\\"color:#475569;font-size:16px\\\\\\"></i>\\'">'
       : '<i class="fas fa-image" style="color: #475569; font-size: 16px;"></i>';
 
-    return '<div style="display: grid; grid-template-columns: 60px 1fr 140px 90px 70px 70px 100px; gap: 12px; padding: 12px 18px; align-items: center; border-bottom: 1px solid rgba(30, 41, 59, 0.5); transition: background 0.15s;" onmouseover="this.style.background=\'rgba(0,210,255,0.03)\'" onmouseout="this.style.background=\'transparent\'">' +
+    return '<div style="display: grid; grid-template-columns: 60px 1fr 140px 90px 70px 70px 100px; gap: 12px; padding: 12px 18px; align-items: center; border-bottom: 1px solid rgba(30, 41, 59, 0.5); transition: background 0.15s;" onmouseover="this.style.background=\\'rgba(0,210,255,0.03)\\'" onmouseout="this.style.background=\\'transparent\\'">' +
       '<div><div style="width: 48px; height: 48px; border-radius: 10px; overflow: hidden; background: #070c18; border: 1px solid #1e293b; display: flex; align-items: center; justify-content: center;">' + imgTag + '</div></div>' +
       '<div>' +
         '<div style="color: #fff; font-size: 13px; font-weight: 700; line-height: 1.35;">' + p.name + '</div>' +
@@ -455,9 +457,9 @@ function renderProductsTable() {
       '<div style="text-align: center;">' + (discount > 0 ? '<span style="font-size: 11px; font-weight: 800; color: #34d399; background: rgba(52,211,153,0.1); padding: 2px 8px; border-radius: 999px;">' + discount + '%</span>' : '<span style="color:#334155;">—</span>') + '</div>' +
       '<div style="text-align: center;"><span style="font-size: 14px; font-weight: 800; font-family: monospace; color: ' + stockColor + ';">' + (stock === 999 ? '∞' : stock) + '</span></div>' +
       '<div style="display: flex; gap: 6px; justify-content: center;">' +
-        '<button onclick="openEditModal(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,210,255,0.12); color: #00D2FF; border: none; cursor: pointer; font-size: 13px;" title="تحرير كامل للصنف"><i class="fas fa-pen"></i></button>' +
-        '<button onclick="duplicateProduct(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(148,163,184,0.15); color: #94a3b8; border: none; cursor: pointer; font-size: 13px;" title="نسخ الصنف"><i class="fas fa-copy"></i></button>' +
-        '<button onclick="deleteProduct(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(239,68,68,0.12); color: #f87171; border: none; cursor: pointer; font-size: 13px;" title="حذف"><i class="fas fa-trash"></i></button>' +
+        '<button onclick="openEditModal(\\'' + p.id + '\\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,210,255,0.12); color: #00D2FF; border: none; cursor: pointer; font-size: 13px;" title="تحرير كامل للصنف"><i class="fas fa-pen"></i></button>' +
+        '<button onclick="duplicateProduct(\\'' + p.id + '\\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(148,163,184,0.15); color: #94a3b8; border: none; cursor: pointer; font-size: 13px;" title="نسخ الصنف"><i class="fas fa-copy"></i></button>' +
+        '<button onclick="deleteProduct(\\'' + p.id + '\\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(239,68,68,0.12); color: #f87171; border: none; cursor: pointer; font-size: 13px;" title="حذف"><i class="fas fa-trash"></i></button>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -491,8 +493,8 @@ function openEditModal(productId) {
       '<div style="display: flex; flex-direction: column; gap: 14px;">' +
         '<div>' +
           '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📷 صورة الصنف</label>' +
-          '<div class="img-upload-box" id="edit-img-box" onclick="triggerUpload(\'edit\')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, \'edit\')">' + imgDisplay + '</div>' +
-          '<input type="text" id="edit-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" value="' + (p.image || '') + '" placeholder="أو الصق رابط الصورة مباشرة..." oninput="previewUrl(\'edit\')">' +
+          '<div class="img-upload-box" id="edit-img-box" onclick="triggerUpload(\\'edit\\')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, \\'edit\\')">' + imgDisplay + '</div>' +
+          '<input type="text" id="edit-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" value="' + (p.image || '') + '" placeholder="أو الصق رابط الصورة مباشرة..." oninput="previewUrl(\\'edit\\')">' +
         '</div>' +
         '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📌 اسم الصنف بالعربي</label><input type="text" id="edit-name" class="admin-input" value="' + (p.name || '') + '"></div>' +
         '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🔤 الاسم بالإنجليزي</label><input type="text" id="edit-name-en" class="admin-input" value="' + (p.nameEn || '') + '"></div>' +
@@ -508,9 +510,9 @@ function openEditModal(productId) {
         '<div id="edit-discount-preview" style="display: none; background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.2); border-radius: 10px; padding: 10px; text-align: center;"><span id="edit-discount-value" style="color: #34d399; font-weight: 800; font-size: 20px;">0%</span><div style="color: #64748b; font-size: 11px; margin-top: 2px;">نسبة التخفيض المحسوبة تلقائياً</div></div>' +
         '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📦 كمية المخزون</label>' +
           '<div style="display: flex; align-items: center; gap: 8px;">' +
-            '<button type="button" onclick="adjustQty(\'edit\', -1)" style="width: 38px; height: 38px; border-radius: 10px; background: #1e293b; color: #fff; border: none; font-size: 18px; font-weight: 800; cursor: pointer;">−</button>' +
+            '<button type="button" onclick="adjustQty(\\'edit\\', -1)" style="width: 38px; height: 38px; border-radius: 10px; background: #1e293b; color: #fff; border: none; font-size: 18px; font-weight: 800; cursor: pointer;">−</button>' +
             '<input type="number" id="edit-stock" class="admin-input" value="' + (p.stock !== undefined ? p.stock : 10) + '" min="0" style="text-align: center; font-size: 16px; font-weight: 800; font-family: monospace; color: #34d399;">' +
-            '<button type="button" onclick="adjustQty(\'edit\', 1)" style="width: 38px; height: 38px; border-radius: 10px; background: #1e293b; color: #fff; border: none; font-size: 18px; font-weight: 800; cursor: pointer;">+</button>' +
+            '<button type="button" onclick="adjustQty(\\'edit\\', 1)" style="width: 38px; height: 38px; border-radius: 10px; background: #1e293b; color: #fff; border: none; font-size: 18px; font-weight: 800; cursor: pointer;">+</button>' +
           '</div>' +
           '<div style="display: flex; gap: 6px; margin-top: 8px;">' +
             '<button type="button" onclick="setStockValue(0)" style="flex: 1; font-size: 11px; background: rgba(239,68,68,0.15); color: #f87171; border: none; padding: 6px; border-radius: 8px; cursor: pointer; font-weight: 700;">نفد</button>' +
@@ -531,14 +533,14 @@ function openEditModal(productId) {
       '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">⚙️ نقاط المواصفات</label>' +
       '<div id="edit-specs-tags" style="display: flex; flex-wrap: wrap; gap: 6px; min-height: 40px; padding: 10px; background: #070c18; border: 1px solid #1e293b; border-radius: 10px; margin-bottom: 8px;"></div>' +
       '<div style="display: flex; gap: 8px;">' +
-        '<input type="text" id="edit-spec-text" class="admin-input" placeholder="أضف مواصفة واضغط Enter..." onkeydown="if(event.key===\'Enter\'){event.preventDefault();addSpecItem(\'edit\');}">' +
-        '<button type="button" onclick="addSpecItem(\'edit\')" style="width: 42px; border-radius: 10px; background: rgba(0,210,255,0.15); color: #00D2FF; border: none; cursor: pointer; font-size: 16px;"><i class="fas fa-plus"></i></button>' +
+        '<input type="text" id="edit-spec-text" class="admin-input" placeholder="أضف مواصفة واضغط Enter..." onkeydown="if(event.key===\\'Enter\\'){event.preventDefault();addSpecItem(\\'edit\\');}">' +
+        '<button type="button" onclick="addSpecItem(\\'edit\\')" style="width: 42px; border-radius: 10px; background: rgba(0,210,255,0.15); color: #00D2FF; border: none; cursor: pointer; font-size: 16px;"><i class="fas fa-plus"></i></button>' +
       '</div>' +
     '</div>' +
     '<div style="display: flex; gap: 10px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #1e293b;">' +
       '<button onclick="saveEditChanges()" style="flex: 1; background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; font-weight: 800; padding: 14px; border-radius: 12px; font-size: 14px; cursor: pointer;"><i class="fas fa-save"></i> حفظ جميع التعديلات</button>' +
       '<button onclick="closeEditModal()" style="padding: 14px 22px; background: #1e293b; color: #94a3b8; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">إلغاء</button>' +
-      '<button onclick="deleteProduct(\'' + p.id + '\', true)" style="width: 46px; background: rgba(239,68,68,0.15); color: #f87171; border: none; border-radius: 12px; cursor: pointer;"><i class="fas fa-trash"></i></button>' +
+      '<button onclick="deleteProduct(\\'' + p.id + '\\', true)" style="width: 46px; background: rgba(239,68,68,0.15); color: #f87171; border: none; border-radius: 12px; cursor: pointer;"><i class="fas fa-trash"></i></button>' +
     '</div>' +
   '</div>';
 
@@ -571,7 +573,7 @@ function renderSpecTags(mode) {
   }
 
   container.innerHTML = list.map(function(s, idx) {
-    return '<span class="spec-tag">' + s + ' <button type="button" onclick="removeSpecItem(\'' + mode + '\', ' + idx + ')" style="background: none; border: none; color: #f87171; cursor: pointer; font-size: 11px;"><i class="fas fa-times"></i></button></span>';
+    return '<span class="spec-tag">' + s + ' <button type="button" onclick="removeSpecItem(\\'' + mode + '\\', ' + idx + ')\" style="background: none; border: none; color: #f87171; cursor: pointer; font-size: 11px;"><i class="fas fa-times"></i></button></span>';
   }).join('');
 }
 
@@ -786,7 +788,7 @@ function previewUrl(mode) {
   if (!urlInput || !box) return;
   var url = urlInput.value.trim();
   if (url) {
-    box.innerHTML = '<img src="' + url + '" style="width: 100%; height: 130px; object-fit: cover;" onerror="this.parentElement.innerHTML=\'<div style=\\\"color:#f87171;font-size:12px;text-align:center;padding:20px;\\\">رابط غير صالح</div>\'">';
+    box.innerHTML = '<img src="' + url + '" style="width: 100%; height: 130px; object-fit: cover;" onerror="this.parentElement.innerHTML=\\'<div style=\\\\\\"color:#f87171;font-size:12px;text-align:center;padding:20px;\\\\\\">رابط غير صالح</div>\\'">';
   }
 }
 
@@ -834,7 +836,7 @@ function renderStats() {
           '<div><div style="color: #fff; font-size: 13px; font-weight: 700;">' + p.name + '</div><div style="color: #64748b; font-size: 11px; font-family: monospace;">' + p.id + '</div></div>' +
           '<div style="display: flex; align-items: center; gap: 12px;">' +
             '<span style="color: #f87171; font-weight: 800; font-family: monospace; font-size: 13px;">المتبقي: ' + (p.stock || 0) + '</span>' +
-            '<button onclick="openEditModal(\'' + p.id + '\')" style="background: rgba(0,210,255,0.15); color: #00D2FF; border: none; border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer;">تعديل المخزون</button>' +
+            '<button onclick="openEditModal(\\'' + p.id + '\\')" style="background: rgba(0,210,255,0.15); color: #00D2FF; border: none; border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer;">تعديل المخزون</button>' +
           '</div>' +
         '</div>';
       }).join('');
@@ -868,3 +870,9 @@ function showToast(msg) {
 </script>
 </body>
 </html>
+'''
+
+with open('admin.html', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print('admin.html written successfully! Length:', len(content))
