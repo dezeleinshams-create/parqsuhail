@@ -1333,7 +1333,16 @@ function showToast(msg) {
   t._timer = setTimeout(function() {
     t.style.display = 'none';
   }, 3000);
-}
+// ── Security & Anti-Theft Guard ─────────────────────────────
+(function(){
+  if(window.top!==window.self){try{window.top.location=window.self.location;}catch(e){}}
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'||e.key==='C'||e.key==='c'))||(e.ctrlKey&&(e.key==='U'||e.key==='u'||e.key==='S'||e.key==='s'))){
+      e.preventDefault();return false;
+    }
+  });
+})();
 </script>
 </body>
 </html>

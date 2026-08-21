@@ -1,0 +1,11 @@
+# Environment & System
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# Temp & build scripts
+check_data.py
+inventory_data.txt
+*.pyc
+__pycache__/
