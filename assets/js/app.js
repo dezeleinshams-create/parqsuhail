@@ -238,11 +238,12 @@ function renderGridCard(p) {
         
         <div class="flex items-center gap-1.5 shrink-0">
           ${(p.oldPrice && p.oldPrice > p.price) ? `
-            <span class="bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 text-white text-[10px] sm:text-[11px] font-black px-2 py-0.5 rounded-lg shadow-md border border-rose-400/40 flex items-center gap-1 font-mono tracking-tight">
-              <i class="fas fa-bolt text-[8px] text-amber-200"></i>
+            <span class="bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 text-white text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 rounded-lg shadow-lg shadow-rose-500/50 border border-rose-400/60 ring-1 ring-amber-400/50 flex items-center gap-1 font-mono tracking-tight animate-pulse">
+              <i class="fas fa-bolt text-[9px] text-amber-200 animate-bounce"></i>
               <span>خصم ${(p.oldPrice - p.price).toLocaleString()} ر.س</span>
             </span>
           ` : ''}
+
 
           <button onclick="openProductModal('${p.id}')" class="pointer-events-auto w-7 h-7 rounded-lg bg-slate-950/90 hover:bg-cyan-500 text-slate-300 hover:text-slate-950 flex items-center justify-center text-xs transition border border-slate-800 backdrop-blur-md" title="نظرة سريعة">
             <i class="fas fa-eye"></i>
