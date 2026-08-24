@@ -206,13 +206,10 @@
       <span id="count-badge" style="background: rgba(0,210,255,0.1); color: #00D2FF; border: 1px solid rgba(0,210,255,0.25); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 9999px; font-family: monospace;">0 صنف</span>
     </div>
     <div style="display: flex; gap: 10px; align-items: center;">
-      <button onclick="resetToDefault()" style="display: flex; align-items: center; gap: 6px; background: #1e293b; color: #94a3b8; border: none; border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer;" title="استعادة الجرد الأصلي من ملف البيانات">
-        <i class="fas fa-rotate-left"></i> استعادة الجرد
-      </button>
       <button onclick="exportJSON()" style="display: flex; align-items: center; gap: 6px; background: #1e293b; color: #cbd5e1; border: none; border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer;">
         <i class="fas fa-download"></i> تصدير JSON
       </button>
-      <button id="github-publish-btn" onclick="publishToGitHub()" style="display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #065f46, #10b981); color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(52,211,153,0.25);" title="نشر التغييرات على الموقع الحي فوراً">
+      <button id="github-publish-btn" onclick="publishToGitHub(false)" style="display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #065f46, #10b981); color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(52,211,153,0.25);" title="نشر التغييرات على الموقع الحي فوراً">
         <i class="fas fa-cloud-arrow-up"></i> نشر على الموقع
       </button>
       <button onclick="switchTab('add')" style="display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; border-radius: 10px; padding: 8px 18px; font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(0,210,255,0.25);">
@@ -1743,11 +1740,13 @@ async function getFileSHA(token, path) {
   return null;
 }
 
-async function publishToGitHub() {
+async function publishToGitHub(isAuto) {
   var token = getGithubToken();
   if (!token) {
-    showToast('⚙️ يرجى إعداد GitHub Token أولاً من تبويب "النشر على الموقع"');
-    switchTab('github');
+    if (!isAuto) {
+      showToast('⚙️ يرجى إعداد GitHub Token أولاً من تبويب "النشر على الموقع"');
+      switchTab('github');
+    }
     return;
   }
 
@@ -1764,12 +1763,13 @@ async function publishToGitHub() {
   }
 
   if (!storeProducts || storeProducts.length === 0) {
-    showToast('⚠️ لا توجد منتجات للنشر! تأكد من تحميل البيانات أولاً.');
+    if (!isAuto) showToast('⚠️ لا توجد منتجات للنشر! تأكد من تحميل البيانات أولاً.');
     return;
   }
 
   var btn = document.getElementById('github-publish-btn');
   if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر (' + storeProducts.length + ' صنف)...'; btn.disabled = true; }
+  if (isAuto) showToast('☁️ جاري الحفظ والنشر التلقائي على الموقع (' + storeProducts.length + ' صنف)...');
 
   try {
     // 1. Build new data.js content
@@ -1788,7 +1788,7 @@ async function publishToGitHub() {
     if (result.ok) {
       localStorage.removeItem('barq_unpublished');
       updatePublishBtnState();
-      showToast('🚀 تم النشر على الموقع الحي بنجاح! (' + storeProducts.length + ' صنف محدث على barqsuhail.com)');
+      showToast('🚀 تم الحفظ والنشر التلقائي على barqsuhail.com بنجاح! (' + storeProducts.length + ' صنف)');
       addDeployLog('✅ نُشر بنجاح: ' + storeProducts.length + ' صنف على barqsuhail.com');
     } else {
       showToast('❌ فشل النشر: ' + result.error);
@@ -1852,22 +1852,6 @@ function updateBadge() {
   if (b) b.textContent = (storeProducts ? storeProducts.length : 0) + ' صنف';
 }
 
-function resetToDefault() {
-  if (!confirm('هل تريد استعادة بيانات الجرد الافتراضية كاملة (92 صنف)؟')) return;
-  var sourceData = (typeof INITIAL_PRODUCTS !== 'undefined' && INITIAL_PRODUCTS.length > 0) ? INITIAL_PRODUCTS :
-                   (typeof window !== 'undefined' && window.INITIAL_PRODUCTS && window.INITIAL_PRODUCTS.length > 0) ? window.INITIAL_PRODUCTS :
-                   (typeof INVENTORY_PRODUCTS !== 'undefined' && INVENTORY_PRODUCTS.length > 0) ? INVENTORY_PRODUCTS :
-                   (typeof window !== 'undefined' && window.INVENTORY_PRODUCTS && window.INVENTORY_PRODUCTS.length > 0) ? window.INVENTORY_PRODUCTS : [];
-  
-  if (sourceData && sourceData.length > 0) {
-    storeProducts = JSON.parse(JSON.stringify(sourceData));
-  }
-  saveToStorage();
-  renderProductsTable();
-  renderStats();
-  showToast('✅ تم استعادة بيانات الجرد الأصلية بالكامل!');
-}
-
 // ── Pricing Calculations ────────────────────────────────────
 function calcAddPricing(changedField) {
   var baseEl = document.getElementById('add-base-price');
@@ -1881,21 +1865,23 @@ function calcAddPricing(changedField) {
   var final = parseFloat(finalEl.value) || 0;
 
   if (changedField === 'base' || changedField === 'discount') {
-    if (base > 0) {
-      if (disc > 0) { finalEl.value = Math.max(0, base - disc); }
-      else { finalEl.value = base; }
+    if (base > 0 && disc > 0) {
+      finalEl.value = Math.max(0, base - disc);
+      ribbonText.textContent = 'خصم ' + disc.toLocaleString() + ' ر.س';
+      ribbonEl.style.display = 'block';
+    } else {
+      finalEl.value = base > 0 ? base : '';
+      ribbonEl.style.display = 'none';
     }
   } else if (changedField === 'final') {
-    if (base > 0 && final < base) { discEl.value = base - final; }
-    else { discEl.value = 0; }
-  }
-
-  var currentDisc = parseFloat(discEl.value) || 0;
-  if (currentDisc > 0 && base > 0) {
-    ribbonText.textContent = 'خصم ' + currentDisc.toLocaleString() + ' ر.س';
-    ribbonEl.style.display = 'block';
-  } else {
-    ribbonEl.style.display = 'none';
+    if (base > 0 && final > 0 && base > final) {
+      discEl.value = base - final;
+      ribbonText.textContent = 'خصم ' + (base - final).toLocaleString() + ' ر.س';
+      ribbonEl.style.display = 'block';
+    } else {
+      discEl.value = '';
+      ribbonEl.style.display = 'none';
+    }
   }
 }
 
@@ -1911,29 +1897,31 @@ function calcEditPricing(changedField) {
   var final = parseFloat(finalEl.value) || 0;
 
   if (changedField === 'base' || changedField === 'discount') {
-    if (base > 0) {
-      if (disc > 0) { finalEl.value = Math.max(0, base - disc); }
-      else { finalEl.value = base; }
+    if (base > 0 && disc > 0) {
+      finalEl.value = Math.max(0, base - disc);
+      if (ribbonText) ribbonText.textContent = 'خصم ' + disc.toLocaleString() + ' ر.س';
+      if (ribbonEl) ribbonEl.style.display = 'block';
+    } else {
+      finalEl.value = base > 0 ? base : '';
+      if (ribbonEl) ribbonEl.style.display = 'none';
     }
   } else if (changedField === 'final') {
-    if (base > 0 && final < base) { discEl.value = base - final; }
-    else { discEl.value = 0; }
-  }
-
-  var currentDisc = parseFloat(discEl.value) || 0;
-  if (currentDisc > 0 && base > 0) {
-    ribbonText.textContent = 'خصم ' + currentDisc.toLocaleString() + ' ر.س';
-    ribbonEl.style.display = 'block';
-  } else {
-    ribbonEl.style.display = 'none';
+    if (base > 0 && final > 0 && base > final) {
+      discEl.value = base - final;
+      if (ribbonText) ribbonText.textContent = 'خصم ' + (base - final).toLocaleString() + ' ر.س';
+      if (ribbonEl) ribbonEl.style.display = 'block';
+    } else {
+      discEl.value = '';
+      if (ribbonEl) ribbonEl.style.display = 'none';
+    }
   }
 }
 
 // ── Render Products Table ───────────────────────────────────
 function renderProductsTable() {
-  var search = (document.getElementById('search-inp').value || '').toLowerCase().trim();
-  var catFilter = document.getElementById('cat-filter').value;
-  var sortFilter = document.getElementById('sort-filter').value;
+  var search = (document.getElementById('search-inp') ? document.getElementById('search-inp').value : '').trim().toLowerCase();
+  var catFilter = document.getElementById('cat-filter') ? document.getElementById('cat-filter').value : 'all';
+  var sortFilter = document.getElementById('sort-filter') ? document.getElementById('sort-filter').value : 'default';
 
   var filtered = storeProducts.slice();
 
@@ -1943,15 +1931,14 @@ function renderProductsTable() {
 
   if (search) {
     filtered = filtered.filter(function(p) {
-      return (p.name || '').toLowerCase().includes(search) ||
-             (p.id || '').toLowerCase().includes(search) ||
-             (p.nameEn || '').toLowerCase().includes(search);
+      return (p.name && p.name.toLowerCase().includes(search)) ||
+             (p.nameEn && p.nameEn.toLowerCase().includes(search)) ||
+             (p.id && p.id.toLowerCase().includes(search)) ||
+             (p.shortDesc && p.shortDesc.toLowerCase().includes(search));
     });
   }
 
-  if (sortFilter === 'name') {
-    filtered.sort(function(a, b) { return (a.name || '').localeCompare(b.name || '', 'ar'); });
-  } else if (sortFilter === 'price-asc') {
+  if (sortFilter === 'price-asc') {
     filtered.sort(function(a, b) { return (a.price || 0) - (b.price || 0); });
   } else if (sortFilter === 'price-desc') {
     filtered.sort(function(a, b) { return (b.price || 0) - (a.price || 0); });
@@ -2034,35 +2021,26 @@ function openEditModal(productId) {
     '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">' +
       '<!-- Left -->' +
       '<div style="display: flex; flex-direction: column; gap: 14px;">' +
+        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">اسم الصنف (عربي)</label><input type="text" id="edit-name" class="admin-input" value="' + (p.name || '') + '"></div>' +
+        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">الاسم بالإنجليزية (اختياري)</label><input type="text" id="edit-name-en" class="admin-input" value="' + (p.nameEn || '') + '"></div>' +
+        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">الفئة والنوع</label><select id="edit-category" class="admin-input">' + catOptionsHtml + '</select></div>' +
+        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">شارة مميزة (Badge)</label><input type="text" id="edit-badge" class="admin-input" value="' + (p.badge || '') + '" placeholder="مثال: الأكثر مبيعاً، أصلي CST..."></div>' +
         '<div>' +
-          '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📷 صورة الصنف</label>' +
-          '<div class="img-upload-box" id="edit-img-box" onclick="triggerUpload(\'edit\')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, \'edit\')">' + imgDisplay + '</div>' +
-          '<input type="text" id="edit-img-url" class="admin-input" style="margin-top: 8px; font-size: 12px;" value="' + (p.image || '') + '" placeholder="أو الصق رابط الصورة مباشرة..." oninput="previewUrl(\'edit\')">' +
+          '<label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🖼️ صورة الصنف</label>' +
+          '<div id="edit-img-box" class="img-upload-box" onclick="triggerUpload(\'edit\')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, \'edit\')">' + imgDisplay + '</div>' +
+          '<input type="text" id="edit-img-url" class="admin-input" value="' + (p.image || '') + '" placeholder="أو الصق رابط الصورة مباشرة..." oninput="previewUrl(\'edit\')" style="margin-top: 8px; font-size: 11px;">' +
         '</div>' +
-        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">📌 اسم الصنف بالعربي</label><input type="text" id="edit-name" class="admin-input" value="' + (p.name || '') + '"></div>' +
-        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🔤 الاسم بالإنجليزي</label><input type="text" id="edit-name-en" class="admin-input" value="' + (p.nameEn || '') + '"></div>' +
-        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🗂️ الفئة</label><select id="edit-category" class="admin-input">' + catOptionsHtml + '</select></div>' +
-        '<div><label style="display: block; font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">🏷️ الشارة الترويجية</label><input type="text" id="edit-badge" class="admin-input" value="' + (p.badge || '') + '" placeholder="مثال: الأكثر مبيعاً، خصم خاص..."></div>' +
       '</div>' +
       '<!-- Right -->' +
       '<div style="display: flex; flex-direction: column; gap: 14px;">' +
-        '<div style="background: rgba(7,12,24,0.6); border: 1px solid #1e293b; border-radius: 12px; padding: 12px;">' +
-          '<div style="font-size: 12px; font-weight: 800; color: #00D2FF; margin-bottom: 8px;">💰 تسعير الصنف والتخفيض</div>' +
-          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">' +
-            '<div>' +
-              '<label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">السعر الأساسي (ر.س) *</label>' +
-              '<input type="number" id="edit-base-price" class="admin-input" value="' + basePrice + '" min="0" style="font-family: monospace;" oninput="calcEditPricing(\'base\')">' +
-            '</div>' +
-            '<div>' +
-              '<label style="display: block; font-size: 11px; font-weight: 700; color: #f87171; margin-bottom: 4px;">قيمة الخصم (ر.س)</label>' +
-              '<input type="number" id="edit-discount-amt" class="admin-input" value="' + discountAmt + '" min="0" style="color: #f87171; font-weight: 800; font-family: monospace;" oninput="calcEditPricing(\'discount\')">' +
-            '</div>' +
+        '<div style="background: rgba(0,210,255,0.05); border: 1px solid rgba(0,210,255,0.2); border-radius: 12px; padding: 14px;">' +
+          '<div style="font-size: 12px; font-weight: 800; color: #00D2FF; margin-bottom: 10px;"><i class="fas fa-tags"></i> نظام التسعير والخصومات الذكية</div>' +
+          '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">' +
+            '<div><label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px;">السعر الأساسي (قبل الخصم)</label><input type="number" id="edit-base-price" class="admin-input" value="' + (basePrice || '') + '" oninput="calcEditPricing(\'base\')"></div>' +
+            '<div><label style="display: block; font-size: 11px; font-weight: 700; color: #f87171; margin-bottom: 4px;">مبلغ الخصم (ر.س)</label><input type="number" id="edit-discount-amt" class="admin-input" value="' + (discountAmt || '') + '" oninput="calcEditPricing(\'discount\')" style="color: #f87171;"></div>' +
           '</div>' +
-          '<div>' +
-            '<label style="display: block; font-size: 11px; font-weight: 700; color: #34d399; margin-bottom: 4px;">السعر النهائي للبيع (ر.س) *</label>' +
-            '<input type="number" id="edit-final-price" class="admin-input" value="' + finalPrice + '" min="0" style="color: #34d399; font-weight: 800; font-family: monospace; font-size: 15px;" oninput="calcEditPricing(\'final\')">' +
-          '</div>' +
-          '<div id="edit-ribbon-preview" style="display: ' + (discountAmt > 0 ? 'block' : 'none') + '; margin-top: 8px; padding: 6px 12px; background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.25); border-radius: 8px; font-size: 11px; color: #fb7185; font-weight: 700; text-align: center;">' +
+          '<div><label style="display: block; font-size: 11px; font-weight: 700; color: #34d399; margin-bottom: 4px;">السعر النهائي للبيع (ر.س)</label><input type="number" id="edit-final-price" class="admin-input" value="' + (finalPrice || '') + '" oninput="calcEditPricing(\'final\')" style="font-weight: 800; font-size: 16px; color: #34d399;"></div>' +
+          '<div id="edit-ribbon-preview" style="' + (discountAmt > 0 ? '' : 'display:none;') + ' margin-top: 8px; font-size: 11px; color: #f87171; background: rgba(239,68,68,0.1); padding: 4px 10px; border-radius: 6px;">' +
             '🏷️ سيظهر شريط في المتجر: <span id="edit-ribbon-text" class="font-bold font-mono">خصم ' + discountAmt.toLocaleString() + ' ر.س</span>' +
           '</div>' +
         '</div>' +
@@ -2071,13 +2049,6 @@ function openEditModal(productId) {
             '<button type="button" onclick="adjustQty(\'edit\', -1)" style="width: 38px; height: 38px; border-radius: 10px; background: #1e293b; color: #fff; border: none; font-size: 18px; font-weight: 800; cursor: pointer;">−</button>' +
             '<input type="number" id="edit-stock" class="admin-input" value="' + (p.stock !== undefined ? p.stock : 10) + '" min="0" style="text-align: center; font-size: 16px; font-weight: 800; font-family: monospace; color: #34d399;">' +
             '<button type="button" onclick="adjustQty(\'edit\', 1)" style="width: 38px; height: 38px; border-radius: 10px; background: #1e293b; color: #fff; border: none; font-size: 18px; font-weight: 800; cursor: pointer;">+</button>' +
-          '</div>' +
-          '<div style="display: flex; gap: 6px; margin-top: 8px;">' +
-            '<button type="button" onclick="setStockValue(0)" style="flex: 1; font-size: 11px; background: rgba(239,68,68,0.15); color: #f87171; border: none; padding: 6px; border-radius: 8px; cursor: pointer; font-weight: 700;">نفد</button>' +
-            '<button type="button" onclick="setStockValue(5)" style="flex: 1; font-size: 11px; background: #1e293b; color: #cbd5e1; border: none; padding: 6px; border-radius: 8px; cursor: pointer;">5</button>' +
-            '<button type="button" onclick="setStockValue(10)" style="flex: 1; font-size: 11px; background: #1e293b; color: #cbd5e1; border: none; padding: 6px; border-radius: 8px; cursor: pointer;">10</button>' +
-            '<button type="button" onclick="setStockValue(20)" style="flex: 1; font-size: 11px; background: #1e293b; color: #cbd5e1; border: none; padding: 6px; border-radius: 8px; cursor: pointer;">20</button>' +
-            '<button type="button" onclick="setStockValue(999)" style="flex: 1; font-size: 11px; background: rgba(0,210,255,0.15); color: #00D2FF; border: none; padding: 6px; border-radius: 8px; cursor: pointer; font-weight: 800;">غير محدود</button>' +
           '</div>' +
         '</div>' +
         '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">' +
@@ -2096,7 +2067,7 @@ function openEditModal(productId) {
       '</div>' +
     '</div>' +
     '<div style="display: flex; gap: 10px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #1e293b;">' +
-      '<button onclick="saveEditChanges()" style="flex: 1; background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; font-weight: 800; padding: 14px; border-radius: 12px; font-size: 14px; cursor: pointer;"><i class="fas fa-save"></i> حفظ جميع التعديلات</button>' +
+      '<button onclick="saveEditChanges()" style="flex: 1; background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; font-weight: 800; padding: 14px; border-radius: 12px; font-size: 14px; cursor: pointer;"><i class="fas fa-save"></i> حفظ ونشر التعديل فوراً</button>' +
       '<button onclick="closeEditModal()" style="padding: 14px 22px; background: #1e293b; color: #94a3b8; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">إلغاء</button>' +
       '<button onclick="deleteProduct(\'' + p.id + '\', true)" style="width: 46px; background: rgba(239,68,68,0.15); color: #f87171; border: none; border-radius: 12px; cursor: pointer;"><i class="fas fa-trash"></i></button>' +
     '</div>' +
@@ -2224,7 +2195,7 @@ function saveNewProduct() {
   };
 
   storeProducts.push(newProd);
-  saveToStorage();
+  saveToStorage(true);
 
   // Reset Form
   document.getElementById('add-name').value = '';
@@ -2243,7 +2214,7 @@ function saveNewProduct() {
   switchTab('products');
   renderProductsTable();
   renderStats();
-  showToast('✅ تم إضافة "' + name + '" للموقع بنجاح!');
+  publishToGitHub(true);
 }
 
 // ── Delete / Duplicate Product ──────────────────────────────
@@ -2253,11 +2224,11 @@ function deleteProduct(id, fromModal) {
   if (!confirm('هل أنت متأكد من حذف الصنف: "' + p.name + '"؟')) return;
 
   storeProducts = storeProducts.filter(function(x) { return x.id !== id; });
-  saveToStorage();
+  saveToStorage(true);
   if (fromModal) closeEditModal();
   renderProductsTable();
   renderStats();
-  showToast('🗑️ تم حذف الصنف بنجاح!');
+  publishToGitHub(true);
 }
 
 function duplicateProduct(id) {
@@ -2271,9 +2242,9 @@ function duplicateProduct(id) {
 
   var idx = storeProducts.findIndex(function(x) { return x.id === id; });
   storeProducts.splice(idx + 1, 0, copy);
-  saveToStorage();
+  saveToStorage(true);
   renderProductsTable();
-  showToast('📋 تم عمل نسخة من "' + p.name + '"');
+  publishToGitHub(true);
 }
 
 // ── Quantity Helpers ────────────────────────────────────────
