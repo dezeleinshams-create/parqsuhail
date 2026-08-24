@@ -2813,6 +2813,17 @@ function renderSectionCustomizer(secId) {
     '</div>';
   }
 
+  if (html) {
+    var saveBtnHtml = '<div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(30,41,59,0.7); display: flex; justify-content: flex-end;">' +
+      '<button type="button" onclick="saveThemeBuilderConfig()" style="background: linear-gradient(135deg, #008DA5, #00D2FF); color: #070C1A; border: none; border-radius: 10px; padding: 9px 20px; font-size: 13px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0,210,255,0.25);">' +
+        '<i class="fas fa-cloud-arrow-up"></i> حفظ ونشر هذا القسم فوراً' +
+      '</button>' +
+    '</div></div>';
+    if (html.endsWith('</div>')) {
+      html = html.substring(0, html.length - 6) + saveBtnHtml;
+    }
+  }
+
   container.innerHTML = html;
 }
 
@@ -2826,7 +2837,9 @@ function moveBuilderSection(idx, dir) {
   order[targetIdx] = temp;
 
   renderBuilderSectionsList();
-  showToast('🔄 تم تحريك القسم!');
+  showToast('🔄 تم تحريك القسم ونشره!');
+  localStorage.setItem('barq_theme_config', JSON.stringify(currentThemeConfig));
+  publishToGitHub(true);
 }
 
 function toggleBuilderSectionVisibility(secId) {
@@ -2834,7 +2847,9 @@ function toggleBuilderSectionVisibility(secId) {
   var current = (currentThemeConfig.sectionsVisible[secId] !== false);
   currentThemeConfig.sectionsVisible[secId] = !current;
   renderBuilderSectionsList();
-  showToast(!current ? '👁️ تم إظهار القسم' : '🙈 تم إخفاء القسم');
+  showToast(!current ? '👁️ تم إظهار القسم ونشره' : '🙈 تم إخفاء القسم ونشره');
+  localStorage.setItem('barq_theme_config', JSON.stringify(currentThemeConfig));
+  publishToGitHub(true);
 }
 
 function setBannerFit(fitMode, notify) {
