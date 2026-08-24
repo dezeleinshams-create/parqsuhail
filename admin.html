@@ -3156,47 +3156,53 @@ function getMasterCatalog() {
 
 function loadData() {
   storeProducts = [];
+
+  // ALWAYS start from the full embedded master catalog (92 products guaranteed)
   var master = getMasterCatalog();
+
+  // Collect any saved user edits / additions from localStorage
   var saved = localStorage.getItem('barq_products');
-  var parsed = null;
+  var savedEdits = {}; // map id -> edited product
+  var savedAdditions = []; // new products not in master
 
   if (saved) {
     try {
       var p = JSON.parse(saved);
       if (Array.isArray(p) && p.length > 0) {
-        // Auto-heal check for corrupted characters
-        var isCorrupted = p.some(function(item) { 
-          return item && item.name && (item.name.indexOf('╪') !== -1 || item.name.indexOf('┘') !== -1); 
+        // Check for corrupted Arabic characters (from bad Base64 encoding)
+        var isCorrupted = p.some(function(item) {
+          return item && item.name && (item.name.indexOf('╪') !== -1 || item.name.indexOf('┘') !== -1);
         });
-        if (!isCorrupted) {
-          parsed = p;
-        } else {
+        if (isCorrupted) {
+          // Wipe bad data - master catalog will be used
           localStorage.removeItem('barq_products');
+        } else {
+          // Build edit map from saved
+          var masterIds = {};
+          master.forEach(function(m) { masterIds[m.id] = true; });
+          p.forEach(function(item) {
+            if (masterIds[item.id]) {
+              savedEdits[item.id] = item; // override master entry
+            } else {
+              savedAdditions.push(item);  // new product added by user
+            }
+          });
         }
       }
-    } catch(e) { parsed = null; }
+    } catch(e) {
+      localStorage.removeItem('barq_products');
+    }
   }
 
-  if (parsed && Array.isArray(parsed) && parsed.length >= master.length) {
-    // Full catalog with possible edits or additions
-    storeProducts = parsed;
-  } else if (parsed && Array.isArray(parsed) && parsed.length > 0) {
-    // Merge master products with any saved customizations / additions
-    var merged = master.slice();
-    parsed.forEach(function(pItem) {
-      var existIdx = merged.findIndex(function(m) { return m.id === pItem.id; });
-      if (existIdx !== -1) {
-        merged[existIdx] = Object.assign({}, merged[existIdx], pItem);
-      } else {
-        merged.push(pItem);
-      }
-    });
-    storeProducts = merged;
-  } else if (master && master.length > 0) {
-    storeProducts = master;
-  } else {
-    storeProducts = [];
-  }
+  // Always start with master, apply edits on top
+  storeProducts = master.map(function(masterItem) {
+    return savedEdits[masterItem.id]
+      ? Object.assign({}, masterItem, savedEdits[masterItem.id])
+      : masterItem;
+  });
+
+  // Append any user-added products that aren't in master
+  savedAdditions.forEach(function(added) { storeProducts.push(added); });
 
   // Sort & index
   storeProducts.sort(function(a, b) {
@@ -3205,7 +3211,7 @@ function loadData() {
   });
   storeProducts.forEach(function(p, i) { p.displayIndex = i + 1; });
 
-  saveToStorage(false); // save clean state without marking unpublished
+  saveToStorage(false);
   renderProductsTable();
   renderStats();
   updateBadge();
