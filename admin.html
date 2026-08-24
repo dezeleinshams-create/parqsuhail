@@ -1718,46 +1718,36 @@ async function publishToGitHub() {
     return;
   }
 
+  if (!storeProducts || storeProducts.length === 0) {
+    showToast('⚠️ لا توجد منتجات للنشر! تأكد من تحميل البيانات أولاً.');
+    return;
+  }
+
   var btn = document.getElementById('github-publish-btn');
-  var origHtml = btn ? btn.innerHTML : '';
   if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...'; btn.disabled = true; }
 
   try {
     // 1. Build new data.js content
     var content = buildDataJsContent(storeProducts);
-    var encoded = btoa(unescape(encodeURIComponent(content)));
+    // Safe base64 encoding that handles Arabic/Unicode
+    var encoded = btoa(encodeURIComponent(content).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+      return String.fromCharCode('0x' + p1);
+    }));
 
-    // 2. Get current file SHA (needed for update)
+    // 2. Get fresh SHA right before pushing
     var sha = await getFileSHA(token, GITHUB_DATA_FILE);
 
-    // 3. Push to GitHub
-    var body = {
-      message: 'feat(admin): update products catalog - ' + storeProducts.length + ' items [' + new Date().toLocaleString('ar-SA') + ']',
-      content: encoded,
-      branch: GITHUB_BRANCH
-    };
-    if (sha) body.sha = sha;
+    // 3. Try push - if SHA conflict, retry once with fresh SHA
+    var result = await tryGitHubPush(token, encoded, sha, 1);
 
-    var res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + GITHUB_DATA_FILE, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'token ' + token,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-
-    if (res.ok) {
+    if (result.ok) {
       localStorage.removeItem('barq_unpublished');
       updatePublishBtnState();
       showToast('🚀 تم النشر على الموقع الحي بنجاح! (barqsuhail.com سيتحدث خلال دقيقة)');
-      // Log in github tab
       addDeployLog('✅ نُشر بنجاح: ' + storeProducts.length + ' صنف على barqsuhail.com');
     } else {
-      var errData = await res.json();
-      showToast('❌ فشل النشر: ' + (errData.message || res.status));
-      addDeployLog('❌ فشل النشر: ' + (errData.message || res.status));
+      showToast('❌ فشل النشر: ' + result.error);
+      addDeployLog('❌ فشل النشر: ' + result.error);
     }
   } catch(e) {
     showToast('❌ خطأ في الاتصال: ' + e.message);
@@ -1766,6 +1756,40 @@ async function publishToGitHub() {
 
   if (btn) { btn.disabled = false; }
   updatePublishBtnState();
+}
+
+async function tryGitHubPush(token, encoded, sha, attempt) {
+  var body = {
+    message: 'feat(admin): update products catalog - ' + storeProducts.length + ' items [' + new Date().toLocaleString('ar-SA') + ']',
+    content: encoded,
+    branch: GITHUB_BRANCH
+  };
+  if (sha) body.sha = sha;
+
+  var res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + GITHUB_DATA_FILE, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'token ' + token,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (res.ok) return { ok: true };
+
+  var errData = {};
+  try { errData = await res.json(); } catch(e) {}
+
+  // If SHA conflict (422) and first attempt, retry with fresh SHA
+  if (res.status === 422 && attempt < 3) {
+    addDeployLog('🔄 SHA مختلف - إعادة المحاولة ' + attempt + '/2...');
+    await new Promise(function(r) { setTimeout(r, 1000); }); // wait 1s
+    var freshSha = await getFileSHA(token, GITHUB_DATA_FILE);
+    return tryGitHubPush(token, encoded, freshSha, attempt + 1);
+  }
+
+  return { ok: false, error: (errData.message || 'HTTP ' + res.status) };
 }
 
 function addDeployLog(msg) {
