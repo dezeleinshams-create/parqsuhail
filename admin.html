@@ -193,6 +193,9 @@
     <button class="nav-btn" id="nav-tab-users" onclick="switchTab('users')" style="color: #c084fc;">
       <i class="fas fa-users-gear w-5 text-center"></i> إدارة المسؤولين
     </button>
+    <button class="nav-btn" onclick="restoreFullInventory()" style="color: #fbbf24; font-weight: 700;">
+      <i class="fas fa-rotate w-5 text-center"></i> استعادة الجرد (92 صنف)
+    </button>
     <div style="border-top: 1px solid #1e293b; margin: 10px 0;"></div>
     <button class="nav-btn" id="nav-tab-github" onclick="switchTab('github')" style="color: #34d399;">
       <i class="fas fa-cloud-arrow-up w-5 text-center"></i> النشر على الموقع
@@ -219,6 +222,9 @@
       <span id="count-badge" style="background: rgba(0,210,255,0.1); color: #00D2FF; border: 1px solid rgba(0,210,255,0.25); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 9999px; font-family: monospace;">0 صنف</span>
     </div>
     <div style="display: flex; gap: 10px; align-items: center;">
+      <button onclick="restoreFullInventory()" style="display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; border: none; border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(245,158,11,0.25);" title="استعادة كافة الـ 92 صنفاً من الكتالوج الأصلي فوراً">
+        <i class="fas fa-rotate"></i> استعادة الجرد (92 صنف)
+      </button>
       <button onclick="exportJSON()" style="display: flex; align-items: center; gap: 6px; background: #1e293b; color: #cbd5e1; border: none; border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer;">
         <i class="fas fa-download"></i> تصدير JSON
       </button>
@@ -3245,6 +3251,38 @@ function loadData() {
   renderProductsTable();
   renderStats();
   updateBadge();
+}
+
+function restoreFullInventory() {
+  var master = (typeof DEFAULT_INVENTORY_PRODUCTS !== 'undefined' && Array.isArray(DEFAULT_INVENTORY_PRODUCTS) && DEFAULT_INVENTORY_PRODUCTS.length > 0) ? DEFAULT_INVENTORY_PRODUCTS :
+               (typeof INVENTORY_PRODUCTS !== 'undefined' && Array.isArray(INVENTORY_PRODUCTS) && INVENTORY_PRODUCTS.length > 0) ? INVENTORY_PRODUCTS : [];
+
+  if (!master || master.length === 0) {
+    showToast('❌ تعذر العثور على الكتالوج الأصلي');
+    return;
+  }
+
+  storeProducts = JSON.parse(JSON.stringify(master));
+  storeProducts.sort(function(a, b) {
+    return ((CATEGORY_PRIORITY[a.category] || 9) - (CATEGORY_PRIORITY[b.category] || 9)) ||
+           ((a.displayIndex || 0) - (b.displayIndex || 0));
+  });
+  storeProducts.forEach(function(p, i) { p.displayIndex = i + 1; });
+
+  localStorage.setItem('barq_products', JSON.stringify(storeProducts));
+
+  var sInp = document.getElementById('search-inp');
+  if (sInp) sInp.value = '';
+  var cFil = document.getElementById('cat-filter');
+  if (cFil) cFil.value = 'all';
+  var sFil = document.getElementById('sort-filter');
+  if (sFil) sFil.value = 'default';
+
+  renderProductsTable();
+  renderStats();
+  updateBadge();
+  showToast('✅ تم استعادة كافة الـ ' + storeProducts.length + ' منتجاً بنجاح!');
+  publishToGitHub(true);
 }
 
 function saveToStorage(markUnpublished) {
