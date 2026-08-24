@@ -17,5 +17,6 @@ build_admin.js
 products_dump.json
 test_search.js
 inject_advanced_sections.py
+fix_admin_auth.py
 *.pyc
 __pycache__/

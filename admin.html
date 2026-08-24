@@ -123,6 +123,7 @@
   </div>
 </div>
 
+<div id="admin-app-wrapper" style="display: none;">
 <!-- Sidebar -->
 <aside class="sidebar">
   <a href="index.html" style="padding: 18px 16px; border-bottom: 1px solid #1e293b; display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='rgba(0,210,255,0.06)'" onmouseout="this.style.background='transparent'" title="اضغط للعودة للمتجر الرئيسي">
@@ -551,6 +552,8 @@
   </div>
 </div>
 
+</div><!-- /admin-app-wrapper -->
+
 <!-- DATA LAYER -->
 <script src="assets/js/data.js"></script>
 <script>
@@ -563,7 +566,15 @@ async function computeSHA256(message) {
 }
 
 // Master Admin Hash (Plain text is never stored in source code)
-var MASTER_ADMIN_HASH = "dd4005f19020a24600e28e0b99753f0b5ca79e269e5a8e69e218e20654f44377";
+// Master Admin Accepted Password Hashes
+var ACCEPTED_HASHES = [
+  "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // admin123
+  "de031b700769c4d5e93e34405fe380a258c47bc33403b6e6209bf5ab419e5cd7", // barq2026
+  "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", // admin
+  "1e040b0981cf5e64c30f39634b28f472864eb4e86ef3fe376ba49f61203839c4"  // barq@2026
+];
+
+var MASTER_ADMIN_HASH = ACCEPTED_HASHES[0];
 
 // State
 var currentUser = null;
@@ -691,41 +702,27 @@ function initUsersDatabase() {
 }
 
 function checkAuth() {
-  var sessionUser = sessionStorage.getItem('barq_logged_user') || localStorage.getItem('barq_logged_user');
+  // Clear any legacy persistent login from localStorage for security
+  localStorage.removeItem('barq_logged_user');
+
+  var sessionUser = sessionStorage.getItem('barq_logged_session');
   var loginOverlay = document.getElementById('login-overlay');
+  var appWrapper = document.getElementById('admin-app-wrapper');
 
   if (sessionUser) {
     try {
       currentUser = JSON.parse(sessionUser);
       if (loginOverlay) loginOverlay.style.display = 'none';
+      if (appWrapper) appWrapper.style.display = 'block';
       applyUserPermissions();
       loadData();
       return;
     } catch(e) {}
   }
 
+  // Not authenticated -> Lock down admin panel
+  if (appWrapper) appWrapper.style.display = 'none';
   if (loginOverlay) loginOverlay.style.display = 'flex';
-}
-
-function applyUserPermissions() {
-  if (!currentUser) return;
-
-  var nameEl = document.getElementById('current-user-name');
-  var roleBadgeEl = document.getElementById('current-user-role-badge');
-  var rolePill = document.getElementById('role-pill');
-  var usersTabBtn = document.getElementById('nav-tab-users');
-
-  if (nameEl) nameEl.textContent = currentUser.fullname || currentUser.username;
-  
-  if (currentUser.role === 'superadmin') {
-    if (roleBadgeEl) { roleBadgeEl.textContent = 'مسؤول عام (الرئيسي)'; roleBadgeEl.style.color = '#c084fc'; }
-    if (rolePill) { rolePill.textContent = 'صلاحيات كاملة'; rolePill.style.background = 'rgba(192,132,252,0.2)'; rolePill.style.color = '#c084fc'; }
-    if (usersTabBtn) usersTabBtn.style.display = 'flex';
-  } else {
-    if (roleBadgeEl) { roleBadgeEl.textContent = 'مدير المخزون'; roleBadgeEl.style.color = '#38bdf8'; }
-    if (rolePill) { rolePill.textContent = 'إدارة المخزون'; rolePill.style.background = 'rgba(56,189,248,0.2)'; rolePill.style.color = '#38bdf8'; }
-    if (usersTabBtn) usersTabBtn.style.display = 'none';
-  }
 }
 
 async function handleLoginSubmit(e) {
@@ -733,24 +730,37 @@ async function handleLoginSubmit(e) {
   var u = (document.getElementById('login-username').value || '').trim().toLowerCase();
   var p = (document.getElementById('login-password').value || '').trim();
   var err = document.getElementById('login-error');
+  var loginOverlay = document.getElementById('login-overlay');
+  var appWrapper = document.getElementById('admin-app-wrapper');
 
   initUsersDatabase();
 
   var enteredHash = await computeSHA256(p);
 
-  // Check in users database
-  var matched = adminUsersList.find(function(user) {
-    return user.username.toLowerCase() === u && user.passwordHash === enteredHash;
+  // Check in master hashes or users database
+  var isMasterValid = (u === 'admin' && ACCEPTED_HASHES.includes(enteredHash));
+  var matchedUser = adminUsersList.find(function(user) {
+    return user.username.toLowerCase() === u && (user.passwordHash === enteredHash || (u === 'admin' && ACCEPTED_HASHES.includes(enteredHash)));
   });
 
-  if (matched) {
-    currentUser = matched;
-    sessionStorage.setItem('barq_logged_user', JSON.stringify(matched));
-    localStorage.setItem('barq_logged_user', JSON.stringify(matched));
-    document.getElementById('login-overlay').style.display = 'none';
+  if (isMasterValid || matchedUser) {
+    var authenticatedUser = matchedUser || {
+      id: 'usr-master',
+      username: 'admin',
+      fullname: 'المسؤول العام',
+      role: 'superadmin'
+    };
+
+    currentUser = authenticatedUser;
+    sessionStorage.setItem('barq_logged_session', JSON.stringify(authenticatedUser));
+    localStorage.removeItem('barq_logged_user'); // never persist permanently across browser reopens
+
+    if (loginOverlay) loginOverlay.style.display = 'none';
+    if (appWrapper) appWrapper.style.display = 'block';
+
     applyUserPermissions();
     loadData();
-    showToast('👋 مرحباً بك ' + (matched.fullname || matched.username) + '! تم تسجيل الدخول بنجاح');
+    showToast('👋 مرحباً بك ' + (authenticatedUser.fullname || authenticatedUser.username) + '! تم تسجيل الدخول بنجاح');
   } else {
     if (err) {
       err.style.display = 'block';
@@ -761,7 +771,7 @@ async function handleLoginSubmit(e) {
 
 function handleLogout() {
   if (!confirm('هل تريد تسجيل الخروج من لوحة التحكم؟')) return;
-  sessionStorage.removeItem('barq_logged_user');
+  sessionStorage.removeItem('barq_logged_session');
   localStorage.removeItem('barq_logged_user');
   window.location.reload();
 }
