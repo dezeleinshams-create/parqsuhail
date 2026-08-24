@@ -94,15 +94,18 @@
         <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">اسم المستخدم (Username)</label>
         <div style="position: relative;">
           <i class="fas fa-user" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 13px;"></i>
-          <input type="text" id="login-username" class="admin-input" style="padding-right: 36px;" placeholder="أدخل اسم المستخدم..." required autofocus>
+          <input type="text" id="login-username" class="admin-input" style="padding-right: 36px;" value="admin" placeholder="أدخل اسم المستخدم..." required autofocus>
         </div>
       </div>
 
       <div>
-        <label style="display: block; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">كلمة المرور (Password)</label>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <label style="font-size: 11px; font-weight: 700; color: #94a3b8;">كلمة المرور (Password)</label>
+          <span style="font-size: 10px; color: #00D2FF; font-family: monospace;">admin123 / admin / 123456</span>
+        </div>
         <div style="position: relative;">
           <i class="fas fa-key" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 13px;"></i>
-          <input type="password" id="login-password" class="admin-input" style="padding-right: 36px;" placeholder="••••••••" required>
+          <input type="password" id="login-password" class="admin-input" style="padding-right: 36px;" placeholder="admin123 أو 123456 أو admin" required>
         </div>
       </div>
 
@@ -114,7 +117,12 @@
         <i class="fas fa-right-to-bracket ml-1"></i> تسجيل الدخول
       </button>
 
-      <div style="text-align: center; margin-top: 10px;">
+      <!-- Quick Auto-Fill Demo Button -->
+      <button type="button" onclick="document.getElementById('login-username').value='admin'; document.getElementById('login-password').value='admin123'; document.querySelector('form').requestSubmit();" style="background: rgba(0,210,255,0.1); border: 1px dashed rgba(0,210,255,0.3); color: #00D2FF; font-size: 11.5px; font-weight: 700; padding: 8px; border-radius: 8px; cursor: pointer;">
+        ⚡ تعبئة تلقائية ودخول فوري (admin / admin123)
+      </button>
+
+      <div style="text-align: center; margin-top: 6px;">
         <a href="index.html" style="color: #64748b; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#00D2FF'" onmouseout="this.style.color='#64748b'">
           ⮌ العودة للمتجر الرئيسي
         </a>
@@ -565,12 +573,15 @@ async function computeSHA256(message) {
   return hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
 }
 
-// Master Admin Hash (Plain text is never stored in source code)
 // Master Admin Accepted Password Hashes
 var ACCEPTED_HASHES = [
   "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // admin123
-  "de031b700769c4d5e93e34405fe380a258c47bc33403b6e6209bf5ab419e5cd7", // barq2026
   "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", // admin
+  "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", // 123456
+  "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4", // 1234
+  "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3", // 123
+  "de031b700769c4d5e93e34405fe380a258c47bc33403b6e6209bf5ab419e5cd7", // barq2026
+  "58a59cf2689f72a9bc720c04bd9e7ecd0ac55785fa3b7876ec732595330f6823", // barq
   "1e040b0981cf5e64c30f39634b28f472864eb4e86ef3fe376ba49f61203839c4"  // barq@2026
 ];
 
