@@ -1544,7 +1544,18 @@ const INITIAL_PRODUCTS = INVENTORY_PRODUCTS
   })
   .map((p, i) => ({ ...p, displayIndex: i + 1 }));
 
-// Save to localStorage ONLY if not already initialized, to preserve admin edits
-if (!localStorage.getItem("barq_products")) {
-  localStorage.setItem("barq_products", JSON.stringify(INITIAL_PRODUCTS));
+if (typeof window !== "undefined") {
+  window.INVENTORY_PRODUCTS = INVENTORY_PRODUCTS;
+  window.INITIAL_PRODUCTS = INITIAL_PRODUCTS;
 }
+
+// Save to localStorage if empty or invalid
+try {
+  const existing = localStorage.getItem("barq_products");
+  if (!existing || existing === "[]" || JSON.parse(existing).length === 0) {
+    localStorage.setItem("barq_products", JSON.stringify(INITIAL_PRODUCTS));
+  }
+} catch (e) {
+  try { localStorage.setItem("barq_products", JSON.stringify(INITIAL_PRODUCTS)); } catch (err) {}
+}
+
