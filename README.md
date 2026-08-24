@@ -1,7 +1,7 @@
 # 🛰️ مؤسسة برق سهيل التجارية | Barq Suhail Trading Est
 
-> **الموقع الرسمي:** [https://barqsuhail.com/](https://barqsuhail.com/)  
-> **لوحة الإدارة:** [https://barqsuhail.com/admin.html](https://barqsuhail.com/admin.html)  
+> **الموقع الرسمي:** [https://www.barqsuhail.com/](https://www.barqsuhail.com/)  
+> **لوحة الإدارة:** [https://www.barqsuhail.com/admin.html](https://www.barqsuhail.com/admin.html)  
 > **متجر سلة الرسمي:** [https://salla.sa/barqsuhail](https://salla.sa/barqsuhail)  
 > **الاعتماد والترخيص:** مرخص من **هيئة الاتصالات والفضاء وتقنية المعلومات (CST)** بالمملكة العربية السعودية.
 
