@@ -8,8 +8,21 @@
       if (!isLocal && (location.protocol === 'http:' || location.hostname === 'barqsuhail.com')) {
         location.replace('https://www.barqsuhail.com' + location.pathname + location.search + location.hash);
       }
+      // Version marker - force reload if old cached version loaded
+      var ADMIN_VERSION = '20260824_v5';
+      var cachedVer = sessionStorage.getItem('admin_page_version');
+      if (cachedVer !== ADMIN_VERSION) {
+        sessionStorage.setItem('admin_page_version', ADMIN_VERSION);
+        if (cachedVer !== null) {
+          // Old version detected - hard reload without cache
+          location.reload(true);
+        }
+      }
     })();
   </script>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة التحكم | مؤسسة برق سهيل التجارية</title>
@@ -2218,6 +2231,22 @@ var DEFAULT_INVENTORY_PRODUCTS = [
   }
 
 ];
+
+// ─── Direct Seed: Ensure localStorage always has the master catalog ───
+(function seedProductsNow() {
+  try {
+    var existing = localStorage.getItem('barq_products');
+    var parsed = null;
+    if (existing) {
+      try { parsed = JSON.parse(existing); } catch(e) {}
+    }
+    if (!parsed || !Array.isArray(parsed) || parsed.length === 0) {
+      if (typeof DEFAULT_INVENTORY_PRODUCTS !== 'undefined' && Array.isArray(DEFAULT_INVENTORY_PRODUCTS) && DEFAULT_INVENTORY_PRODUCTS.length > 0) {
+        localStorage.setItem('barq_products', JSON.stringify(DEFAULT_INVENTORY_PRODUCTS));
+      }
+    }
+  } catch(e) {}
+})();
 
 // State
 var currentUser = null;
