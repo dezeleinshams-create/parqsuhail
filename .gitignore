@@ -18,5 +18,6 @@ products_dump.json
 test_search.js
 inject_advanced_sections.py
 fix_admin_auth.py
+update_domain_seo.py
 *.pyc
 __pycache__/
