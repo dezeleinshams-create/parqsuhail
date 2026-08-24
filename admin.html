@@ -1625,56 +1625,80 @@ function deleteUser(userId) {
 }
 
 // ── Products Data ───────────────────────────────────────────
+function getMasterCatalog() {
+  var src = (typeof INVENTORY_PRODUCTS !== 'undefined' && Array.isArray(INVENTORY_PRODUCTS) && INVENTORY_PRODUCTS.length > 0) ? INVENTORY_PRODUCTS :
+            (typeof INITIAL_PRODUCTS !== 'undefined' && Array.isArray(INITIAL_PRODUCTS) && INITIAL_PRODUCTS.length > 0) ? INITIAL_PRODUCTS :
+            (typeof window !== 'undefined' && Array.isArray(window.INVENTORY_PRODUCTS) && window.INVENTORY_PRODUCTS.length > 0) ? window.INVENTORY_PRODUCTS :
+            (typeof window !== 'undefined' && Array.isArray(window.INITIAL_PRODUCTS) && window.INITIAL_PRODUCTS.length > 0) ? window.INITIAL_PRODUCTS : [];
+  return JSON.parse(JSON.stringify(src));
+}
+
 function loadData() {
   storeProducts = [];
+  var master = getMasterCatalog();
   var saved = localStorage.getItem('barq_products');
+  var parsed = null;
+
   if (saved) {
     try {
-      var parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        // Auto-heal check: if data in localStorage is corrupted mojibake
-        var isCorrupted = parsed.some(function(p) { 
-          return p && p.name && (p.name.indexOf('╪') !== -1 || p.name.indexOf('┘') !== -1 || p.name.indexOf('') !== -1); 
+      var p = JSON.parse(saved);
+      if (Array.isArray(p) && p.length > 0) {
+        // Auto-heal check for corrupted characters
+        var isCorrupted = p.some(function(item) { 
+          return item && item.name && (item.name.indexOf('╪') !== -1 || item.name.indexOf('┘') !== -1); 
         });
         if (!isCorrupted) {
-          storeProducts = parsed;
+          parsed = p;
         } else {
-          console.warn('Corrupted mojibake detected in localStorage, reloading from clean data layer.');
           localStorage.removeItem('barq_products');
         }
       }
-    } catch(e) { storeProducts = []; }
+    } catch(e) { parsed = null; }
   }
 
-  if (!storeProducts || storeProducts.length === 0) {
-    var sourceData = (typeof INITIAL_PRODUCTS !== 'undefined' && INITIAL_PRODUCTS.length > 0) ? INITIAL_PRODUCTS :
-                     (typeof window !== 'undefined' && window.INITIAL_PRODUCTS && window.INITIAL_PRODUCTS.length > 0) ? window.INITIAL_PRODUCTS :
-                     (typeof INVENTORY_PRODUCTS !== 'undefined' && INVENTORY_PRODUCTS.length > 0) ? INVENTORY_PRODUCTS :
-                     (typeof window !== 'undefined' && window.INVENTORY_PRODUCTS && window.INVENTORY_PRODUCTS.length > 0) ? window.INVENTORY_PRODUCTS : [];
-
-    if (sourceData && sourceData.length > 0) {
-      storeProducts = JSON.parse(JSON.stringify(sourceData));
-      storeProducts.sort(function(a, b) {
-        return (CATEGORY_PRIORITY[a.category] || 9) - (CATEGORY_PRIORITY[b.category] || 9);
-      });
-      storeProducts.forEach(function(p, i) { p.displayIndex = i + 1; });
-    }
+  if (parsed && Array.isArray(parsed) && parsed.length >= master.length) {
+    // Full catalog with possible edits or additions
+    storeProducts = parsed;
+  } else if (parsed && Array.isArray(parsed) && parsed.length > 0) {
+    // Merge master products with any saved customizations / additions
+    var merged = master.slice();
+    parsed.forEach(function(pItem) {
+      var existIdx = merged.findIndex(function(m) { return m.id === pItem.id; });
+      if (existIdx !== -1) {
+        merged[existIdx] = Object.assign({}, merged[existIdx], pItem);
+      } else {
+        merged.push(pItem);
+      }
+    });
+    storeProducts = merged;
+  } else if (master && master.length > 0) {
+    storeProducts = master;
+  } else {
+    storeProducts = [];
   }
 
-  saveToStorage();
+  // Sort & index
+  storeProducts.sort(function(a, b) {
+    return ((CATEGORY_PRIORITY[a.category] || 9) - (CATEGORY_PRIORITY[b.category] || 9)) ||
+           ((a.displayIndex || 0) - (b.displayIndex || 0));
+  });
+  storeProducts.forEach(function(p, i) { p.displayIndex = i + 1; });
+
+  saveToStorage(false); // save clean state without marking unpublished
   renderProductsTable();
   renderStats();
   updateBadge();
 }
 
-function saveToStorage() {
+function saveToStorage(markUnpublished) {
   if (storeProducts && storeProducts.length > 0) {
     localStorage.setItem('barq_products', JSON.stringify(storeProducts));
   }
   updateBadge();
-  // Mark as having unpublished changes
-  localStorage.setItem('barq_unpublished', '1');
-  updatePublishBtnState();
+  if (markUnpublished !== false) {
+    localStorage.setItem('barq_unpublished', '1');
+    updatePublishBtnState();
+  }
 }
 
 function updatePublishBtnState() {
@@ -1687,7 +1711,7 @@ function updatePublishBtnState() {
     btn.title = 'يوجد تغييرات غير منشورة - اضغط للنشر الفوري';
   } else {
     btn.style.background = 'linear-gradient(135deg, #065f46, #10b981)';
-    btn.innerHTML = '<i class="fas fa-check-circle"></i> الموقع محدّث';
+    btn.innerHTML = '<i class="fas fa-check-circle"></i> الموقع محدّث (' + storeProducts.length + ' صنف)';
     btn.title = 'الموقع الحي محدث بآخر البيانات';
   }
 }
@@ -1727,13 +1751,25 @@ async function publishToGitHub() {
     return;
   }
 
+  // Safety merge before publishing: ensure we never publish less than the master catalog
+  var master = getMasterCatalog();
+  if (master.length > 0 && (!storeProducts || storeProducts.length < master.length)) {
+    var merged = master.slice();
+    (storeProducts || []).forEach(function(item) {
+      var existIdx = merged.findIndex(function(m) { return m.id === item.id; });
+      if (existIdx !== -1) merged[existIdx] = item;
+      else merged.push(item);
+    });
+    storeProducts = merged;
+  }
+
   if (!storeProducts || storeProducts.length === 0) {
     showToast('⚠️ لا توجد منتجات للنشر! تأكد من تحميل البيانات أولاً.');
     return;
   }
 
   var btn = document.getElementById('github-publish-btn');
-  if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...'; btn.disabled = true; }
+  if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر (' + storeProducts.length + ' صنف)...'; btn.disabled = true; }
 
   try {
     // 1. Build new data.js content
@@ -1752,7 +1788,7 @@ async function publishToGitHub() {
     if (result.ok) {
       localStorage.removeItem('barq_unpublished');
       updatePublishBtnState();
-      showToast('🚀 تم النشر على الموقع الحي بنجاح! (barqsuhail.com سيتحدث خلال دقيقة)');
+      showToast('🚀 تم النشر على الموقع الحي بنجاح! (' + storeProducts.length + ' صنف محدث على barqsuhail.com)');
       addDeployLog('✅ نُشر بنجاح: ' + storeProducts.length + ' صنف على barqsuhail.com');
     } else {
       showToast('❌ فشل النشر: ' + result.error);
