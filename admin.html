@@ -2350,6 +2350,7 @@ var CATEGORY_PRIORITY = { devices: 1, thuraya: 2, garmin: 3, accessories: 4, car
 window.addEventListener('DOMContentLoaded', function () {
   initUsersDatabase();
   loadThemeBuilderConfig();
+  loadData();
   checkAuth();
 });
 
@@ -3478,14 +3479,24 @@ function calcEditPricing(changedField) {
 
 // ── Render Products Table ───────────────────────────────────
 function renderProductsTable() {
-  var search = (document.getElementById('search-inp') ? document.getElementById('search-inp').value : '').trim().toLowerCase();
-  var catFilter = document.getElementById('cat-filter') ? document.getElementById('cat-filter').value : 'all';
-  var sortFilter = document.getElementById('sort-filter') ? document.getElementById('sort-filter').value : 'default';
+  if (!storeProducts || !Array.isArray(storeProducts) || storeProducts.length === 0) {
+    var master = getMasterCatalog();
+    if (master && master.length > 0) {
+      storeProducts = master.slice();
+    }
+  }
 
-  var filtered = storeProducts.slice();
+  var searchEl = document.getElementById('search-inp');
+  var search = searchEl ? searchEl.value.trim().toLowerCase() : '';
+  var catEl = document.getElementById('cat-filter');
+  var catFilter = (catEl && catEl.value) ? catEl.value : 'all';
+  var sortEl = document.getElementById('sort-filter');
+  var sortFilter = (sortEl && sortEl.value) ? sortEl.value : 'default';
 
-  if (catFilter !== 'all') {
-    filtered = filtered.filter(function(p) { return p.category === catFilter; });
+  var filtered = (storeProducts && Array.isArray(storeProducts)) ? storeProducts.slice() : [];
+
+  if (catFilter && catFilter !== 'all') {
+    filtered = filtered.filter(function(p) { return p && p.category === catFilter; });
   }
 
   if (search) {
