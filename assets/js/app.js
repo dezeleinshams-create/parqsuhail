@@ -24,11 +24,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ----------------- VISUAL THEME & LAYOUT BUILDER SYNC -----------------
 function applyThemeConfig() {
+  let config = null;
   const raw = localStorage.getItem("barq_theme_config");
-  if (!raw) return;
+  if (raw) {
+    try { config = JSON.parse(raw); } catch(e) {}
+  }
+  if (!config && typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG && Object.keys(THEME_CONFIG).length > 0) {
+    config = THEME_CONFIG;
+  }
+  if (!config && typeof window !== 'undefined' && window.THEME_CONFIG && Object.keys(window.THEME_CONFIG).length > 0) {
+    config = window.THEME_CONFIG;
+  }
+  if (!config) return;
   try {
-    const config = JSON.parse(raw);
-    if (!config) return;
 
     // 1. Reorder & Toggle Sections Visibility
     const mainContainer = document.getElementById("main-sections-container");
