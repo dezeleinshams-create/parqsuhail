@@ -3,11 +3,17 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
+~$*
+*.xlsx
 
 # Temp & build scripts
 check_data.py
 inventory_data.txt
 build_seo.py
+build_product_page.py
+generate_product_pages.py
+generate_admin.py
+build_admin.js
 products_dump.json
 test_search.js
 *.pyc

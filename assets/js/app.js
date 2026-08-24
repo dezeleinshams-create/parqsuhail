@@ -500,7 +500,7 @@ function renderGridCard(p) {
 
 
       <!-- Image Container (Compact h-36 to h-40) -->
-      <div class="relative h-36 sm:h-40 w-full bg-slate-950 overflow-hidden cursor-pointer flex items-center justify-center p-2" onclick="openProductModal('${p.id}')">
+      <a href="product.html?id=${encodeURIComponent(p.id)}" class="relative h-36 sm:h-40 w-full bg-slate-950 overflow-hidden cursor-pointer flex items-center justify-center p-2 block" title="فتح صفحة ${p.name}">
         <img 
           src="${p.image}" 
           alt="${p.name}" 
@@ -509,7 +509,7 @@ function renderGridCard(p) {
           loading="lazy"
         >
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-60"></div>
-      </div>
+      </a>
 
 
       <!-- Card Details (Compact padding p-3 sm:p-3.5) -->
@@ -525,8 +525,8 @@ function renderGridCard(p) {
           </div>
 
           <!-- Product Title (Clamped to 2 lines for uniform height) -->
-          <h3 class="font-bold text-white text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-cyan-300 transition-colors mb-2 min-h-[2.5rem] cursor-pointer" onclick="openProductModal('${p.id}')" title="${p.name}">
-            ${p.name}
+          <h3 class="font-bold text-white text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-cyan-300 transition-colors mb-2 min-h-[2.5rem]" title="${p.name}">
+            <a href="product.html?id=${encodeURIComponent(p.id)}">${p.name}</a>
           </h3>
         </div>
 
@@ -539,10 +539,15 @@ function renderGridCard(p) {
             ${p.oldPrice ? `<span class="text-[10px] text-slate-500 line-through font-mono block truncate">${p.oldPrice.toLocaleString()} ر.س</span>` : ''}
           </div>
 
-          <button onclick="addToCart('${p.id}')" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold px-2.5 sm:px-3 py-1.5 rounded-xl text-xs flex items-center gap-1 shadow-md shadow-cyan-500/20 transition active:scale-95 shrink-0" title="إضافة للسلة">
-            <i class="fas fa-cart-plus text-[11px]"></i>
-            <span class="hidden sm:inline text-[11px]">سلة</span>
-          </button>
+          <div class="flex items-center gap-1">
+            <a href="product.html?id=${encodeURIComponent(p.id)}" class="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs transition" title="صفحة المنتج">
+              <i class="fas fa-arrow-up-right-from-square text-[11px]"></i>
+            </a>
+            <button onclick="addToCart('${p.id}')" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold px-2.5 sm:px-3 py-1.5 rounded-xl text-xs flex items-center gap-1 shadow-md shadow-cyan-500/20 transition active:scale-95 shrink-0" title="إضافة للسلة">
+              <i class="fas fa-cart-plus text-[11px]"></i>
+              <span class="hidden sm:inline text-[11px]">سلة</span>
+            </button>
+          </div>
         </div>
 
       </div>
@@ -558,9 +563,9 @@ function renderListCard(p) {
       
       <div class="flex items-center gap-3.5 w-full sm:w-auto flex-1 min-w-0">
         <!-- Thumbnail -->
-        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden shrink-0 flex items-center justify-center p-1 cursor-pointer" onclick="openProductModal('${p.id}')">
+        <a href="product.html?id=${encodeURIComponent(p.id)}" class="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden shrink-0 flex items-center justify-center p-1 cursor-pointer block" title="فتح صفحة ${p.name}">
           <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition" onerror="this.src='assets/images/main_logo.jpg'">
-        </div>
+        </a>
 
         <!-- Info -->
         <div class="flex-1 min-w-0 space-y-1">
@@ -574,8 +579,8 @@ function renderListCard(p) {
             </div>
           </div>
 
-          <h3 class="font-bold text-white text-sm sm:text-base truncate group-hover:text-cyan-300 transition-colors cursor-pointer" onclick="openProductModal('${p.id}')">
-            ${p.name}
+          <h3 class="font-bold text-white text-sm sm:text-base truncate group-hover:text-cyan-300 transition-colors">
+            <a href="product.html?id=${encodeURIComponent(p.id)}">${p.name}</a>
           </h3>
 
           <p class="text-xs text-slate-400 line-clamp-1 hidden md:block">${p.shortDesc}</p>
@@ -1022,12 +1027,16 @@ function openProductModal(productId) {
           </div>
         </div>
 
-        <div class="flex gap-3">
-          <button onclick="addToCart('${p.id}'); closeModal();" class="flex-1 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20">
+        <div class="flex gap-2.5 flex-wrap">
+          <button onclick="addToCart('${p.id}'); closeModal();" class="flex-1 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold py-3 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 transition">
             <i class="fas fa-cart-plus"></i>
-            <span>إضافة للسلة الآن</span>
+            <span>إضافة للسلة</span>
           </button>
-          <a href="https://wa.me/${STORE_PHONE}?text=${encodeURIComponent('استفسار بخصوص منتج: ' + p.name)}" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-3 rounded-xl flex items-center justify-center" title="استفسار واتساب">
+          <a href="product.html?id=${encodeURIComponent(p.id)}" class="bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 px-3.5 py-3 rounded-xl flex items-center justify-center text-xs font-bold transition gap-1.5" title="عرض صفحة المنتج المستقلة">
+            <i class="fas fa-arrow-up-right-from-square"></i>
+            <span>صفحة المنتج</span>
+          </a>
+          <a href="https://wa.me/${STORE_PHONE}?text=${encodeURIComponent('استفسار بخصوص منتج: ' + p.name)}" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-3 rounded-xl flex items-center justify-center" title="استفسار واتساب">
             <i class="fab fa-whatsapp text-lg"></i>
           </a>
         </div>
@@ -1207,7 +1216,7 @@ function closeSearchSuggestions() {
 
 function selectSuggestedProduct(productId) {
   closeSearchSuggestions();
-  openProductModal(productId);
+  window.location.href = `product.html?id=${encodeURIComponent(productId)}`;
 }
 
 function quickSearch(term) {
