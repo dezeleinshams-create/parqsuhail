@@ -682,7 +682,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!-- DATA LAYER -->
-<script src="assets/js/data.js?v=20260824_03"></script>
+<script src="assets/js/data.js?v=20260824_10"></script>
 <script>
 // ── Cryptographic SHA-256 Utility ────────────────────────────
 async function computeSHA256(message) {
@@ -1632,7 +1632,16 @@ function loadData() {
     try {
       var parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        storeProducts = parsed;
+        // Auto-heal check: if data in localStorage is corrupted mojibake
+        var isCorrupted = parsed.some(function(p) { 
+          return p && p.name && (p.name.indexOf('╪') !== -1 || p.name.indexOf('┘') !== -1 || p.name.indexOf('') !== -1); 
+        });
+        if (!isCorrupted) {
+          storeProducts = parsed;
+        } else {
+          console.warn('Corrupted mojibake detected in localStorage, reloading from clean data layer.');
+          localStorage.removeItem('barq_products');
+        }
       }
     } catch(e) { storeProducts = []; }
   }
