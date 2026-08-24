@@ -1290,5 +1290,322 @@ function setupEventListeners() {
       closeSearchSuggestions();
     }
   });
+
+  // Init Advanced Features
+  initAdvancedFeatures();
 }
+
+// ==========================================================
+// 🧭 ADVANCED TOOLKIT: SMART FINDER QUIZ CONTROLLER
+// ==========================================================
+let quizState = {
+  step1: null, // hunting, marine, security, travel
+  step2: null, // car, handheld, satellite
+  step3: null  // bundle, device_only
+};
+
+function handleQuizAnswer(step, val) {
+  if (step === 1) {
+    quizState.step1 = val;
+    goQuizStep(2);
+  } else if (step === 2) {
+    quizState.step2 = val;
+    goQuizStep(3);
+  } else if (step === 3) {
+    quizState.step3 = val;
+    renderQuizResult();
+  }
+}
+
+function goQuizStep(step) {
+  [1, 2, 3].forEach(s => {
+    const el = document.getElementById(`quiz-step-${s}`);
+    const dot = document.getElementById(`step-dot-${s}`);
+    if (el) el.classList.toggle("hidden", s !== step);
+    if (dot) {
+      if (s === step) {
+        dot.className = "relative z-10 w-9 h-9 rounded-full bg-cyan-500 text-slate-950 font-bold flex items-center justify-center text-xs shadow-lg shadow-cyan-500/40";
+      } else if (s < step) {
+        dot.className = "relative z-10 w-9 h-9 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-xs shadow-md";
+        dot.innerHTML = `<i class="fas fa-check"></i>`;
+      } else {
+        dot.className = "relative z-10 w-9 h-9 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs border border-slate-700";
+        dot.textContent = s;
+      }
+    }
+  });
+
+  const resEl = document.getElementById("quiz-result");
+  if (resEl) resEl.classList.add("hidden");
+}
+
+function resetQuiz() {
+  quizState = { step1: null, step2: null, step3: null };
+  goQuizStep(1);
+}
+
+function renderQuizResult() {
+  [1, 2, 3].forEach(s => {
+    const el = document.getElementById(`quiz-step-${s}`);
+    if (el) el.classList.add("hidden");
+  });
+
+  const resWrap = document.getElementById("quiz-result");
+  const resCard = document.getElementById("quiz-result-card");
+  const resTitle = document.getElementById("quiz-result-title");
+  if (!resWrap || !resCard) return;
+
+  const products = getProducts();
+
+  // Recommendation Matcher
+  let rec = {
+    title: "باقة المقناص والبر المعتمدة (آيكوم IC-V3500)",
+    desc: "أقوى توليفة للمقناص والرحلات الصحراوية بقوة إرسال 65 واط وصوت فائق النقاء.",
+    primaryId: "Sku-5624-350",
+    items: [
+      { name: "جهاز آيكوم IC-V3500 الأصلي (65W)", id: "Sku-5624-350", price: 1850 },
+      { name: "هوائي دايموند (أبو عقال) الأصلي", id: "Sku-25321", price: 320 },
+      { name: "قاعدة تثبيت تايوانية فاخرة", id: "Sku-35272", price: 140 },
+      { name: "كيبل RG58 إيطالي أصلي 5 متر", id: "Sku-40320", price: 110 }
+    ],
+    bundlePrice: 2250,
+    oldBundlePrice: 2420
+  };
+
+  if (quizState.step1 === 'marine' || quizState.step2 === 'car') {
+    rec = {
+      title: "باقة الأداء الياباني الشاق (آيكوم IC-2300H)",
+      desc: "متانة يابانية استثنائية وتحمل جبار للحرارة مع هوائي سيريو 3 وصلات.",
+      primaryId: "Sku-5624-230",
+      items: [
+        { name: "جهاز آيكوم IC-2300H ياباني أصلي", id: "Sku-5624-230", price: 1650 },
+        { name: "هوائي سيريو - ثلاث وصلات أصلي", id: "Sku-25326", price: 290 },
+        { name: "قاعدة تايوانية للسيارات والقوارب", id: "Sku-35272", price: 140 },
+        { name: "سلك هوائي إيطالي معتمد", id: "Sku-40320", price: 110 }
+      ],
+      bundlePrice: 2050,
+      oldBundlePrice: 2190
+    };
+  } else if (quizState.step2 === 'handheld' || quizState.step1 === 'security') {
+    rec = {
+      title: "باقة الاتصال اليدوي عالي القوة (TYT 15W)",
+      desc: "أعلى مدى للأجهزة اليدوية المحمولة مع ريشة مايك وهوائي مرن.",
+      primaryId: "Sku-15W",
+      items: [
+        { name: "جهاز TYT 15W لاسلكي يدوي قوي", id: "Sku-15W", price: 420 },
+        { name: "ريشة TYT يدوي (مايك ريشة)", id: "Sku-81435", price: 95 },
+        { name: "هوائي يدوي مرن إضافي", id: "Sku-949284", price: 65 }
+      ],
+      bundlePrice: 530,
+      oldBundlePrice: 580
+    };
+  } else if (quizState.step2 === 'satellite' || quizState.step1 === 'travel') {
+    rec = {
+      title: "باقة الاتصال الفضائي والطوارئ (ثريا وسفر)",
+      desc: "تغطية عالمية بدون أبراج جوال مع شريحة ثريا ووحدة شحن فورية.",
+      primaryId: "Sku-14275",
+      items: [
+        { name: "هاتف الثريا الفضائي المعتمد", id: "Sku-14275", price: 4200 },
+        { name: "شريحة ثريا فضائية مفعلة", id: "Sku-140320", price: 350 },
+        { name: "بطاقة شحن رصيد ثريا 100 وحدة", id: "Sku-14300", price: 680 }
+      ],
+      bundlePrice: 5050,
+      oldBundlePrice: 5230
+    };
+  }
+
+  if (quizState.step3 === 'device_only') {
+    const single = products.find(p => p.id === rec.primaryId) || products[0];
+    rec.title = `جهازك الأنسب: ${single.name}`;
+    rec.desc = single.shortDesc;
+    rec.items = [{ name: single.name, id: single.id, price: single.price }];
+    rec.bundlePrice = single.price;
+    rec.oldBundlePrice = single.oldPrice || 0;
+  }
+
+  if (resTitle) resTitle.textContent = rec.title;
+
+  const saving = (rec.oldBundlePrice > rec.bundlePrice) ? (rec.oldBundlePrice - rec.bundlePrice) : 0;
+
+  resCard.innerHTML = `
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-7 space-y-4">
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">${rec.desc}</p>
+        
+        <div class="space-y-2 pt-2">
+          <h5 class="text-xs font-bold text-slate-400">محتويات الباقة المرشحة:</h5>
+          <div class="space-y-1.5">
+            ${rec.items.map(item => `
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+                <span class="text-white font-medium flex items-center gap-2">
+                  <i class="fas fa-check-circle text-cyan-400 text-[11px]"></i>
+                  ${item.name}
+                </span>
+                <span class="font-mono text-cyan-400 font-bold">${item.price.toLocaleString()} ر.س</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center gap-2 text-[11px] text-slate-400">
+          <i class="fas fa-shield-check text-emerald-400"></i>
+          <span>ضمان سنتين معتمد + برمجة الترددات مجاناً بالمعرض</span>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center space-y-4 shadow-xl">
+        <div>
+          <span class="text-xs text-slate-400">السعر الإجمالي للباقة:</span>
+          <div class="text-3xl sm:text-4xl font-black text-white font-mono mt-1">${rec.bundlePrice.toLocaleString()} <span class="text-sm font-bold text-cyan-400">ر.س</span></div>
+          ${saving > 0 ? `
+            <div class="inline-block mt-2 bg-gradient-to-r from-rose-600 to-amber-500 text-white font-black text-xs px-3 py-1 rounded-lg font-mono">
+              وفرت ${saving.toLocaleString()} ر.س
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="space-y-2 pt-2">
+          <button onclick="addBundleToCart('${rec.items.map(i => i.id).join(',')}')" class="w-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 active:scale-95 transition">
+            <i class="fas fa-cart-plus"></i>
+            <span>إضافة الباقة كاملة للسلة</span>
+          </button>
+
+          <a href="https://wa.me/${STORE_PHONE}?text=${encodeURIComponent('السلام عليكم، أود طلب الباقة المرشحة من المستشار الذكي: ' + rec.title + ' بقيمة ' + rec.bundlePrice.toLocaleString() + ' ر.س')}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 active:scale-95 transition">
+            <i class="fab fa-whatsapp text-base"></i>
+            <span>طلب الباقة عبر واتساب</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+
+  resWrap.classList.remove("hidden");
+}
+
+function addBundleToCart(idsString) {
+  const ids = idsString.split(',').map(s => s.trim()).filter(Boolean);
+  const products = getProducts();
+
+  ids.forEach(id => {
+    const p = products.find(x => x.id === id);
+    if (p) {
+      const existing = cart.find(x => x.id === id);
+      if (existing) existing.qty += 1;
+      else cart.push({ ...p, qty: 1 });
+    }
+  });
+
+  saveCart();
+  updateCartUI();
+  toggleCart(true);
+  showToast(`تمت إضافة الباقة كاملة (${ids.length} منتجات) إلى السلة 🛒`);
+}
+
+// ==========================================================
+// 🔌 ADVANCED TOOLKIT: COMPATIBILITY ENGINE CONTROLLER
+// ==========================================================
+function updateCompatibilityUI(deviceId) {
+  const grid = document.getElementById("compat-results-grid");
+  if (!grid) return;
+
+  const products = getProducts();
+  const targetDevice = products.find(p => p.id === deviceId);
+
+  // Filter matching accessories from inventory
+  const allAccs = products.filter(p => p.category === 'accessories' || p.category === 'cards');
+  
+  let matchingAccs = [];
+
+  if (deviceId.includes('5624') || deviceId.includes('10111') || deviceId.includes('8000')) {
+    // Mobile VHF Radios
+    matchingAccs = allAccs.filter(p => 
+      p.name.includes('سيريو') || 
+      p.name.includes('دايموند') || 
+      p.name.includes('لارسن') || 
+      p.name.includes('قاعدة') || 
+      p.name.includes('كيبل') || 
+      p.name.includes('ريشة')
+    ).slice(0, 4);
+  } else if (deviceId.includes('88') || deviceId.includes('15W') || deviceId.includes('26656') || deviceId.includes('23721')) {
+    // Handheld Radios
+    matchingAccs = allAccs.filter(p => 
+      p.name.includes('يدوي') || 
+      p.name.includes('بوفنق') || 
+      p.name.includes('ريشة') || 
+      p.name.includes('بطارية')
+    ).slice(0, 4);
+  } else if (deviceId.includes('14275')) {
+    // Thuraya
+    matchingAccs = products.filter(p => p.category === 'cards' || (p.category === 'accessories' && p.name.includes('ثريا'))).slice(0, 4);
+  } else {
+    // Garmin / Other
+    matchingAccs = allAccs.slice(0, 4);
+  }
+
+  if (matchingAccs.length === 0) {
+    matchingAccs = allAccs.slice(0, 4);
+  }
+
+  grid.innerHTML = matchingAccs.map(p => `
+    <div class="product-card group relative bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-3.5 transition flex flex-col justify-between shadow-md">
+      <div class="relative h-32 w-full bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2">
+        <span class="absolute top-2 right-2 bg-emerald-500/90 text-slate-950 text-[9px] font-black px-2 py-0.5 rounded-md flex items-center gap-1">
+          <i class="fas fa-check"></i> متوافق 100%
+        </span>
+        <a href="product.html?id=${encodeURIComponent(p.id)}">
+          <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition" onerror="this.src='assets/images/main_logo.jpg'">
+        </a>
+      </div>
+
+      <div class="space-y-1.5 flex-1 flex flex-col justify-between">
+        <div>
+          <div class="text-[10px] text-cyan-400 font-bold">${p.categoryName || 'ملحق معتمد'}</div>
+          <h4 class="text-xs font-bold text-white leading-snug line-clamp-2 min-h-[2rem]">
+            <a href="product.html?id=${encodeURIComponent(p.id)}" class="hover:text-cyan-300 transition">${p.name}</a>
+          </h4>
+        </div>
+
+        <div class="pt-2 border-t border-slate-800 flex items-center justify-between gap-2 mt-auto">
+          <div class="text-sm font-black text-white font-mono">${p.price.toLocaleString()} <span class="text-[10px] font-normal text-cyan-400 font-sans">ر.س</span></div>
+          <button onclick="addToCart('${p.id}')" class="p-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1" title="إضافة للسلة">
+            <i class="fas fa-cart-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ==========================================================
+// ❓ ADVANCED TOOLKIT: FAQ ACCORDION CONTROLLER
+// ==========================================================
+function toggleFaq(faqId) {
+  const content = document.getElementById(`faq-content-${faqId}`);
+  const icon = document.getElementById(`faq-icon-${faqId}`);
+  if (!content || !icon) return;
+
+  const isHidden = content.classList.contains("hidden");
+
+  // Close other FAQs
+  [1, 2, 3, 4, 5].forEach(id => {
+    const c = document.getElementById(`faq-content-${id}`);
+    const ic = document.getElementById(`faq-icon-${id}`);
+    if (c) c.classList.add("hidden");
+    if (ic) ic.style.transform = "rotate(0deg)";
+  });
+
+  if (isHidden) {
+    content.classList.remove("hidden");
+    icon.style.transform = "rotate(180deg)";
+  }
+}
+
+function initAdvancedFeatures() {
+  // Initialize compatibility tool on page load
+  const compatSelect = document.getElementById("compat-device-select");
+  if (compatSelect) {
+    updateCompatibilityUI(compatSelect.value || "Sku-5624-350");
+  }
+}
+
 
