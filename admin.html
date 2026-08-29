@@ -2271,7 +2271,7 @@ var DEFAULT_SECTIONS_META = [
 ];
 
 var currentThemeConfig = {
-  sectionsOrder: ['home', 'section-features', 'products', 'thuraya', 'garmin', 'b2b', 'showroom'],
+  sectionsOrder: ['home', 'products', 'section-features', 'thuraya', 'garmin', 'b2b', 'showroom'],
   sectionsVisible: {
     'home': true,
     'section-features': true,
@@ -2995,7 +2995,7 @@ function resetThemeBuilderConfig() {
   if (!confirm('هل تريد استعادة تصميم الموقع الافتراضي بالكامل؟')) return;
   localStorage.removeItem('barq_theme_config');
   currentThemeConfig = {
-    sectionsOrder: ['home', 'section-features', 'products', 'thuraya', 'garmin', 'b2b', 'showroom'],
+    sectionsOrder: ['home', 'products', 'section-features', 'thuraya', 'garmin', 'b2b', 'showroom'],
     sectionsVisible: {
       'home': true,
       'section-features': true,
