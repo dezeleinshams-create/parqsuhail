@@ -2,7 +2,7 @@
 
 > **الموقع الرسمي:** [https://www.barqsuhail.com/](https://www.barqsuhail.com/)  
 > **لوحة الإدارة:** [https://www.barqsuhail.com/admin.html](https://www.barqsuhail.com/admin.html)  
-> **متجر سلة الرسمي:** [https://salla.sa/barqsuhail](https://salla.sa/barqsuhail)  
+> **متجر سلة الرسمي:** [https://store.barqsuhail.com](https://store.barqsuhail.com)  
 > **الاعتماد والترخيص:** مرخص من **هيئة الاتصالات والفضاء وتقنية المعلومات (CST)** بالمملكة العربية السعودية.
 
 ---
