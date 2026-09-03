@@ -251,25 +251,16 @@ function updateThemeToggleUI(theme) {
 }
 
 // Get Products from localStorage or INITIAL_PRODUCTS
-const CURRENT_CATALOG_VERSION = "20260903_v6";
+const CURRENT_CATALOG_VERSION = "FORCE_REFRESH_1788399836";
+
+// Auto-purge all stale caches
+try {
+  localStorage.removeItem("barq_products");
+  localStorage.removeItem("barq_theme_config");
+} catch(e) {}
 
 function getProducts() {
-  const storedVersion = localStorage.getItem("barq_catalog_version");
-  if (storedVersion !== CURRENT_CATALOG_VERSION) {
-    localStorage.removeItem("barq_products");
-    localStorage.setItem("barq_catalog_version", CURRENT_CATALOG_VERSION);
-  }
-
-  const stored = localStorage.getItem("barq_products");
-  if (stored) {
-    try {
-      const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    } catch (e) {
-      console.error("Error reading stored products:", e);
-    }
-  }
-  return typeof INITIAL_PRODUCTS !== "undefined" ? INITIAL_PRODUCTS : [];
+  return (typeof INITIAL_PRODUCTS !== "undefined" && Array.isArray(INITIAL_PRODUCTS)) ? INITIAL_PRODUCTS : [];
 }
 
 // Update count badges on category pills
