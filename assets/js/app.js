@@ -550,10 +550,10 @@ function renderGridCard(p) {
             <a href="product.html?id=${encodeURIComponent(p.id)}" class="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs transition" title="صفحة المنتج">
               <i class="fas fa-arrow-up-right-from-square text-[11px]"></i>
             </a>
-            <button onclick="addToCart('${p.id}')" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold px-2.5 sm:px-3 py-1.5 rounded-xl text-xs flex items-center gap-1 shadow-md shadow-cyan-500/20 transition active:scale-95 shrink-0" title="إضافة للسلة">
-              <i class="fas fa-cart-plus text-[11px]"></i>
-              <span class="hidden sm:inline text-[11px]">سلة</span>
-            </button>
+            <a href="${p.sallaUrl || 'https://store.barqsuhail.com/search?q=' + encodeURIComponent(p.id)}" target="_blank" class="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black px-2.5 sm:px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-emerald-500/25 transition active:scale-95 shrink-0" title="الشراء والدفع عبر متجر سلة">
+              <i class="fas fa-shopping-bag text-[11px]"></i>
+              <span class="text-[11px] font-bold">شراء بسلة</span>
+            </a>
           </div>
         </div>
 
@@ -607,10 +607,10 @@ function renderListCard(p) {
           <button onclick="openProductModal('${p.id}')" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs transition" title="عرض التفاصيل">
             <i class="fas fa-eye"></i>
           </button>
-          <button onclick="addToCart('${p.id}')" class="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-cyan-500/20 transition active:scale-95">
-            <i class="fas fa-cart-plus"></i>
-            <span>إضافة للسلة</span>
-          </button>
+          <a href="${p.sallaUrl || 'https://store.barqsuhail.com/search?q=' + encodeURIComponent(p.id)}" target="_blank" class="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black px-2.5 sm:px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-emerald-500/25 transition active:scale-95 shrink-0" title="الشراء والدفع عبر متجر سلة">
+              <i class="fas fa-shopping-bag text-[11px]"></i>
+              <span class="text-[11px] font-bold">شراء بسلة</span>
+            </a>
         </div>
       </div>
 
@@ -1574,9 +1574,10 @@ function updateCompatibilityUI(deviceId) {
 
         <div class="pt-2 border-t border-slate-800 flex items-center justify-between gap-2 mt-auto">
           <div class="text-sm font-black text-white font-mono">${p.price.toLocaleString()} <span class="text-[10px] font-normal text-cyan-400 font-sans">ر.س</span></div>
-          <button onclick="addToCart('${p.id}')" class="p-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1" title="إضافة للسلة">
-            <i class="fas fa-cart-plus"></i>
-          </button>
+          <a href="${p.sallaUrl || 'https://store.barqsuhail.com/search?q=' + encodeURIComponent(p.id)}" target="_blank" class="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black px-2.5 sm:px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-emerald-500/25 transition active:scale-95 shrink-0" title="الشراء والدفع عبر متجر سلة">
+              <i class="fas fa-shopping-bag text-[11px]"></i>
+              <span class="text-[11px] font-bold">شراء بسلة</span>
+            </a>
         </div>
       </div>
     </div>
