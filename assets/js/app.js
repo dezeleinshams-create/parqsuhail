@@ -251,7 +251,7 @@ function updateThemeToggleUI(theme) {
 }
 
 // Get Products from localStorage or INITIAL_PRODUCTS
-const CURRENT_CATALOG_VERSION = "20260903_v3";
+const CURRENT_CATALOG_VERSION = "20260903_v4";
 
 function getProducts() {
   const storedVersion = localStorage.getItem("barq_catalog_version");
