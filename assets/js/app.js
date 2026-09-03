@@ -251,7 +251,15 @@ function updateThemeToggleUI(theme) {
 }
 
 // Get Products from localStorage or INITIAL_PRODUCTS
+const CURRENT_CATALOG_VERSION = "20260903_v3";
+
 function getProducts() {
+  const storedVersion = localStorage.getItem("barq_catalog_version");
+  if (storedVersion !== CURRENT_CATALOG_VERSION) {
+    localStorage.removeItem("barq_products");
+    localStorage.setItem("barq_catalog_version", CURRENT_CATALOG_VERSION);
+  }
+
   const stored = localStorage.getItem("barq_products");
   if (stored) {
     try {
