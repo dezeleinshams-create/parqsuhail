@@ -1,4 +1,4 @@
-// Barq Suhail Product Catalog Data - 100% Exact 1-to-1 Image Mapped
+// Barq Suhail Product Catalog Data - Direct Salla Checkout URLs
 var INITIAL_PRODUCTS = [
   {
     "id": "Sku-5624-350",
@@ -20,7 +20,8 @@ var INITIAL_PRODUCTS = [
       "شاشة LCD عريضة ملونة",
       "ريشة DTMF للتحكم"
     ],
-    "discount": "خصم 150 ر.س"
+    "discount": "خصم 150 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+آيكوم"
   },
   {
     "id": "Sku-5624-230",
@@ -42,7 +43,8 @@ var INITIAL_PRODUCTS = [
       "207 قنوات ذاكرة",
       "صناعة يابانية 100%"
     ],
-    "discount": "خصم 200 ر.س"
+    "discount": "خصم 200 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+آيكوم"
   },
   {
     "id": "Sku-10111-W",
@@ -64,7 +66,8 @@ var INITIAL_PRODUCTS = [
       "استقبال مزدوج متزامن V/U",
       "صناعة يابانية أصلية 100%"
     ],
-    "discount": "خصم 150 ر.س"
+    "discount": "خصم 150 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+آيكوم"
   },
   {
     "id": "Sku-10111-B",
@@ -86,7 +89,8 @@ var INITIAL_PRODUCTS = [
       "استقبال مزدوج متزامن V/U",
       "صناعة يابانية أصلية 100%"
     ],
-    "discount": "خصم 150 ر.س"
+    "discount": "خصم 150 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+آيكوم"
   },
   {
     "id": "Sku-82737-800",
@@ -107,7 +111,8 @@ var INITIAL_PRODUCTS = [
       "ثنائي التردد VHF/UHF",
       "خاصية Cross-band Repeater",
       "بطارية 3600mAh"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+TYT"
   },
   {
     "id": "Sku-82737-88",
@@ -128,7 +133,8 @@ var INITIAL_PRODUCTS = [
       "ثنائي التردد VHF/UHF",
       "خاصية Cross-band Repeater",
       "بطارية 3600mAh"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+TYT"
   },
   {
     "id": "Sku-15W",
@@ -149,7 +155,8 @@ var INITIAL_PRODUCTS = [
       "شحن Type-C سريع",
       "بطارية عملاقة تدوم طويلاً",
       "مدى اتصال مضاعف"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+TYT"
   },
   {
     "id": "Sku-46668-53",
@@ -170,7 +177,8 @@ var INITIAL_PRODUCTS = [
       "محمل بأحدث خرائط البر والمدن",
       "تنبيهات السرعة وساهر",
       "تحديثات مجانية"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قارمن+DriveSmart"
   },
   {
     "id": "Sku-46668-66",
@@ -192,7 +200,8 @@ var INITIAL_PRODUCTS = [
       "اتصال بلوتوث للمكالمات",
       "تحديثات Wi-Fi مباشرة"
     ],
-    "discount": "خصم 50 ر.س"
+    "discount": "خصم 50 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/668369891"
   },
   {
     "id": "Sku-46668-76",
@@ -214,7 +223,8 @@ var INITIAL_PRODUCTS = [
       "تنبيهات حركة المرور المباشرة",
       "أوامر صوتية وبلوتوث"
     ],
-    "discount": "خصم 200 ر.س"
+    "discount": "خصم 200 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1105170494"
   },
   {
     "id": "Sku-26656",
@@ -235,7 +245,8 @@ var INITIAL_PRODUCTS = [
       "128 قناة قابلة للبرمجة",
       "بطارية ليثيوم",
       "سعر اقتصادي"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+بوفنق"
   },
   {
     "id": "Sku-23721",
@@ -256,7 +267,8 @@ var INITIAL_PRODUCTS = [
       "صوت نقي وقوي",
       "بطارية طويلة الأمد",
       "هيكل متين"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=جهاز+موتورولا"
   },
   {
     "id": "Sku-14275",
@@ -278,7 +290,8 @@ var INITIAL_PRODUCTS = [
       "مقاوم للغبار والصدمات",
       "هوائي قابل للسحب"
     ],
-    "discount": "خصم 200 ر.س"
+    "discount": "خصم 200 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1518844976"
   },
   {
     "id": "Sku-81435",
@@ -300,7 +313,8 @@ var INITIAL_PRODUCTS = [
       "منفذ سماعة أذن 3.5mm",
       "سلك حلزوني مرن"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1302785156"
   },
   {
     "id": "Sku-53488-L",
@@ -321,7 +335,8 @@ var INITIAL_PRODUCTS = [
       "مقاوم للأحوال الجوية",
       "قاعدة توصيل قياسية",
       "للسيارات والشاحنات"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+تجاري"
   },
   {
     "id": "Sku-53488-S",
@@ -342,7 +357,8 @@ var INITIAL_PRODUCTS = [
       "مقاوم للرياح العالية",
       "سهل التركيب",
       "متعدد الأحجام"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+تجاري"
   },
   {
     "id": "Sku-99831-4DB",
@@ -363,7 +379,8 @@ var INITIAL_PRODUCTS = [
       "كونكترات PL-259 راكبة وجاهزة",
       "مرونة عالية وسهولة في التمديد",
       "نقل إشارة مستقر"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+ترام"
   },
   {
     "id": "Sku-99831-3DB",
@@ -384,7 +401,8 @@ var INITIAL_PRODUCTS = [
       "كونكترات PL-259 راكبة وجاهزة",
       "مرونة عالية وسهولة في التمديد",
       "نقل إشارة مستقر"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+ترام"
   },
   {
     "id": "Sku-99831-1DB",
@@ -405,7 +423,8 @@ var INITIAL_PRODUCTS = [
       "كونكترات PL-259 راكبة وجاهزة",
       "مرونة عالية وسهولة في التمديد",
       "نقل إشارة مستقر"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+ترام"
   },
   {
     "id": "Sku-27312-L",
@@ -426,7 +445,8 @@ var INITIAL_PRODUCTS = [
       "سوط فولاذي أسود عالي المرونة",
       "قاعدة ملف أسطوانية معزولة",
       "مثالي للمقناص والرحلات"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+لارسن"
   },
   {
     "id": "Sku-27312-S",
@@ -447,7 +467,8 @@ var INITIAL_PRODUCTS = [
       "سوط فولاذي أسود عالي المرونة",
       "قاعدة ملف أسطوانية معزولة",
       "مثالي للمقناص والرحلات"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+لارسن"
   },
   {
     "id": "Sku-90780-3DB",
@@ -468,7 +489,8 @@ var INITIAL_PRODUCTS = [
       "كسب 3 dBi",
       "مواد متينة للطقس القاسي",
       "أداء موثوق"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+أبعد"
   },
   {
     "id": "Sku-90780-R",
@@ -489,7 +511,8 @@ var INITIAL_PRODUCTS = [
       "مرونة عالية بالتركيب",
       "مدى واسع",
       "مقاوم للاهتزاز"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+أبعد"
   },
   {
     "id": "Sku-25737",
@@ -511,7 +534,8 @@ var INITIAL_PRODUCTS = [
       "حلقة مطابقة مركزية لضبط الراجع",
       "طول 1.22 متر ستانلس ستيل"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/795492524"
   },
   {
     "id": "Sku-6558",
@@ -532,7 +556,8 @@ var INITIAL_PRODUCTS = [
       "وصلة واحدة سهلة التركيب",
       "أداء VHF ممتاز",
       "مواد ألومنيوم عالية الجودة"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+سيريو"
   },
   {
     "id": "Sku-7867",
@@ -553,7 +578,8 @@ var INITIAL_PRODUCTS = [
       "تصميم وصلتين عالي الكسب",
       "ملف تحميل أوسط لضبط الإشارة",
       "مرونة وثبات على السرعات العالية"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+سيريو"
   },
   {
     "id": "768687",
@@ -575,7 +601,8 @@ var INITIAL_PRODUCTS = [
       "أعلى كسب إشارة لفئة الأرايل المتحركة",
       "مقاوم للرياح والحرارة العالية"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/290602299"
   },
   {
     "id": "Sku-61831",
@@ -597,7 +624,8 @@ var INITIAL_PRODUCTS = [
       "أدنى نسبة راجع VSWR",
       "كسب إرسال قوي واستثنائي"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1871119715"
   },
   {
     "id": "Sku-19085",
@@ -619,7 +647,8 @@ var INITIAL_PRODUCTS = [
       "سوستة وسطى لامتصاص الصدمات",
       "كسب إشارة عالي 3.0/5.5dBi"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/807280648"
   },
   {
     "id": "Sku-19022",
@@ -641,7 +670,8 @@ var INITIAL_PRODUCTS = [
       "سوستة وسطى لامتصاص الصدمات",
       "كسب إشارة عالي 3.0/5.5dBi"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/318965154"
   },
   {
     "id": "Sku-19253",
@@ -663,7 +693,8 @@ var INITIAL_PRODUCTS = [
       "سوستة وسطى لامتصاص الصدمات",
       "كسب إشارة عالي 3.0/5.5dBi"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/887876149"
   },
   {
     "id": "Sku-57287",
@@ -685,7 +716,8 @@ var INITIAL_PRODUCTS = [
       "كسب إشارة عالي 2.15/3.2dBi",
       "كونكتر BNC / SMA"
     ],
-    "discount": "خصم 40 ر.س"
+    "discount": "خصم 40 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1030704550"
   },
   {
     "id": "Sku-7592",
@@ -706,7 +738,8 @@ var INITIAL_PRODUCTS = [
       "دقة عالية جداً",
       "مواد ممتازة",
       "للاستخدام الاحترافي"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+مطاري"
   },
   {
     "id": "Sku-4566",
@@ -727,7 +760,8 @@ var INITIAL_PRODUCTS = [
       "تردد النطاق البحري VHF Marine",
       "يشمل قاعدة التعديل والكيبل",
       "فيبر جلاس أبيض عازل"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/p/90066378"
   },
   {
     "id": "Sku-4567",
@@ -748,7 +782,8 @@ var INITIAL_PRODUCTS = [
       "سعر اقتصادي",
       "تحسين ملحوظ للإشارة",
       "سهل التركيب"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+يدوي"
   },
   {
     "id": "0006-5",
@@ -770,7 +805,8 @@ var INITIAL_PRODUCTS = [
       "كسب 2.15dBi",
       "طول 40 سم مثالي"
     ],
-    "discount": "خصم 25 ر.س"
+    "discount": "خصم 25 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/532676921"
   },
   {
     "id": "0006-4",
@@ -792,7 +828,8 @@ var INITIAL_PRODUCTS = [
       "تحسين كبير في المدى والاستقبال",
       "خفيف وعملي"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/100636735"
   },
   {
     "id": "0006-7",
@@ -813,7 +850,8 @@ var INITIAL_PRODUCTS = [
       "ثنائي التردد دبل باند VHF/UHF",
       "سوستة وسطى لامتصاص الصدمات",
       "كسب إشارة عالي 3.0/5.5dBi"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+كومت"
   },
   {
     "id": "2533",
@@ -834,7 +872,8 @@ var INITIAL_PRODUCTS = [
       "مواد متينة",
       "مناسب لجميع الأجهزة",
       "سعر مناسب"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=هوائي+دار"
   },
   {
     "id": "Sku-35272",
@@ -856,7 +895,8 @@ var INITIAL_PRODUCTS = [
       "طول 4 أمتار كامل",
       "كونكتر PL-259 أصلي"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1842515942"
   },
   {
     "id": "Sku-35274",
@@ -878,7 +918,8 @@ var INITIAL_PRODUCTS = [
       "طول 5 أمتار كامل",
       "رأس نحيف لسهولة التمديد"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/724350481"
   },
   {
     "id": "Sku-35277",
@@ -900,7 +941,8 @@ var INITIAL_PRODUCTS = [
       "مرونة عالية وسهولة في التمديد",
       "نقل إشارة مستقر"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/908255364"
   },
   {
     "id": "Sku-25321",
@@ -922,7 +964,8 @@ var INITIAL_PRODUCTS = [
       "كونكترات أصلية محكمة",
       "يتيح إخفاء جسم الجهاز"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/793954932"
   },
   {
     "id": "Sku-25358",
@@ -944,7 +987,8 @@ var INITIAL_PRODUCTS = [
       "سلك معزول عالي الجودة",
       "توصيل مباشر بجهاز اللاسلكي"
     ],
-    "discount": "خصم 40 ر.س"
+    "discount": "خصم 40 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/859938915"
   },
   {
     "id": "Sku-25326",
@@ -965,7 +1009,8 @@ var INITIAL_PRODUCTS = [
       "دقة عالية",
       "توصيل محكم",
       "للفنيين المتخصصين"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=سلك+بلمتر"
   },
   {
     "id": "Sku-8536-B",
@@ -987,7 +1032,8 @@ var INITIAL_PRODUCTS = [
       "كلبسات توصيل جاهزة",
       "طول 3 أمتار"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1551474551"
   },
   {
     "id": "Sku-8536-L",
@@ -1008,7 +1054,8 @@ var INITIAL_PRODUCTS = [
       "فيوزات أمان مزدوجة 20A",
       "كلبسات توصيل جاهزة",
       "طول 3 أمتار"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=سلك+كهرباء"
   },
   {
     "id": "Sku-56576",
@@ -1030,7 +1077,8 @@ var INITIAL_PRODUCTS = [
       "صوت نقي خالي من التشويش",
       "متوافقة مع آيكوم 2300 و 2730"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1006504682"
   },
   {
     "id": "Sku-56596",
@@ -1051,7 +1099,8 @@ var INITIAL_PRODUCTS = [
       "جودة صوت عالية",
       "متوافقة مع أجهزة كنوود",
       "عمر طويل"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=ريشة+كنوود"
   },
   {
     "id": "Sku-56595",
@@ -1073,7 +1122,8 @@ var INITIAL_PRODUCTS = [
       "سلك سميك مقوى",
       "صوت قوي وواضح"
     ],
-    "discount": "خصم 70 ر.س"
+    "discount": "خصم 70 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/813732110"
   },
   {
     "id": "Sku-21943",
@@ -1095,7 +1145,8 @@ var INITIAL_PRODUCTS = [
       "صوت نقي خالي من التشويش",
       "متوافقة مع آيكوم 2300 و 2730"
     ],
-    "discount": "خصم 70 ر.س"
+    "discount": "خصم 70 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/90579390"
   },
   {
     "id": "Sku-45848",
@@ -1117,7 +1168,8 @@ var INITIAL_PRODUCTS = [
       "كيبل RG58 أصلي 4م",
       "حماية لبوية سقف السيارة"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/811930487"
   },
   {
     "id": "Sku-45847",
@@ -1138,7 +1190,8 @@ var INITIAL_PRODUCTS = [
       "كونكترات PL-259 راكبة وجاهزة",
       "مرونة عالية وسهولة في التمديد",
       "نقل إشارة مستقر"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قاعدة+مغناطيس"
   },
   {
     "id": "Sku-45846",
@@ -1159,7 +1212,8 @@ var INITIAL_PRODUCTS = [
       "سعر اقتصادي",
       "مقاومة جيدة للطقس",
       "سهلة التركيب"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قاعدة+مغناطيس"
   },
   {
     "id": "Sku-276226",
@@ -1181,7 +1235,8 @@ var INITIAL_PRODUCTS = [
       "تثبيت صخري على السلة",
       "مقاومة كاملة للاهتزازات"
     ],
-    "discount": "خصم 10 ر.س"
+    "discount": "خصم 10 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1050803828"
   },
   {
     "id": "Sku-276426",
@@ -1202,7 +1257,8 @@ var INITIAL_PRODUCTS = [
       "قابلة لضبط الزاوية 360°",
       "ستانلس ستيل أسود متين",
       "حماية كاملة لجسم السيارة"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قاعدة+شاص"
   },
   {
     "id": "Sku-227626",
@@ -1224,7 +1280,8 @@ var INITIAL_PRODUCTS = [
       "مسامير ألين قفل محكمة",
       "متوافقة مع جميع السيارات"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/489082435"
   },
   {
     "id": "Sku-3279-S",
@@ -1245,7 +1302,8 @@ var INITIAL_PRODUCTS = [
       "غطاء حماية مطاطي للكونكتر",
       "تثبيت قوي على المزراب",
       "سن توصيل قياسي UHF"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قاعدة+شاص"
   },
   {
     "id": "Sku-3279-T",
@@ -1266,7 +1324,8 @@ var INITIAL_PRODUCTS = [
       "غطاء حماية مطاطي للكونكتر",
       "تثبيت قوي على المزراب",
       "سن توصيل قياسي UHF"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قاعدة+ترام"
   },
   {
     "id": "Sku-55087",
@@ -1288,7 +1347,8 @@ var INITIAL_PRODUCTS = [
       "مرن الاستخدام",
       "لا يخدش السطح"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/832210555"
   },
   {
     "id": "Sku-99244",
@@ -1310,7 +1370,8 @@ var INITIAL_PRODUCTS = [
       "هيكل معدني أسود صلب",
       "مقبض قفل جانبي سريع"
     ],
-    "discount": "خصم 30 ر.س"
+    "discount": "خصم 30 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/134113773"
   },
   {
     "id": "Sku-949284",
@@ -1331,7 +1392,8 @@ var INITIAL_PRODUCTS = [
       "دوران 360 درجة",
       "مناسب للجوال والقارمن",
       "سهل الفك والتركيب"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=كرسي+جهاز"
   },
   {
     "id": "Sku-403210",
@@ -1353,7 +1415,8 @@ var INITIAL_PRODUCTS = [
       "مشبك إمساك سريع بنقرة واحدة",
       "ثبات صخري في الطرق الوعرة"
     ],
-    "discount": "خصم 65 ر.س"
+    "discount": "خصم 65 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1503673950"
   },
   {
     "id": "Sku-410320",
@@ -1374,7 +1437,8 @@ var INITIAL_PRODUCTS = [
       "حلقة MagSafe نيوديميوم قوية",
       "ذراع ألومنيوم قابل للطي",
       "دوران كامل 360 درجة"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قاعدة+جوال"
   },
   {
     "id": "Sku-140320",
@@ -1396,7 +1460,8 @@ var INITIAL_PRODUCTS = [
       "ذراع ألومنيوم قابل للطي",
       "دوران كامل 360 درجة"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1317965600"
   },
   {
     "id": "Sku-40320",
@@ -1417,7 +1482,8 @@ var INITIAL_PRODUCTS = [
       "تثبيت دائم",
       "مناسب للداشبورد",
       "أنيق وخفيف"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قاعدة+جوال"
   },
   {
     "id": "4564",
@@ -1438,7 +1504,8 @@ var INITIAL_PRODUCTS = [
       "مقبض قابل للتعديل",
       "يناسب جميع أحجام الجوال",
       "تصميم أنيق"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قاعدة+جوال"
   },
   {
     "id": "Sku-919284",
@@ -1459,7 +1526,8 @@ var INITIAL_PRODUCTS = [
       "شحن سريع وآمن",
       "مؤشر شحن",
       "أصلي لأجهزة TYT"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=شاحن+ولاعة"
   },
   {
     "id": "Sku-49051-T",
@@ -1480,7 +1548,8 @@ var INITIAL_PRODUCTS = [
       "مخرج تيار مستقر وآمن",
       "فيوز حماية مدمج",
       "كابل طويل مرن"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=شاحن+ثريا"
   },
   {
     "id": "Sku-49051-G",
@@ -1502,7 +1571,8 @@ var INITIAL_PRODUCTS = [
       "فيوز حماية مدمج",
       "كابل طويل مرن"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/418643830"
   },
   {
     "id": "Sku-49051-TY",
@@ -1523,7 +1593,8 @@ var INITIAL_PRODUCTS = [
       "مخرج تيار مستقر وآمن",
       "فيوز حماية مدمج",
       "كابل طويل مرن"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=شاحن+TYT"
   },
   {
     "id": "Sku-79118-25",
@@ -1544,7 +1615,8 @@ var INITIAL_PRODUCTS = [
       "قدرة قصوى 35 أمبير بدون تشويش",
       "عدادان لمراقبة الفولت والأمبير",
       "مخرج ولاعة سيارة مدمج"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=محول+كهرباء"
   },
   {
     "id": "Sku-79118-35",
@@ -1566,7 +1638,8 @@ var INITIAL_PRODUCTS = [
       "عدادان لمراقبة الفولت والأمبير",
       "مخرج ولاعة سيارة مدمج"
     ],
-    "discount": "خصم 200 ر.س"
+    "discount": "خصم 200 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1914466962"
   },
   {
     "id": "Sku-24370-4",
@@ -1588,7 +1661,8 @@ var INITIAL_PRODUCTS = [
       "تحمل طاقة 200W",
       "تغطية مسافات قياسية وشاسعة"
     ],
-    "discount": "خصم 150 ر.س"
+    "discount": "خصم 150 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/940293092"
   },
   {
     "id": "Sku-24370-3",
@@ -1610,7 +1684,8 @@ var INITIAL_PRODUCTS = [
       "فيبر جلاس سميك مقاوم للعواصف",
       "صناعة يابانية 100%"
     ],
-    "discount": "خصم 100 ر.س"
+    "discount": "خصم 100 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/504809471"
   },
   {
     "id": "Sku-24370",
@@ -1632,7 +1707,8 @@ var INITIAL_PRODUCTS = [
       "فقد منخفض جداً",
       "تردد VHF/UHF"
     ],
-    "discount": "خصم 100 ر.س"
+    "discount": "خصم 100 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/504809471"
   },
   {
     "id": "Sku-891350",
@@ -1654,7 +1730,8 @@ var INITIAL_PRODUCTS = [
       "توصيل محكم مقاوم للتآكل",
       "متوافقة مع PL259 و SO239 و BNC"
     ],
-    "discount": "خصم 10 ر.س"
+    "discount": "خصم 10 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/2027474596"
   },
   {
     "id": "Sku-893450",
@@ -1676,7 +1753,8 @@ var INITIAL_PRODUCTS = [
       "توصيل محكم مقاوم للتآكل",
       "متوافقة مع PL259 و SO239 و BNC"
     ],
-    "discount": "خصم 10 ر.س"
+    "discount": "خصم 10 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/1540203774"
   },
   {
     "id": "Sku-789350",
@@ -1698,7 +1776,8 @@ var INITIAL_PRODUCTS = [
       "توصيل محكم مقاوم للتآكل",
       "متوافقة مع PL259 و SO239 و BNC"
     ],
-    "discount": "خصم 10 ر.س"
+    "discount": "خصم 10 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/185830694"
   },
   {
     "id": "Sku-95472",
@@ -1720,7 +1799,8 @@ var INITIAL_PRODUCTS = [
       "تثبيت محكم للريشة",
       "شكل أنيق ومقاوم للتآكل"
     ],
-    "discount": "خصم 5 ر.س"
+    "discount": "خصم 5 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/463489351"
   },
   {
     "id": "Sku-71896",
@@ -1741,7 +1821,8 @@ var INITIAL_PRODUCTS = [
       "مايكروفون واضح",
       "زر PTT يدوي",
       "متوافقة مع معظم الأجهزة"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=سماعة+أذن"
   },
   {
     "id": "Sku-93317",
@@ -1763,7 +1844,8 @@ var INITIAL_PRODUCTS = [
       "واجهة شفافة للرد السريع",
       "حماية من الصدمات والرمال"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/489604003"
   },
   {
     "id": "4568",
@@ -1784,7 +1866,8 @@ var INITIAL_PRODUCTS = [
       "بطارية تدوم حتى 6 ساعات تحدث",
       "مقاوم للغبار والصدمات",
       "هوائي قابل للسحب"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=حافظة+جهاز"
   },
   {
     "id": "Sku-72474-F",
@@ -1805,7 +1888,8 @@ var INITIAL_PRODUCTS = [
       "للأجهزة الثابتة",
       "تبريد فعال",
       "سهل التركيب"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قطعة+غيار"
   },
   {
     "id": "Sku-72474-P",
@@ -1826,7 +1910,8 @@ var INITIAL_PRODUCTS = [
       "متوافق مع عدة موديلات",
       "تركيب سهل",
       "متانة عالية"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=قطعة+غيار"
   },
   {
     "id": "0002",
@@ -1848,7 +1933,8 @@ var INITIAL_PRODUCTS = [
       "خلايا يابانية عالية الكفاءة",
       "متوافقة مع أجهزة TYT"
     ],
-    "discount": "خصم 20 ر.س"
+    "discount": "خصم 20 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/2142141418"
   },
   {
     "id": "0001",
@@ -1869,7 +1955,8 @@ var INITIAL_PRODUCTS = [
       "توصيل ملحقات خارجية",
       "مواد متينة",
       "سهل الاستخدام"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=وصلة+TYT"
   },
   {
     "id": "Sku-26695",
@@ -1889,7 +1976,8 @@ var INITIAL_PRODUCTS = [
       "تمديد صلاحية الشريحة",
       "شحن فوري برمز الكشط",
       "كود معتمد ورسمي"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/p/1455643982"
   },
   {
     "id": "Sku-66044",
@@ -1911,7 +1999,8 @@ var INITIAL_PRODUCTS = [
       "تفعيل فوري برقم هوية العميل",
       "متوافقة مع جميع أجهزة الثريا"
     ],
-    "discount": "خصم 60 ر.س"
+    "discount": "خصم 60 ر.س",
+    "sallaUrl": "https://store.barqsuhail.com/p/2042220707"
   },
   {
     "id": "Sku-2675",
@@ -1932,7 +2021,8 @@ var INITIAL_PRODUCTS = [
       "خرائط تفصيلية بخطوط الارتفاعات",
       "تنفيذ بالمعرض أو الذاكرة",
       "ضمان التحديث"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=تحديث+خرائط"
   },
   {
     "id": "Sku-14300",
@@ -1953,7 +2043,8 @@ var INITIAL_PRODUCTS = [
       "أدوات احترافية",
       "فحص عام للجهاز",
       "تنفيذ فوري بالمعرض"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=خدمة+تنظيف"
   },
   {
     "id": "Sku-46030",
@@ -1974,6 +2065,7 @@ var INITIAL_PRODUCTS = [
       "تمديد في السيارة",
       "اختبار الأداء",
       "ضمان على التركيب"
-    ]
+    ],
+    "sallaUrl": "https://store.barqsuhail.com/search?q=خدمة+تركيب"
   }
 ];
