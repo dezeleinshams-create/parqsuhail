@@ -222,6 +222,9 @@
       <button onclick="exportJSON()" style="display: flex; align-items: center; gap: 6px; background: #1e293b; color: #cbd5e1; border: none; border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer;">
         <i class="fas fa-download"></i> تصدير JSON
       </button>
+            <button id="sync-live-btn" onclick="syncLiveCatalog(false)" style="display: flex; align-items: center; gap: 6px; background: #1e293b; color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer;" title="مزامنة وسحب أحدث بيانات الموقع الحي">
+        <i class="fas fa-arrows-rotate"></i> مزامنة البيانات
+      </button>
       <button id="github-publish-btn" onclick="publishToGitHub(false)" style="display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #065f46, #10b981); color: #fff; border: none; border-radius: 10px; padding: 8px 16px; font-size: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(52,211,153,0.25);" title="نشر التغييرات على الموقع الحي فوراً">
         <i class="fas fa-cloud-arrow-up"></i> نشر على الموقع
       </button>
@@ -694,6 +697,37 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- DATA LAYER -->
 <script src="assets/js/data.js?v=1788651660"></script>
 <script>
+
+// ── Global Multi-User Storage Shield & Auto-Purge ────────────
+(function autoPurgeStaleStorage() {
+  try {
+    var REQUIRED_VERSION = '20260906_V3_RESTORED';
+    var curVer = localStorage.getItem('barq_catalog_synced_version');
+    var rawProds = localStorage.getItem('barq_products');
+    var shouldPurge = false;
+
+    if (rawProds) {
+      try {
+        var parsed = JSON.parse(rawProds);
+        if (Array.isArray(parsed)) {
+          // If any product has hero_banner or data: base64 or corrupted chars
+          shouldPurge = parsed.some(function(p) {
+            return !p || (p.image && (p.image.indexOf('hero_banner_1_refined.jpg') !== -1 || p.image.indexOf('data:') === 0))
+                      || (p.name && (p.name.indexOf('╪') !== -1 || p.name.indexOf('┘') !== -1));
+          });
+        }
+      } catch(e) { shouldPurge = true; }
+    }
+
+    if (curVer !== REQUIRED_VERSION || shouldPurge) {
+      console.log('⚡ Auto-purging stale/corrupted localStorage for clean multi-user sync...');
+      localStorage.removeItem('barq_products');
+      localStorage.removeItem('barq_unpublished');
+      localStorage.setItem('barq_catalog_synced_version', REQUIRED_VERSION);
+    }
+  } catch(e) {}
+})();
+
 // ── Cryptographic SHA-256 Utility ────────────────────────────
 async function computeSHA256(message) {
   var msgBuffer = new TextEncoder().encode(message);
@@ -2881,9 +2915,23 @@ var DEFAULT_INVENTORY_PRODUCTS = [
     if (existing) {
       try { parsed = JSON.parse(existing); } catch(e) {}
     }
+    var isCorrupted = false;
+    if (parsed && Array.isArray(parsed)) {
+      isCorrupted = parsed.some(function(item) {
+        return !item || (item.image && (item.image.indexOf('hero_banner_1_refined.jpg') !== -1 || item.image.indexOf('data:') === 0))
+                  || (item.name && (item.name.indexOf('╪') !== -1 || item.name.indexOf('┘') !== -1));
+      });
+    }
+    if (isCorrupted) {
+      localStorage.removeItem('barq_products');
+      localStorage.removeItem('barq_unpublished');
+      parsed = null;
+    }
     if (!parsed || !Array.isArray(parsed) || parsed.length === 0) {
-      if (typeof DEFAULT_INVENTORY_PRODUCTS !== 'undefined' && Array.isArray(DEFAULT_INVENTORY_PRODUCTS) && DEFAULT_INVENTORY_PRODUCTS.length > 0) {
-        localStorage.setItem('barq_products', JSON.stringify(DEFAULT_INVENTORY_PRODUCTS));
+      var master = (typeof INVENTORY_PRODUCTS !== 'undefined' && Array.isArray(INVENTORY_PRODUCTS) && INVENTORY_PRODUCTS.length > 0) ? INVENTORY_PRODUCTS :
+                   (typeof DEFAULT_INVENTORY_PRODUCTS !== 'undefined' && Array.isArray(DEFAULT_INVENTORY_PRODUCTS) && DEFAULT_INVENTORY_PRODUCTS.length > 0) ? DEFAULT_INVENTORY_PRODUCTS : [];
+      if (master.length > 0) {
+        localStorage.setItem('barq_products', JSON.stringify(master));
       }
     }
   } catch(e) {}
@@ -3024,6 +3072,7 @@ function checkAuth() {
       if (appWrapper) appWrapper.style.display = 'block';
       applyUserPermissions();
       loadData();
+      syncLiveCatalog(true);
       return;
     } catch(e) {}
   }
@@ -3842,10 +3891,58 @@ function getMasterCatalog() {
   return JSON.parse(JSON.stringify(src));
 }
 
+
+// ── Multi-User Live Catalog Sync ────────────────────────────
+async function syncLiveCatalog(silent) {
+  var syncBtn = document.getElementById('sync-live-btn');
+  if (syncBtn) {
+    syncBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري المزامنة...';
+    syncBtn.disabled = true;
+  }
+  try {
+    var res = await fetch('assets/js/data.js?t=' + Date.now(), { cache: 'no-store' });
+    if (res.ok) {
+      var text = await res.text();
+      var m = text.match(/var INITIAL_PRODUCTS\s*=\s*(\[[\s\S]*?\]);\s*(?:var INVENTORY_PRODUCTS|var THEME_CONFIG)/);
+      if (m) {
+        var liveProds = JSON.parse(m[1]);
+        if (Array.isArray(liveProds) && liveProds.length > 0) {
+          var hasUnpublished = localStorage.getItem('barq_unpublished') === '1';
+          if (!hasUnpublished) {
+            storeProducts = liveProds;
+            saveToStorage(false);
+            renderProductsTable();
+            renderStats();
+            updateBadge();
+            if (!silent) showToast('🟢 تم مزامنة أحدث المنتجات من السيرفر بنجاح (' + liveProds.length + ' صنف)');
+            if (syncBtn) { syncBtn.innerHTML = '<i class="fas fa-arrows-rotate"></i> مزامنة البيانات'; syncBtn.disabled = false; }
+            return;
+          } else {
+            if (!silent) showToast('⚠️ لديك تعديلات غير منشورة محلياً. يرجى النشر أولاً أو تجاهلها.');
+          }
+        }
+      }
+    }
+  } catch(e) {
+    console.warn('Sync live failed:', e);
+  }
+  if (syncBtn) { syncBtn.innerHTML = '<i class="fas fa-arrows-rotate"></i> مزامنة البيانات'; syncBtn.disabled = false; }
+  if (!silent) showToast('ℹ️ الكتالوج المحلي محدث بالفعل ومتطابق مع السيرفر.');
+}
+
 function loadData() {
   storeProducts = [];
 
   // ALWAYS start from the full embedded master catalog (92 products guaranteed)
+  // Anti-Corruption Guard: Ensure no item is ever published with banner images or base64
+  storeProducts.forEach(function(p) {
+    if (!p.image || p.image.indexOf('hero_banner_1_refined.jpg') !== -1 || p.image.indexOf('data:') === 0) {
+      var mCatalog = getMasterCatalog();
+      var authItem = mCatalog.find(function(m) { return m.id === p.id; });
+      if (authItem && authItem.image) p.image = authItem.image;
+    }
+  });
+
   var master = getMasterCatalog();
 
   // Collect any saved user edits / additions from localStorage
@@ -3882,11 +3979,15 @@ function loadData() {
     }
   }
 
-  // Always start with master, apply edits on top
+  // Always start with master, apply edits on top with Image Protection Guard
   storeProducts = master.map(function(masterItem) {
-    return savedEdits[masterItem.id]
-      ? Object.assign({}, masterItem, savedEdits[masterItem.id])
-      : masterItem;
+    if (!savedEdits[masterItem.id]) return masterItem;
+    var edited = Object.assign({}, masterItem, savedEdits[masterItem.id]);
+    // GUARANTEE: Never let savedEdits overwrite authentic product image with hero_banner or data:
+    if (edited.image && (edited.image.indexOf('hero_banner_1_refined.jpg') !== -1 || edited.image.indexOf('data:') === 0)) {
+      edited.image = masterItem.image;
+    }
+    return edited;
   });
 
   // Append any user-added products that aren't in master
