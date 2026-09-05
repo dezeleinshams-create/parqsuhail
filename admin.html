@@ -128,6 +128,14 @@
         </div>
       </div>
 
+      
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 2px; margin-bottom: 2px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #cbd5e1; font-size: 12px; font-weight: 600; user-select: none;">
+          <input type="checkbox" id="login-remember" checked style="width: 16px; height: 16px; accent-color: #00D2FF; cursor: pointer;">
+          <span>تذكر تسجيل دخولي دائماً على هذا الجهاز</span>
+        </label>
+      </div>
+
       <div id="login-error" style="display: none; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #f87171; font-size: 11px; font-weight: 700; padding: 8px 12px; border-radius: 8px; text-align: center;">
         ❌ اسم المستخدم أو كلمة المرور غير صحيحة!
       </div>
@@ -3044,40 +3052,67 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 function initUsersDatabase() {
-  adminUsersList = [
-    {
-      id: 'usr-master',
-      username: 'admin',
-      fullname: 'المسؤول العام',
-      role: 'superadmin',
-      passwordHash: MASTER_ADMIN_HASH,
-      createdAt: '2026-08-24'
-    }
-  ];
+  var defaultAdmin = {
+    id: 'usr-master',
+    username: 'admin',
+    fullname: 'المسؤول العام',
+    role: 'superadmin',
+    passwordHash: MASTER_ADMIN_HASH,
+    createdAt: '2026-08-24'
+  };
+  var saved = localStorage.getItem('barq_admin_users');
+  if (saved) {
+    try {
+      var p = JSON.parse(saved);
+      if (Array.isArray(p) && p.length > 0) {
+        adminUsersList = p;
+        return;
+      }
+    } catch(e) {}
+  }
+  adminUsersList = [defaultAdmin];
   localStorage.setItem('barq_admin_users', JSON.stringify(adminUsersList));
 }
 
 function checkAuth() {
-  // Clear any legacy persistent login from localStorage for security
-  localStorage.removeItem('barq_logged_user');
-
-  var sessionUser = sessionStorage.getItem('barq_logged_session');
   var loginOverlay = document.getElementById('login-overlay');
   var appWrapper = document.getElementById('admin-app-wrapper');
 
-  if (sessionUser) {
+  // 1. Check Persistent Login (Remember Me) from localStorage first
+  var persistentRaw = localStorage.getItem('barq_persistent_auth');
+  var userToAuth = null;
+
+  if (persistentRaw) {
     try {
-      currentUser = JSON.parse(sessionUser);
-      if (loginOverlay) loginOverlay.style.display = 'none';
-      if (appWrapper) appWrapper.style.display = 'block';
-      applyUserPermissions();
-      loadData();
-      syncLiveCatalog(true);
-      return;
+      var pData = JSON.parse(persistentRaw);
+      if (pData && pData.user) {
+        userToAuth = pData.user;
+      }
     } catch(e) {}
   }
 
-  // Not authenticated -> Lock down admin panel
+  // 2. Fallback to sessionStorage if persistent auth is not present
+  if (!userToAuth) {
+    var sessionRaw = sessionStorage.getItem('barq_logged_session');
+    if (sessionRaw) {
+      try {
+        userToAuth = JSON.parse(sessionRaw);
+      } catch(e) {}
+    }
+  }
+
+  // 3. If authenticated user found -> Show Dashboard smoothly
+  if (userToAuth) {
+    currentUser = userToAuth;
+    if (loginOverlay) loginOverlay.style.display = 'none';
+    if (appWrapper) appWrapper.style.display = 'block';
+    applyUserPermissions();
+    loadData();
+    syncLiveCatalog(true);
+    return;
+  }
+
+  // Not authenticated -> Show Login screen
   if (appWrapper) appWrapper.style.display = 'none';
   if (loginOverlay) loginOverlay.style.display = 'flex';
 }
@@ -3086,6 +3121,7 @@ async function handleLoginSubmit(e) {
   e.preventDefault();
   var u = (document.getElementById('login-username').value || '').trim().toLowerCase();
   var p = (document.getElementById('login-password').value || '').trim();
+  var rememberMe = document.getElementById('login-remember') ? document.getElementById('login-remember').checked : true;
   var err = document.getElementById('login-error');
   var loginOverlay = document.getElementById('login-overlay');
   var appWrapper = document.getElementById('admin-app-wrapper');
@@ -3109,15 +3145,28 @@ async function handleLoginSubmit(e) {
     };
 
     currentUser = authenticatedUser;
+    
+    // Store in sessionStorage
     sessionStorage.setItem('barq_logged_session', JSON.stringify(authenticatedUser));
-    localStorage.removeItem('barq_logged_user'); // never persist permanently across browser reopens
+
+    // If Remember Me -> Persist permanently in localStorage
+    if (rememberMe) {
+      localStorage.setItem('barq_persistent_auth', JSON.stringify({
+        user: authenticatedUser,
+        token: enteredHash,
+        loginAt: new Date().toISOString()
+      }));
+    } else {
+      localStorage.removeItem('barq_persistent_auth');
+    }
 
     if (loginOverlay) loginOverlay.style.display = 'none';
     if (appWrapper) appWrapper.style.display = 'block';
 
     applyUserPermissions();
     loadData();
-    showToast('👋 مرحباً بك ' + (authenticatedUser.fullname || authenticatedUser.username) + '! تم تسجيل الدخول بنجاح');
+    syncLiveCatalog(true);
+    showToast('👋 مرحباً بك ' + (authenticatedUser.fullname || authenticatedUser.username) + '! تم تسجيل الدخول وتثبيت الجلسة بنجاح');
   } else {
     if (err) {
       err.style.display = 'block';
@@ -3127,9 +3176,9 @@ async function handleLoginSubmit(e) {
 }
 
 function handleLogout() {
-  if (!confirm('هل تريد تسجيل الخروج من لوحة التحكم؟')) return;
+  if (!confirm('هل تريد بالتأكيد تسجيل الخروج من لوحة التحكم؟')) return;
   sessionStorage.removeItem('barq_logged_session');
-  localStorage.removeItem('barq_logged_user');
+  localStorage.removeItem('barq_persistent_auth');
   window.location.reload();
 }
 
