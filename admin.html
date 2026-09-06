@@ -251,7 +251,7 @@
     <div id="tab-products">
       <!-- Filter Bar -->
       <div class="glass-card" style="padding: 16px; margin-bottom: 20px;">
-        <div style="display: grid; grid-template-columns: 1fr 180px 180px; gap: 12px;">
+        <div style="display: grid; grid-template-columns: 1fr 160px 150px 170px; gap: 12px;">
           <div style="position: relative;">
             <i class="fas fa-search" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 13px;"></i>
             <input type="text" id="search-inp" oninput="renderProductsTable()" class="admin-input" style="padding-right: 38px;" placeholder="ابحث باسم الصنف، أو SKU، أو الموديل...">
@@ -265,6 +265,11 @@
             <option value="cards">📶 الشرائح والرصيد</option>
             <option value="services">🛠️ الخدمات البرمجية</option>
           </select>
+          <select id="visibility-filter" onchange="renderProductsTable()" class="admin-input">
+            <option value="all">كل الحالات (ظاهر ومخفي)</option>
+            <option value="visible">👁️ الظاهرة فقط</option>
+            <option value="hidden">👁️‍🗨️ المخفية فقط</option>
+          </select>
           <select id="sort-filter" onchange="renderProductsTable()" class="admin-input">
             <option value="default">ترتيب الافتراضي (أجهزة أولاً)</option>
             <option value="name">الاسم أ → ي</option>
@@ -274,14 +279,15 @@
             <option value="stock-desc">المخزون: من الأعلى للأقل</option>
           </select>
         </div>
-        <div style="margin-top: 10px; font-size: 12px; color: #64748b;">
-          عدد الأصناف المعروضة: <span id="results-count" style="color: #00D2FF; font-weight: 800; font-family: monospace;">0</span>
+        <div style="margin-top: 10px; font-size: 12px; color: #64748b; display: flex; justify-content: space-between; align-items: center;">
+          <div>عدد الأصناف المعروضة: <span id="results-count" style="color: #00D2FF; font-weight: 800; font-family: monospace;">0</span></div>
+          <div style="font-size: 11px; color: #94a3b8;"><i class="fas fa-info-circle" style="color: #00D2FF;"></i> زر العين 👁️ بجانب كل صنف يسمح بإخفائه أو إظهاره للزوار فوراً</div>
         </div>
       </div>
 
       <!-- Table Container -->
       <div class="glass-card" style="overflow: hidden;">
-        <div style="display: grid; grid-template-columns: 60px 1fr 140px 100px 90px 70px 100px; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #1e293b; font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase;">
+        <div style="display: grid; grid-template-columns: 60px 1fr 130px 90px 90px 65px 145px; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #1e293b; font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase;">
           <div>الصورة</div>
           <div>اسم الصنف / الرمز</div>
           <div>الفئة</div>
@@ -4370,6 +4376,8 @@ function renderProductsTable() {
   var search = searchEl ? searchEl.value.trim().toLowerCase() : '';
   var catEl = document.getElementById('cat-filter');
   var catFilter = (catEl && catEl.value) ? catEl.value : 'all';
+  var visEl = document.getElementById('visibility-filter');
+  var visFilter = (visEl && visEl.value) ? visEl.value : 'all';
   var sortEl = document.getElementById('sort-filter');
   var sortFilter = (sortEl && sortEl.value) ? sortEl.value : 'default';
 
@@ -4377,6 +4385,12 @@ function renderProductsTable() {
 
   if (catFilter && catFilter !== 'all') {
     filtered = filtered.filter(function(p) { return p && p.category === catFilter; });
+  }
+
+  if (visFilter === 'visible') {
+    filtered = filtered.filter(function(p) { return !p || p.hidden !== true; });
+  } else if (visFilter === 'hidden') {
+    filtered = filtered.filter(function(p) { return p && p.hidden === true; });
   }
 
   if (search) {
@@ -4407,7 +4421,7 @@ function renderProductsTable() {
   var container = document.getElementById('products-rows');
 
   if (filtered.length === 0) {
-    container.innerHTML = '<div style="padding: 50px; text-align: center; color: #64748b;"><i class="fas fa-search" style="font-size: 28px; margin-bottom: 10px; display: block; opacity: 0.4;"></i>لا توجد أصناف مطابقة للبحث</div>';
+    container.innerHTML = '<div style="padding: 50px; text-align: center; color: #64748b;"><i class="fas fa-search" style="font-size: 28px; margin-bottom: 10px; display: block; opacity: 0.4;"></i>لا توجد أصناف مطابقة للبحث أو التصفية الحالية</div>';
     return;
   }
 
@@ -4416,29 +4430,55 @@ function renderProductsTable() {
     var stock = (p.stock !== undefined) ? p.stock : 10;
     var stockColor = stock === 0 ? '#f87171' : stock <= 3 ? '#fbbf24' : '#34d399';
     var discountCash = (p.oldPrice && p.oldPrice > p.price) ? (p.oldPrice - p.price) : 0;
+    var isHidden = (p.hidden === true);
 
     var imgTag = p.image
       ? '<img src="' + p.image + '" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML=\'<i class=\\\"fas fa-image\\\" style=\\\"color:#475569;font-size:16px\\\"></i>\'">'
       : '<i class="fas fa-image" style="color: #475569; font-size: 16px;"></i>';
 
-    return '<div style="display: grid; grid-template-columns: 60px 1fr 140px 100px 90px 70px 100px; gap: 12px; padding: 12px 18px; align-items: center; border-bottom: 1px solid rgba(30, 41, 59, 0.5); transition: background 0.15s;" onmouseover="this.style.background=\'rgba(0,210,255,0.03)\'" onmouseout="this.style.background=\'transparent\'">' +
+    var rowBg = isHidden ? 'background: rgba(239, 68, 68, 0.035); border-right: 3px solid #f87171;' : '';
+
+    return '<div style="display: grid; grid-template-columns: 60px 1fr 130px 90px 90px 65px 145px; gap: 12px; padding: 12px 18px; align-items: center; border-bottom: 1px solid rgba(30, 41, 59, 0.5); transition: background 0.15s; ' + rowBg + '" onmouseover="this.style.background=\'rgba(0,210,255,0.03)\'" onmouseout="this.style.background=\'' + (isHidden ? 'rgba(239, 68, 68, 0.035)' : 'transparent') + '\'">' +
       '<div><div style="width: 48px; height: 48px; border-radius: 10px; overflow: hidden; background: #070c18; border: 1px solid #1e293b; display: flex; align-items: center; justify-content: center;">' + imgTag + '</div></div>' +
       '<div>' +
-        '<div style="color: #fff; font-size: 13px; font-weight: 700; line-height: 1.35;">' + p.name + '</div>' +
-        '<div style="color: #64748b; font-size: 11px; font-family: monospace; margin-top: 2px;">' + p.id + '</div>' +
-        (p.badge ? '<span style="display: inline-block; font-size: 10px; font-weight: 800; background: rgba(0,210,255,0.1); color: #00D2FF; border: 1px solid rgba(0,210,255,0.2); padding: 1px 8px; border-radius: 999px; margin-top: 2px;">' + p.badge + '</span>' : '') +
+        '<div style="color: ' + (isHidden ? '#cbd5e1' : '#fff') + '; font-size: 13px; font-weight: 700; line-height: 1.35;">' + p.name + '</div>' +
+        '<div style="display: flex; align-items: center; gap: 6px; margin-top: 3px; flex-wrap: wrap;">' +
+          '<span style="color: #64748b; font-size: 11px; font-family: monospace;">' + p.id + '</span>' +
+          (isHidden
+            ? '<span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 1px 7px; border-radius: 999px;"><i class="fas fa-eye-slash"></i> مخفي عن العملاء</span>'
+            : '<span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.25); padding: 1px 7px; border-radius: 999px;"><i class="fas fa-eye"></i> معروض بالمتجر</span>'
+          ) +
+          (p.badge ? '<span style="display: inline-block; font-size: 10px; font-weight: 800; background: rgba(0,210,255,0.1); color: #00D2FF; border: 1px solid rgba(0,210,255,0.2); padding: 1px 8px; border-radius: 999px;">' + p.badge + '</span>' : '') +
+        '</div>' +
       '</div>' +
       '<div><span style="display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; ' + cat.badgeClass + '">' + cat.icon + ' ' + cat.name + '</span></div>' +
       '<div style="text-align: center;"><div style="color: #34d399; font-size: 14px; font-weight: 800; font-family: monospace;">' + (p.price || 0).toLocaleString() + '</div><div style="color: #64748b; font-size: 10px;">ر.س</div></div>' +
       '<div style="text-align: center;">' + (discountCash > 0 ? '<span style="font-size: 11px; font-weight: 800; color: #f87171; background: rgba(239,68,68,0.12); padding: 3px 8px; border-radius: 999px; font-family: monospace;">-' + discountCash.toLocaleString() + ' ر.س</span>' : '<span style="color:#334155;">—</span>') + '</div>' +
       '<div style="text-align: center;"><span style="font-size: 14px; font-weight: 800; font-family: monospace; color: ' + stockColor + ';">' + (stock === 999 ? '∞' : stock) + '</span></div>' +
-      '<div style="display: flex; gap: 6px; justify-content: center;">' +
-        '<button onclick="openEditModal(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,210,255,0.12); color: #00D2FF; border: none; cursor: pointer; font-size: 13px;" title="تحرير كامل للصنف"><i class="fas fa-pen"></i></button>' +
-        '<button onclick="duplicateProduct(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(148,163,184,0.15); color: #94a3b8; border: none; cursor: pointer; font-size: 13px;" title="نسخ الصنف"><i class="fas fa-copy"></i></button>' +
-        '<button onclick="deleteProduct(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(239,68,68,0.12); color: #f87171; border: none; cursor: pointer; font-size: 13px;" title="حذف"><i class="fas fa-trash"></i></button>' +
+      '<div style="display: flex; gap: 5px; justify-content: center; align-items: center;">' +
+        '<button onclick="toggleProductVisibility(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: ' + (isHidden ? 'rgba(239,68,68,0.18)' : 'rgba(52,211,153,0.14)') + '; color: ' + (isHidden ? '#f87171' : '#34d399') + '; border: 1px solid ' + (isHidden ? 'rgba(239,68,68,0.4)' : 'rgba(52,211,153,0.35)') + '; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s;" title="' + (isHidden ? 'الصنف مخفي عن العملاء - اضغط لإظهاره بالمتجر' : 'الصنف معروض للعملاء - اضغط لإخفائه عن المتجر') + '"><i class="fas ' + (isHidden ? 'fa-eye-slash' : 'fa-eye') + '"></i></button>' +
+        '<button onclick="openEditModal(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,210,255,0.12); color: #00D2FF; border: none; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; justify-content: center;" title="تحرير كامل للصنف"><i class="fas fa-pen"></i></button>' +
+        '<button onclick="duplicateProduct(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(148,163,184,0.15); color: #94a3b8; border: none; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; justify-content: center;" title="نسخ الصنف"><i class="fas fa-copy"></i></button>' +
+        '<button onclick="deleteProduct(\'' + p.id + '\')" style="width: 32px; height: 32px; border-radius: 8px; background: rgba(239,68,68,0.12); color: #f87171; border: none; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; justify-content: center;" title="حذف"><i class="fas fa-trash"></i></button>' +
       '</div>' +
     '</div>';
   }).join('');
+}
+
+// ── Toggle Product Visibility ───────────────────────────────
+function toggleProductVisibility(productId) {
+  var p = storeProducts.find(function(x) { return x.id === productId; });
+  if (!p) return;
+  p.hidden = !p.hidden;
+  saveToStorage(true);
+  renderProductsTable();
+  renderStats();
+  if (p.hidden) {
+    showToast('👁️‍🗨️ تم إخفاء الصنف "' + p.name + '" عن الزوار، وجاري النشر التلقائي...');
+  } else {
+    showToast('👁️ تم إظهار الصنف "' + p.name + '" للزوار بالمتجر، وجاري النشر التلقائي...');
+  }
+  publishToGitHub(true);
 }
 
 // ── Edit Modal ──────────────────────────────────────────────
@@ -4483,6 +4523,19 @@ function openEditModal(productId) {
       '</div>' +
       '<!-- Right -->' +
       '<div style="display: flex; flex-direction: column; gap: 14px;">' +
+        '<div style="background: rgba(15,23,42,0.7); border: 1px solid ' + (p.hidden ? 'rgba(239,68,68,0.35)' : 'rgba(52,211,153,0.35)') + '; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">' +
+          '<div>' +
+            '<div style="font-size: 12px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 6px;">' +
+              '<i class="fas ' + (p.hidden ? 'fa-eye-slash' : 'fa-eye') + '" style="color: ' + (p.hidden ? '#f87171' : '#34d399') + ';" id="edit-hidden-icon"></i> ' +
+              'حالة ظهور الصنف للعملاء' +
+            '</div>' +
+            '<div style="font-size: 11px; color: #64748b; margin-top: 2px;">إخفاء الصنف من المتجر بدون حذفه</div>' +
+          '</div>' +
+          '<label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; background: #070c18; padding: 6px 12px; border-radius: 8px; border: 1px solid #1e293b;">' +
+            '<input type="checkbox" id="edit-hidden" ' + (p.hidden ? 'checked' : '') + ' onchange="var lbl=document.getElementById(\'edit-hidden-label\'); var icon=document.getElementById(\'edit-hidden-icon\'); if(this.checked){lbl.textContent=\'مخفي عن العملاء\'; lbl.style.color=\'#f87171\'; icon.className=\'fas fa-eye-slash\'; icon.style.color=\'#f87171\';}else{lbl.textContent=\'ظاهر للعملاء\'; lbl.style.color=\'#34d399\'; icon.className=\'fas fa-eye\'; icon.style.color=\'#34d399\';}" style="width: 16px; height: 16px; accent-color: #ef4444; cursor: pointer;">' +
+            '<span id="edit-hidden-label" style="font-size: 12px; font-weight: 800; color: ' + (p.hidden ? '#f87171' : '#34d399') + ';">' + (p.hidden ? 'مخفي عن العملاء' : 'ظاهر للعملاء') + '</span>' +
+          '</label>' +
+        '</div>' +
         '<div style="background: rgba(0,210,255,0.05); border: 1px solid rgba(0,210,255,0.2); border-radius: 12px; padding: 14px;">' +
           '<div style="font-size: 12px; font-weight: 800; color: #00D2FF; margin-bottom: 10px;"><i class="fas fa-tags"></i> نظام التسعير والخصومات الذكية</div>' +
           '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">' +
@@ -4585,6 +4638,7 @@ function saveEditChanges() {
     finalPrice = Math.max(0, basePrice - discountAmt);
   }
 
+  var isHidden = document.getElementById('edit-hidden') ? document.getElementById('edit-hidden').checked : (storeProducts[idx].hidden || false);
   storeProducts[idx] = Object.assign({}, storeProducts[idx], {
     name: (document.getElementById('edit-name').value || '').trim(),
     nameEn: (document.getElementById('edit-name-en').value || '').trim(),
@@ -4598,7 +4652,8 @@ function saveEditChanges() {
     reviewsCount: parseInt(document.getElementById('edit-reviews').value) || 0,
     shortDesc: (document.getElementById('edit-desc').value || '').trim(),
     specs: editSpecsList.slice(),
-    image: (document.getElementById('edit-img-url').value || '').trim() || storeProducts[idx].image || ''
+    image: (document.getElementById('edit-img-url').value || '').trim() || storeProducts[idx].image || '',
+    hidden: isHidden
   });
 
   saveToStorage();
@@ -4606,6 +4661,7 @@ function saveEditChanges() {
   renderProductsTable();
   renderStats();
   showToast('✅ تم حفظ التعديلات وحفظ الخصم بنجاح!');
+  publishToGitHub(true);
 }
 
 // ── Add New Product ─────────────────────────────────────────
@@ -4805,16 +4861,21 @@ function renderStats() {
   var counts = {};
   var totalStock = 0;
   var lowStock = [];
+  var hiddenCount = 0;
 
   storeProducts.forEach(function(p) {
+    if (p && p.hidden === true) hiddenCount++;
     counts[p.category] = (counts[p.category] || 0) + 1;
     var st = (p.stock !== undefined) ? p.stock : 10;
     totalStock += st;
     if (st <= 3) lowStock.push(p);
   });
 
+  var visibleCount = storeProducts.length - hiddenCount;
   var statCards = [
-    { label: 'إجمالي الأصناف', val: storeProducts.length, icon: 'fas fa-boxes-stacked', color: '#00D2FF', bg: 'rgba(0,210,255,0.12)' },
+    { label: 'إجمالي الأصناف باللوحة', val: storeProducts.length, icon: 'fas fa-boxes-stacked', color: '#00D2FF', bg: 'rgba(0,210,255,0.12)' },
+    { label: 'أصناف معروضة للعملاء', val: visibleCount, icon: 'fas fa-eye', color: '#10b981', bg: 'rgba(16,185,129,0.12)' },
+    { label: 'أصناف مخفية عن المتجر', val: hiddenCount, icon: 'fas fa-eye-slash', color: '#f87171', bg: 'rgba(239,68,68,0.12)' },
     { label: 'إجمالي القطع في المخزون', val: totalStock, icon: 'fas fa-warehouse', color: '#34d399', bg: 'rgba(52,211,153,0.12)' },
     { label: 'أصناف قاربت على النفاد', val: lowStock.length, icon: 'fas fa-triangle-exclamation', color: '#f87171', bg: 'rgba(239,68,68,0.12)' },
     { label: 'أجهزة اللاسلكي', val: counts.devices || 0, icon: 'fas fa-radio', color: '#60a5fa', bg: 'rgba(96,165,250,0.12)' },

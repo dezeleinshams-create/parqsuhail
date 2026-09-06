@@ -260,7 +260,8 @@ try {
 } catch(e) {}
 
 function getProducts() {
-  return (typeof INITIAL_PRODUCTS !== "undefined" && Array.isArray(INITIAL_PRODUCTS)) ? INITIAL_PRODUCTS : [];
+  const list = (typeof INITIAL_PRODUCTS !== "undefined" && Array.isArray(INITIAL_PRODUCTS)) ? INITIAL_PRODUCTS : [];
+  return list.filter(p => p && p.hidden !== true);
 }
 
 // Update count badges on category pills
