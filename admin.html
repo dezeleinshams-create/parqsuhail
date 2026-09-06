@@ -703,7 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!-- DATA LAYER -->
-<script src="assets/js/data.js?v=1788652667"></script>
+<script src="assets/js/data.js?v=1788653331"></script>
 <script>
 
 // ── Global Multi-User Storage Shield & Auto-Purge ────────────
@@ -997,7 +997,7 @@ var DEFAULT_INVENTORY_PRODUCTS = [
     "price": 340,
     "oldPrice": 460,
     "badge": "اقتصادي",
-    "image": "assets/images/salla_BS-THURAYA-XT-LITE.webp",
+    "image": "assets/images/baofeng_dual_band_radio.jpg",
     "rating": 4.5,
     "reviewsCount": 63,
     "stock": 9,
@@ -3949,7 +3949,7 @@ async function syncLiveCatalog(silent) {
     syncBtn.disabled = true;
   }
   try {
-    var res = await fetch('assets/js/data.js?v=1788652667' + Date.now(), { cache: 'no-store' });
+    var res = await fetch('assets/js/data.js?v=1788653331' + Date.now(), { cache: 'no-store' });
     if (res.ok) {
       var text = await res.text();
       var m = text.match(/var INITIAL_PRODUCTS\s*=\s*(\[[\s\S]*?\]);\s*(?:var INVENTORY_PRODUCTS|var THEME_CONFIG)/);
