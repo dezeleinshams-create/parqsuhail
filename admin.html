@@ -703,7 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <!-- DATA LAYER -->
-<script src="assets/js/data.js?v=1788656170"></script>
+<script src="assets/js/data.js?v=1788656754"></script>
 <script>
 
 // ── Global Multi-User Storage Shield & Auto-Purge ────────────
@@ -997,8 +997,8 @@ var DEFAULT_INVENTORY_PRODUCTS = [
     "nameEn": "Baofeng Dual Band Radio",
     "category": "devices",
     "categoryName": "أجهزة اللاسلكي",
-    "price": 120,
-    "oldPrice": 120,
+    "price": 340,
+    "oldPrice": 400,
     "badge": "اقتصادي",
     "image": "assets/images/client_upload_sku_26656.jpg",
     "rating": 4.5,
@@ -1011,9 +1011,9 @@ var DEFAULT_INVENTORY_PRODUCTS = [
       "بطارية ليثيوم",
       "سعر اقتصادي"
     ],
-    "sallaUrl": "https://store.barqsuhail.com/baofeng-dual-band-radio-جهاز-بوفنق/p636490288",
+    "sallaUrl": "https://store.barqsuhail.com/baofeng-dual-band-radio-%D8%AC%D9%87%D8%A7%D8%B2-%D8%A8%D9%88%D9%81%D9%86%D9%82/p636490288",
     "displayIndex": 11,
-    "discount": null
+    "discount": "خصم 60 ر.س"
   },
   {
     "id": "Sku-23721",
@@ -3964,7 +3964,7 @@ async function syncLiveCatalog(silent) {
     syncBtn.disabled = true;
   }
   try {
-    var res = await fetch('assets/js/data.js?v=1788656170' + Date.now(), { cache: 'no-store' });
+    var res = await fetch('assets/js/data.js?v=1788656754' + Date.now(), { cache: 'no-store' });
     if (res.ok) {
       var text = await res.text();
       var m = text.match(/var INITIAL_PRODUCTS\s*=\s*(\[[\s\S]*?\]);\s*(?:var INVENTORY_PRODUCTS|var THEME_CONFIG)/);
