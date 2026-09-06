@@ -1,6 +1,14 @@
 // Main JavaScript Application for Barq Suhail (www.barqsuhail.com)
 // Optimized for High-Density 99+ Products Catalog
 
+// ── Always open at the top (الرئيسية) ──────────────────────────────────────
+// Disable browser scroll memory so page always starts from Hero section
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+window.scrollTo(0, 0);
+// ───────────────────────────────────────────────────────────────────────────
+
 const STORE_PHONE = "966507181115";
 let cart = JSON.parse(localStorage.getItem("barq_cart")) || [];
 
