@@ -2968,24 +2968,30 @@ var editSpecsList = [];
 var selectedBuilderSectionId = 'home';
 
 var DEFAULT_SECTIONS_META = [
-  { id: 'home', title: 'البنر الإعلاني الرئيسي (Hero Banner)', icon: 'fas fa-image', desc: 'صورة البنر وتمددها، والعناوين وزر الكتالوج' },
-  { id: 'section-features', title: 'شريط المميزات والضمان (Features Strip)', icon: 'fas fa-shield-halved', desc: 'ميزات المتجر، ترخيص CST، والشحن والتوصيل' },
+  { id: 'home', title: 'البنر الإعلاني والتعريف الرئيسي (Hero Banner)', icon: 'fas fa-image', desc: 'صورة البنر وتمددها، والعناوين وزر الكتالوج' },
   { id: 'products', title: 'كتالوج المنتجات والفئات (Products Catalog)', icon: 'fas fa-boxes-stacked', desc: 'عدد الأعمدة، نمط العرض، وكثافة المنتجات' },
+  { id: 'section-features', title: 'شريط المميزات والضمان (Features Strip)', icon: 'fas fa-shield-halved', desc: 'ميزات المتجر، ترخيص CST، والشحن والتوصيل' },
   { id: 'thuraya', title: 'قسم هواتف وأجهزة الثريا (Thuraya Spotlight)', icon: 'fas fa-satellite', desc: 'بنر الثريا الفضائية ومواصفاتها وزر الواتساب' },
   { id: 'garmin', title: 'قسم قارمن والملاحة والخرائط (Garmin GPS)', icon: 'fas fa-map-location-dot', desc: 'بنر قارمن الصحراوي ومميزات الملاحة والتحديث' },
+  { id: 'finder', title: 'مستشار برق سهيل التفاعلي (Smart Finder)', icon: 'fas fa-wand-magic-sparkles', desc: 'أسئلة ترشيح الجهاز والباقة المثالية' },
+  { id: 'compatibility', title: 'فحص التوافقية الذكي (Compatibility Checker)', icon: 'fas fa-check-double', desc: 'أداة فحص توافق الأجهزة والملحقات' },
   { id: 'b2b', title: 'نموذج طلب عروض الأسعار (B2B Quote Request)', icon: 'fas fa-file-invoice', desc: 'عناوين نموذج تسعيرات الشركات والمقناص' },
+  { id: 'faq', title: 'قسم الأسئلة الشائعة (FAQ)', icon: 'fas fa-circle-question', desc: 'الأسئلة المتكررة حول التراخيص والضمان والشحن' },
   { id: 'showroom', title: 'بطاقة المعرض وخريطة الدمام (Showroom Card)', icon: 'fas fa-store', desc: 'صورة المعرض، العنوان، أوقات العمل، ورابط الخرائط' }
 ];
 
 var currentThemeConfig = {
-  sectionsOrder: ['home', 'products', 'section-features', 'thuraya', 'garmin', 'b2b', 'showroom'],
+  sectionsOrder: ['home', 'products', 'section-features', 'thuraya', 'garmin', 'finder', 'compatibility', 'b2b', 'faq', 'showroom'],
   sectionsVisible: {
     'home': true,
-    'section-features': true,
     'products': true,
+    'section-features': true,
     'thuraya': true,
     'garmin': true,
+    'finder': true,
+    'compatibility': true,
     'b2b': true,
+    'faq': true,
     'showroom': true
   },
   banner: {
@@ -3741,14 +3747,17 @@ function resetThemeBuilderConfig() {
   if (!confirm('هل تريد استعادة تصميم الموقع الافتراضي بالكامل؟')) return;
   localStorage.removeItem('barq_theme_config');
   currentThemeConfig = {
-    sectionsOrder: ['home', 'products', 'section-features', 'thuraya', 'garmin', 'b2b', 'showroom'],
+    sectionsOrder: ['home', 'products', 'section-features', 'thuraya', 'garmin', 'finder', 'compatibility', 'b2b', 'faq', 'showroom'],
     sectionsVisible: {
       'home': true,
-      'section-features': true,
       'products': true,
+      'section-features': true,
       'thuraya': true,
       'garmin': true,
+      'finder': true,
+      'compatibility': true,
       'b2b': true,
+      'faq': true,
       'showroom': true
     },
     banner: {

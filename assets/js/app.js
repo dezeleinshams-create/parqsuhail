@@ -7,6 +7,11 @@ if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
 window.scrollTo(0, 0);
+window.addEventListener("load", () => {
+  if (!window.location.hash || window.location.hash === "#home" || window.location.hash === "#") {
+    window.scrollTo(0, 0);
+  }
+});
 // ───────────────────────────────────────────────────────────────────────────
 
 const STORE_PHONE = "966507181115";
@@ -31,11 +36,35 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ----------------- VISUAL THEME & LAYOUT BUILDER SYNC -----------------
+const DEFAULT_SECTION_ORDER = [
+  "home",
+  "products",
+  "section-features",
+  "thuraya",
+  "garmin",
+  "finder",
+  "compatibility",
+  "b2b",
+  "faq",
+  "showroom"
+];
+
 function applyThemeConfig() {
   let config = null;
   const raw = localStorage.getItem("barq_theme_config");
   if (raw) {
-    try { config = JSON.parse(raw); } catch(e) {}
+    try {
+      config = JSON.parse(raw);
+      // Auto-migrate & repair cached sectionsOrder: always ensure home is #1, products is #2
+      if (config && Array.isArray(config.sectionsOrder)) {
+        config.sectionsOrder = config.sectionsOrder.filter(id => id !== "home" && id !== "products");
+        config.sectionsOrder.unshift("home", "products");
+        DEFAULT_SECTION_ORDER.forEach(id => {
+          if (!config.sectionsOrder.includes(id)) config.sectionsOrder.push(id);
+        });
+        localStorage.setItem("barq_theme_config", JSON.stringify(config));
+      }
+    } catch(e) {}
   }
   if (!config && typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG && Object.keys(THEME_CONFIG).length > 0) {
     config = THEME_CONFIG;
@@ -48,12 +77,39 @@ function applyThemeConfig() {
 
     // 1. Reorder & Toggle Sections Visibility
     const mainContainer = document.getElementById("main-sections-container");
-    if (mainContainer && Array.isArray(config.sectionsOrder)) {
-      config.sectionsOrder.forEach(secId => {
-        const secEl = document.getElementById(secId);
+    if (mainContainer) {
+      const allSections = Array.from(mainContainer.querySelectorAll(":scope > section"));
+      const sectionMap = {};
+      allSections.forEach(sec => {
+        if (sec.id) sectionMap[sec.id] = sec;
+      });
+
+      // ALWAYS guarantee 'home' (Hero) is FIRST, and 'products' is SECOND directly under Hero!
+      let order = Array.isArray(config.sectionsOrder) ? [...config.sectionsOrder] : [...DEFAULT_SECTION_ORDER];
+      order = order.filter(id => id !== "home" && id !== "products");
+      order.unshift("home", "products");
+
+      const placed = new Set();
+
+      // 1) Append sections in explicit order
+      order.forEach(secId => {
+        const secEl = sectionMap[secId];
         if (secEl) {
           mainContainer.appendChild(secEl);
+          placed.add(secId);
           if (config.sectionsVisible && config.sectionsVisible[secId] === false) {
+            secEl.style.display = "none";
+          } else {
+            secEl.style.display = "";
+          }
+        }
+      });
+
+      // 2) Append any remaining sections to the END (never leave them at top!)
+      allSections.forEach(secEl => {
+        if (secEl.id && !placed.has(secEl.id)) {
+          mainContainer.appendChild(secEl);
+          if (config.sectionsVisible && config.sectionsVisible[secEl.id] === false) {
             secEl.style.display = "none";
           } else {
             secEl.style.display = "";

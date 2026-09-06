@@ -2185,21 +2185,27 @@ var INITIAL_PRODUCTS = [
 var INVENTORY_PRODUCTS = INITIAL_PRODUCTS;
 var THEME_CONFIG = {
   "sectionsOrder": [
-    "products",
     "home",
+    "products",
     "section-features",
     "thuraya",
     "garmin",
+    "finder",
+    "compatibility",
     "b2b",
+    "faq",
     "showroom"
   ],
   "sectionsVisible": {
     "home": true,
-    "section-features": true,
     "products": true,
+    "section-features": true,
     "thuraya": true,
     "garmin": true,
+    "finder": true,
+    "compatibility": true,
     "b2b": true,
+    "faq": true,
     "showroom": true
   },
   "banner": {
