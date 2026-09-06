@@ -3726,9 +3726,6 @@ function saveThemeBuilderConfig() {
       text: (document.getElementById('builder-header-btn-text').value || '').trim(),
       link: (document.getElementById('builder-header-btn-link').value || '').trim()
     };
-  }
-
-  if (document.getElementById('builder-wa-phone')) {
     currentThemeConfig.whatsapp = {
       phone: (document.getElementById('builder-wa-phone').value || '').trim(),
       message: (document.getElementById('builder-wa-msg').value || '').trim()
@@ -4174,21 +4171,23 @@ function buildDataJsContent(products) {
 }
 
 async function getFileSHA(token, path) {
-  try {
-    // Add timestamp to bust any CDN/browser cache and always get live SHA
-    var bust = '?ref=' + GITHUB_BRANCH + '&t=' + Date.now();
-    var res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path + bust, {
-      headers: {
-        'Authorization': 'token ' + token,
-        'Accept': 'application/vnd.github.v3+json',
-        'Cache-Control': 'no-cache'
+  // Try up to 3 times with a cache-busting timestamp
+  for (var attempt = 1; attempt <= 3; attempt++) {
+    try {
+      var url = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path + '?ref=' + GITHUB_BRANCH + '&_=' + Date.now();
+      var res = await fetch(url, {
+        headers: {
+          'Authorization': 'token ' + token,
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      });
+      if (res.ok) {
+        var data = await res.json();
+        if (data.sha) return data.sha;
       }
-    });
-    if (res.ok) {
-      var data = await res.json();
-      return data.sha || null;
-    }
-  } catch(e) {}
+    } catch(e) {}
+    if (attempt < 3) await new Promise(function(r) { setTimeout(r, 800); });
+  }
   return null;
 }
 
@@ -4233,6 +4232,12 @@ async function publishToGitHub(isAuto) {
 
     // 2. Get fresh SHA right before pushing
     var sha = await getFileSHA(token, GITHUB_DATA_FILE);
+    if (!sha) {
+      showToast('❌ تعذّر جلب SHA من GitHub - تحقق من صلاحيات الـ Token وحاول مجدداً');
+      addDeployLog('❌ فشل جلب SHA بعد 3 محاولات - يُرجى التحقق من التوكن');
+      if (btn) { btn.disabled = false; }
+      return;
+    }
 
     // 3. Try push - if SHA conflict, retry once with fresh SHA
     var result = await tryGitHubPush(token, encoded, sha, 1);
