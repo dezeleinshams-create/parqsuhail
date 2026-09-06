@@ -2,10 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <!-- Homepage & Core Store Hubs -->
+  <!-- Homepage & Core Store -->
   <url>
     <loc>https://www.barqsuhail.com/</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -13,927 +13,964 @@
       <image:title>شعار مؤسسة برق سهيل التجارية</image:title>
     </image:image>
   </url>
+  <!-- Main Category Hubs -->
   <url>
-    <loc>https://www.barqsuhail.com/product.html</loc>
-    <lastmod>2026-08-24</lastmod>
+    <loc>https://www.barqsuhail.com/#devices</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.barqsuhail.com/#thuraya</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.barqsuhail.com/#garmin</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.barqsuhail.com/#accessories</loc>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-5624-350.html</loc>
-    <lastmod>2026-08-24</lastmod>
+    <loc>https://www.barqsuhail.com/#cards</loc>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.barqsuhail.com/#b2b</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.barqsuhail.com/#showroom</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.barqsuhail.com/#product-Sku-5624-350</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_BS-ICOM-V3500.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_5624_350.jpg</image:loc>
       <image:title>جهاز آيكوم IC-V3500</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-5624-230.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-5624-230</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_BS-ICOM-2300-KIT.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_5624_230.jpg</image:loc>
       <image:title>جهاز آيكوم IC-2300H</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-10111-W.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-10111-W</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla____-Sku-10111.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_10111_w.jpg</image:loc>
       <image:title>جهاز آيكوم IC-2730 أبيض</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-10111-B.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-10111-B</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla____-Sku-10111.webp</image:loc>
       <image:title>جهاز آيكوم IC-2730 أسود</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-82737-800.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-82737-800</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/tyt_th_uv8000d.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_82737_800.jpg</image:loc>
       <image:title>جهاز TYT MD-8000 لاسلكي رقمي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-82737-88.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-82737-88</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/tyt_th_uv8000d.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_82737_88.jpg</image:loc>
       <image:title>جهاز TYT TH-88 يدوي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-15W.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-15W</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_BS-TYT-15W.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_15w.jpg</image:loc>
       <image:title>جهاز TYT 15W لاسلكي يدوي قوي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-46668-53.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-46668-53</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_BS-GARMIN-DRIVE-53.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_46668_53.webp</image:loc>
       <image:title>قارمن DriveSmart 53</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-46668-66.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-46668-66</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-46668-66.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_46668_66.jpg</image:loc>
       <image:title>قارمن DriveSmart 66</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-46668-76.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-46668-76</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-46668-76.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_46668_76.jpg</image:loc>
       <image:title>قارمن DriveSmart 76</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-26656.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-26656</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_BS-THURAYA-XT-LITE.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_26656.jpg</image:loc>
       <image:title>جهاز بوفنق لاسلكي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-23721.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-23721</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_BS-THURAYA-XT-LITE.webp</image:loc>
       <image:title>جهاز موتورولا لاسلكي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-14275.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-14275</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_BS-THURAYA-XT-LITE.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_14275.jpg</image:loc>
       <image:title>هاتف الثريا الفضائي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-81435.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-81435</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-81435.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_81435.jpg</image:loc>
       <image:title>ريشة TYT يدوي (مايك ريشة)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-53488-L.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-53488-L</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_____-Sku-27312.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_53488_l.jpg</image:loc>
       <image:title>هوائي تجاري طويل للسيارات</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-53488-S.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-53488-S</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/larsen_mobile_antenna.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_53488_s.jpg</image:loc>
       <image:title>هوائي تجاري صغير للسيارات</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-99831-4DB.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-99831-4DB</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/diamond_dp_cl2e_antenna.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_99831_4db.jpg</image:loc>
       <image:title>هوائي ترام مكس 4dB</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-99831-3DB.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-99831-3DB</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/diamond_dp_cl2e_antenna.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_99831_3db.jpg</image:loc>
       <image:title>هوائي ترام مكس 3dB</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-99831-1DB.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-99831-1DB</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/larsen_mobile_antenna.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_99831_1db.jpg</image:loc>
       <image:title>هوائي ترام مكس 1dB</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-27312-L.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-27312-L</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_____-Sku-27312.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_27312_l.jpg</image:loc>
       <image:title>هوائي لارسن طويل</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-27312-S.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-27312-S</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/larsen_mobile_antenna.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_27312_s.jpg</image:loc>
       <image:title>هوائي لارسن صغير</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-90780-3DB.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-90780-3DB</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/comet_sbb5_single_section_antenna.jpg</image:loc>
       <image:title>هوائي أبعد المدى 3dB</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-90780-R.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-90780-R</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/comet_sbb4_antenna.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_90780_r.jpg</image:loc>
       <image:title>هوائي أبعد المدى ريل</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-25737.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-25737</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla____-Sku-25737.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_25737.jpg</image:loc>
       <image:title>هوائي ديموند (أبو عقال)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-6558.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-6558</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/sirio_dual_section_antenna.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_6558.jpg</image:loc>
       <image:title>هوائي سيريو - وصلة</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-7867.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-7867</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/sirio_dual_section_antenna.jpg</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_sku_7867.jpg</image:loc>
       <image:title>هوائي سيريو - وصلتين</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/768687.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-768687</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.barqsuhail.com/assets/images/salla_sku-768687___________.webp</image:loc>
+      <image:loc>https://www.barqsuhail.com/assets/images/client_upload_768687.jpg</image:loc>
       <image:title>هوائي سيريو - ثلاث وصلات</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-61831.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-61831</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_________-Sku-61831.webp</image:loc>
       <image:title>هوائي سيريو أبو عقال</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-19085.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-19085</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-19085_______________.webp</image:loc>
       <image:title>هوائي كومت - وصلة</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-19022.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-19022</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-19022__________________.webp</image:loc>
       <image:title>هوائي كومت - وصلتين</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-19253.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-19253</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-19253_______________________.webp</image:loc>
       <image:title>هوائي كومت - ثلاث وصلات</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-57287.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-57287</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-57287.webp</image:loc>
       <image:title>هوائي سحاب مرن للسيارات</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-7592.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-7592</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/diamond_dp_cl2e_antenna.jpg</image:loc>
       <image:title>هوائي مطاري (للمطارات والطائرات)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-4566.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-4566</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_4566.webp</image:loc>
       <image:title>هوائي بحري للقوارب</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-4567.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-4567</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_4566.webp</image:loc>
       <image:title>هوائي يدوي (للأجهزة اليدوية)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/0006-5.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-0006-5</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_0006-5.webp</image:loc>
       <image:title>هوائي بوفنق</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/0006-4.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-0006-4</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_0006-4.webp</image:loc>
       <image:title>هوائي أسود سحاب</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/0006-7.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-0006-7</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-35274-___.webp</image:loc>
       <image:title>هوائي كومت-7</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/2533.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-2533</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/diamond_telescopic_antenna.jpg</image:loc>
       <image:title>هوائي دار البوصلة</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-35272.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-35272</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-35272.webp</image:loc>
       <image:title>سلك هوائي إيطالي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-35274.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-35274</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-35274-___.webp</image:loc>
       <image:title>سلك هوائي ناقويا</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-35277.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-35277</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-35277.webp</image:loc>
       <image:title>سلك هوائي ترام مكس</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-25321.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-25321</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-25321.webp</image:loc>
       <image:title>سلك وصل شاشتين</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-25358.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-25358</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-25358.webp</image:loc>
       <image:title>سلك ريشة (مايكروفون)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-25326.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-25326</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-35272.webp</image:loc>
       <image:title>سلك بلمتر (قياس)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-8536-B.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-8536-B</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-8536-BAT.webp</image:loc>
       <image:title>سلك كهرباء - بطارية</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-8536-L.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-8536-L</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/garmin_vehicle_power_cable.jpg</image:loc>
       <image:title>سلك كهرباء - ولاعة</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-56576.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-56576</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-56576.webp</image:loc>
       <image:title>ريشة آيكوم (مايكروفون)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-56596.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-56596</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/icom_hm133v_mic.jpg</image:loc>
       <image:title>ريشة كنوود (مايكروفون)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-56595.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-56595</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-56595.webp</image:loc>
       <image:title>ريشة عسكرية (مايكروفون)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-21943.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-21943</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-21943.webp</image:loc>
       <image:title>ريشة بلوتوث لاسلكية</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-45848.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-45848</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-45848.webp</image:loc>
       <image:title>قاعدة مغناطيس إيطالي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-45847.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-45847</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/rf_coaxial_connectors.jpg</image:loc>
       <image:title>قاعدة مغناطيس ترام مكس</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-45846.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-45846</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/rf_coaxial_connectors.jpg</image:loc>
       <image:title>قاعدة مغناطيس تجارية</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-276226.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-276226</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla____-Sku-276226.webp</image:loc>
       <image:title>قاعدة سلة (تثبيت على صندوق السيارة)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-276426.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-276426</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/trunk_lid_antenna_mount.jpg</image:loc>
       <image:title>قاعدة شاص (تثبيت على الشاص)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-227626.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-227626</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-227626-______________.webp</image:loc>
       <image:title>قاعدة باب شنطة (تثبيت على باب الخلفي)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-3279-S.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-3279-S</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/mad500_gutter_mount.jpg</image:loc>
       <image:title>قاعدة شاص بسلك</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-3279-T.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-3279-T</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/mad500_gutter_mount.jpg</image:loc>
       <image:title>قاعدة ترام مكس صغير</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-55087.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-55087</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-55087.webp</image:loc>
       <image:title>قاعدة مغناطيس جانبي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-99244.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-99244</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-99244.webp</image:loc>
       <image:title>كرسي جوال سحاب (حامل سقف التكييف)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-949284.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-949284</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/radio_sliding_mount_bracket.jpg</image:loc>
       <image:title>كرسي جهاز / كرسي مرتبة (حامل داشبورد)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-403210.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-403210</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla____-Sku-403210.webp</image:loc>
       <image:title>قاعدة جوال كبيرة (مغناطيس)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-410320.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-410320</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/youfo_magnetic_vacuum_holder.jpg</image:loc>
       <image:title>قاعدة جوال شفط لزق</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-140320.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-140320</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla____-Sku-140320.webp</image:loc>
       <image:title>قاعدة جوال شفط</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-40320.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-40320</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/youfo_large_telescopic_phone_mount.jpg</image:loc>
       <image:title>قاعدة جوال لزق</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/4564.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-4564</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/mad500_gutter_mount.jpg</image:loc>
       <image:title>قاعدة جوال كوب</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-919284.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-919284</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/garmin_vehicle_power_cable.jpg</image:loc>
       <image:title>شاحن ولاعة TYT</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-49051-T.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-49051-T</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/garmin_vehicle_power_cable.jpg</image:loc>
       <image:title>شاحن ثريا</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-49051-G.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-49051-G</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-49051-GARMIN.webp</image:loc>
       <image:title>شاحن قارمن</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-49051-TY.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-49051-TY</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/garmin_vehicle_power_cable.jpg</image:loc>
       <image:title>شاحن TYT ولاعة</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-79118-25.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-79118-25</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/compass_power_supply_35a.jpg</image:loc>
       <image:title>محول كهرباء 25 أمبير</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-79118-35.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-79118-35</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-79118-35.webp</image:loc>
       <image:title>محول كهرباء 35 أمبير</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-24370-4.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-24370-4</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_g_Sku-24370-4.webp</image:loc>
       <image:title>استيشن - 4 وصلات</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-24370-3.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-24370-3</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-24370-3.webp</image:loc>
       <image:title>استيشن - 3 وصلات</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-24370.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-24370</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-24370-3.webp</image:loc>
       <image:title>استيشن - وصلتين</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-891350.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-891350</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-891350-___.webp</image:loc>
       <image:title>كونكتر وصل (PL-259)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-893450.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-893450</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-893450-___.webp</image:loc>
       <image:title>كونكتر يدوي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-789350.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-789350</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-789350-___.webp</image:loc>
       <image:title>كونكتر آيكوم</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-95472.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-95472</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-95472.webp</image:loc>
       <image:title>علّاق ريشة (حامل المايكروفون)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-71896.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-71896</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/sirio_magnetic_base.jpg</image:loc>
       <image:title>سماعة أذن لاسلكي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-93317.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-93317</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-93317.webp</image:loc>
       <image:title>جراب ثريا</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/4568.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-4568</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_BS-THURAYA-XT-LITE.webp</image:loc>
       <image:title>حافظة جهاز ثريا مشبك/مغناطيس</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-72474-F.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-72474-F</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/roof_rack_basket_mount.jpg</image:loc>
       <image:title>قطعة غيار - مروحة</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-72474-P.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-72474-P</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/trunk_lid_antenna_mount.jpg</image:loc>
       <image:title>قطعة غيار - فصال</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/0002.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-0002</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/tyt_typec_battery_3800mah.jpg</image:loc>
       <image:title>بطارية TYT</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/0001.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-0001</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/tyt_handheld_speaker_mic.jpg</image:loc>
       <image:title>وصلة TYT (ملحق)</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-26695.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-26695</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-26695.webp</image:loc>
       <image:title>رصيد ثريا الفضائي</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-66044.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-66044</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/salla_Sku-66044.webp</image:loc>
       <image:title>شريحة ثريا الفضائية</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-2675.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-2675</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/garmin_drive_53.jpg</image:loc>
       <image:title>تحديث خرائط قارمن</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-14300.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-14300</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/garmin_drive_53.jpg</image:loc>
       <image:title>خدمة تنظيف الجهاز</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.barqsuhail.com/products/Sku-46030.html</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.85</priority>
+    <loc>https://www.barqsuhail.com/#product-Sku-46030</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
     <image:image>
       <image:loc>https://www.barqsuhail.com/assets/images/garmin_drive_53.jpg</image:loc>
       <image:title>خدمة تركيب وتمديد</image:title>
