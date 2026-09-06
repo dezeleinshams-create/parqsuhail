@@ -4175,8 +4175,14 @@ function buildDataJsContent(products) {
 
 async function getFileSHA(token, path) {
   try {
-    var res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path + '?ref=' + GITHUB_BRANCH, {
-      headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+    // Add timestamp to bust any CDN/browser cache and always get live SHA
+    var bust = '?ref=' + GITHUB_BRANCH + '&t=' + Date.now();
+    var res = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path + bust, {
+      headers: {
+        'Authorization': 'token ' + token,
+        'Accept': 'application/vnd.github.v3+json',
+        'Cache-Control': 'no-cache'
+      }
     });
     if (res.ok) {
       var data = await res.json();
