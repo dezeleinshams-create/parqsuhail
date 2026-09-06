@@ -4272,10 +4272,12 @@ async function tryGitHubPush(token, encoded, sha, attempt) {
   var errData = {};
   try { errData = await res.json(); } catch(e) {}
 
-  // If SHA conflict (422) and first attempt, retry with fresh SHA
-  if (res.status === 422 && attempt < 3) {
-    addDeployLog('🔄 SHA مختلف - إعادة المحاولة ' + attempt + '/2...');
-    await new Promise(function(r) { setTimeout(r, 1000); }); // wait 1s
+  // GitHub returns 409 or 422 for SHA conflicts - retry with a fresh SHA
+  var isShaConflict = (res.status === 409 || res.status === 422);
+  if (isShaConflict && attempt < 4) {
+    var waitMs = attempt * 1200; // progressive backoff: 1.2s, 2.4s, 3.6s
+    addDeployLog('🔄 SHA mismatch (HTTP ' + res.status + ') - جلب SHA جديد وإعادة المحاولة ' + attempt + '/3...');
+    await new Promise(function(r) { setTimeout(r, waitMs); });
     var freshSha = await getFileSHA(token, GITHUB_DATA_FILE);
     return tryGitHubPush(token, encoded, freshSha, attempt + 1);
   }
