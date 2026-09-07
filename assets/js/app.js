@@ -62,8 +62,15 @@ function applyThemeConfig() {
         DEFAULT_SECTION_ORDER.forEach(id => {
           if (!config.sectionsOrder.includes(id)) config.sectionsOrder.push(id);
         });
-        localStorage.setItem("barq_theme_config", JSON.stringify(config));
       }
+      // Migrate banner fit and height to prevent cropping
+      if (config && config.banner) {
+        if (config.banner.fit === "cover" || config.banner.height === "380px") {
+          config.banner.fit = "contain";
+          config.banner.height = "auto";
+        }
+      }
+      localStorage.setItem("barq_theme_config", JSON.stringify(config));
     } catch(e) {}
   }
   if (!config && typeof THEME_CONFIG !== 'undefined' && THEME_CONFIG && Object.keys(THEME_CONFIG).length > 0) {
@@ -123,10 +130,25 @@ function applyThemeConfig() {
       const bannerImg = document.getElementById("hero-banner-img");
       const bannerImgContainer = document.getElementById("hero-banner-img-container");
       if (bannerImg && config.banner.image) bannerImg.src = config.banner.image;
-      if (bannerImg && config.banner.fit) bannerImg.style.objectFit = config.banner.fit;
-      if (bannerImgContainer && config.banner.height) {
-        bannerImgContainer.style.height = config.banner.height;
-        if (bannerImg) bannerImg.style.height = "100%";
+      if (bannerImg) {
+        bannerImg.style.objectFit = config.banner.fit || "contain";
+        bannerImg.style.objectPosition = "center center";
+      }
+      if (bannerImgContainer) {
+        const heightVal = config.banner.height || "auto";
+        if (heightVal === "auto") {
+          bannerImgContainer.style.height = "auto";
+          if (bannerImg) {
+            bannerImg.style.height = "auto";
+            bannerImg.style.width = "100%";
+          }
+        } else {
+          bannerImgContainer.style.height = heightVal;
+          if (bannerImg) {
+            bannerImg.style.height = "100%";
+            bannerImg.style.width = "100%";
+          }
+        }
       }
       if (config.banner.title) {
         const titleEl = document.getElementById("hero-main-title");
